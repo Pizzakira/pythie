@@ -211,3 +211,43 @@ faster-whisper « dès le début du **café** ». Le premier a raison.
 Les sous-titres YouTube restent une **troisième source de contrôle**, jamais la
 source d'identification. Les introductions qu'ils contiennent orientent
 l'étiquetage des grappes de diarisation ; elles ne le fondent pas.
+
+---
+
+# Correction des noms dans le texte — écartée (31 août 2026)
+
+**Hypothèse testée** : à partir du roster fermé, un modèle peut retrouver et
+corriger les patronymes déformés par l'ASR.
+
+**Protocole** : 11 cas — 6 déformations réelles relevées sur LaREF 2026, et
+**5 pièges** : des mots français courants proches d'un patronyme, qu'aucune
+correction ne doit toucher.
+
+| Méthode | Positifs (6) | Pièges (5) | Total |
+|---|---|---|---|
+| Appariement flou déterministe | 2 | 2 | **4/11** |
+| Qwen3.8-27B | 0 | **5** | **5/11** |
+
+## Ce que ça montre
+
+**L'appariement flou est dangereux.** Il transforme « le **total** des
+dépenses » en Attal, « le taux **natal** » en Attal, « **détailler** le
+budget » en Retailleau. Il fabriquerait des noms dans du texte ordinaire.
+
+**Qwen est sûr mais inopérant.** Il refuse correctement les cinq pièges, et
+rate cinq positifs sur six — la plupart en sortie non conforme au schéma.
+
+L'asymétrie est ce qui compte : les échecs de Qwen sont des **abstentions**,
+ceux de l'appariement flou sont des **fabrications**.
+
+## Décision
+
+**On ne corrige pas les noms dans la transcription.**
+
+Ce n'est pas nécessaire. Le besoin réel est d'**étiqueter les grappes de
+diarisation**, et pour cela un signal faible suffit : on agrège des dizaines de
+mentions par grappe sur un débat de trois heures, donc une déformation isolée
+ne pèse rien. Réécrire le texte, en revanche, exige une fiabilité qu'aucune des
+deux méthodes n'atteint — et une correction erronée fabrique une citation.
+
+Le signal des noms alimente l'étiquetage des locuteurs. Jamais le texte.
