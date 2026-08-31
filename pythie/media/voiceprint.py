@@ -52,12 +52,19 @@ class Role:
     CANDIDATE = "candidate"
     MODERATOR = "moderator"
     JOURNALIST = "journalist"
+    HOST = "host"              # e.g. the organisation's president opening the event
+    BUSINESS = "business"      # panellists asking questions
     OTHER = "other"
 
 
-# Roles whose speech is not fact-checked. A moderator's question is not a claim
-# by the panel; a journalist's framing is not a candidate's assertion.
-NOT_ANALYSED = {Role.MODERATOR, Role.JOURNALIST}
+# ONLY candidates are fact-checked.
+#
+# A whitelist, not a blacklist. A blacklist silently analyses any role nobody
+# thought to exclude -- a surprise guest, a voice from the floor, a role added
+# later. Here anything that is not a positively identified candidate is left
+# alone, which is also what happens to an unattributed passage: if we cannot
+# show a candidate said it, we do not judge it.
+ANALYSED_ROLES = {Role.CANDIDATE}
 
 
 def _slug(name: str) -> str:
@@ -91,7 +98,7 @@ class VoicePrint:
 
     @property
     def analysed(self) -> bool:
-        return self.role not in NOT_ANALYSED
+        return self.role in ANALYSED_ROLES
 
     def to_dict(self) -> dict:
         return {
@@ -133,7 +140,7 @@ class Identification:
 
     @property
     def analysed(self) -> bool:
-        return self.accepted and self.role not in NOT_ANALYSED
+        return self.accepted and self.role in ANALYSED_ROLES
 
 
 class Registry:

@@ -39,3 +39,16 @@ empreinte:
   enregistrements_utilises: 0
   secondes_totales: 0
   statut: "non_enrolee"
+
+# --- ALIAS ASR ---------------------------------------------------------
+# Relevé EMPIRIQUE sur les sous-titres automatiques. On ne corrige pas
+# l'ASR, on apprend ses erreurs. Sert à repérer les passations de parole ;
+# ne fonde jamais un verdict. S'enrichit à chaque débat, daté.
+alias_asr:
+  releve_le: "2026-08-31"
+  source: "LaREF 2026 — sous-titres auto YouTube"
+  prenoms_fiables:
+    - "Jean-Luc"
+  variantes_patronyme:
+    - "Melenchon"
+  prenoms_ambigus: []

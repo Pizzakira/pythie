@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .audio import Turn
-from .voiceprint import NOT_ANALYSED, UNKNOWN
+from .voiceprint import ANALYSED_ROLES, UNKNOWN
 
 
 @dataclass
@@ -109,9 +109,10 @@ def build_blocks(
             speaker, role, identified = turn.display_name, turn.role, True
             similarity, note = turn.similarity, ""
 
-        # A statement nobody can be shown to have made is judged against
-        # nobody. Same reflex as "no source -> abstention", applied to voice.
-        analysed = identified and role not in NOT_ANALYSED
+        # Only candidates are fact-checked, and only when positively
+        # identified. A statement nobody can be shown to have made is judged
+        # against nobody -- same reflex as "no source -> abstention".
+        analysed = identified and role in ANALYSED_ROLES
 
         if current and current.speaker == speaker and current.role == role:
             current.end = caption.end
@@ -143,7 +144,7 @@ def coverage_report(blocks: Sequence[Block]) -> Dict[str, object]:
     """
     total = sum(b.end - b.start for b in blocks) or 1e-6
     unattributed = sum(b.end - b.start for b in blocks if not b.identified)
-    not_analysed = sum(
+    identified_not_analysed = sum(
         b.end - b.start for b in blocks if b.identified and not b.analysed
     )
 
@@ -157,8 +158,8 @@ def coverage_report(blocks: Sequence[Block]) -> Dict[str, object]:
         "total_seconds": round(total, 1),
         "unattributed_seconds": round(unattributed, 1),
         "unattributed_share": round(unattributed / total, 3),
-        "moderator_seconds": round(not_analysed, 1),
-        "analysed_seconds": round(total - unattributed - not_analysed, 1),
+        "identified_not_candidate_seconds": round(identified_not_analysed, 1),
+        "analysed_seconds": round(total - unattributed - identified_not_analysed, 1),
         "per_speaker": {k: round(v, 1) for k, v in
                         sorted(per_speaker.items(), key=lambda kv: -kv[1])},
     }
