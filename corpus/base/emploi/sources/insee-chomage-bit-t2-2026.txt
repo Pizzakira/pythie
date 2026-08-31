@@ -8,14 +8,14 @@ population active.
 
 Taux de chomage au sens du BIT :
 
-  T2 2026 .................................... 7,3 %
-  T1 2026 .................................... 7,4 %
-  T2 2025 .................................... 7,6 %
+  T2 2026 : 7,3 %
+  T1 2026 : 7,4 %
+  T2 2025 : 7,6 %
 
 Par tranche d'age, T2 2026 :
-  15-24 ans .................................. 17,2 %
-  25-49 ans ..................................  6,4 %
-  50 ans et plus .............................  5,1 %
+  15-24 ans : 17,2 %
+  25-49 ans : 6,4 %
+  50 ans et plus : 5,1 %
 
 Le point bas de la serie depuis 2008 a ete atteint au T2 2023, a 7,1 %.
 Les series sont revisees a chaque publication trimestrielle.

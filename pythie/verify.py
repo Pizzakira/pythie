@@ -247,6 +247,7 @@ def verify(
             kept.append(source)
         else:
             log(f"  quote rejected - {reason}")
+            log(f"    << {source.quote[:110]} >>")
     result.sources = kept
 
     if not kept:

@@ -28,6 +28,7 @@ The model never searches: it walks down the pyramid and reads what we hand it.
 from __future__ import annotations
 
 import hashlib
+import re
 import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -150,9 +151,18 @@ def load(base: Path = BASE) -> LocalBase:
 
 # --- provenance control ----------------------------------------------------
 
+# Runs of dots, dashes or underscores are layout, not content. A source laid
+# out as "2025 ......... 43,6 % du PIB" cannot be quoted verbatim by any model:
+# it writes "2025 : 43,6 % du PIB", and a literal comparison fails on decoration
+# the model was right to drop. Collapsing them is what makes the quote check a
+# test of fidelity rather than a test of typography.
+_DECORATION = re.compile(r"[.\-_·•]{2,}")
+
+
 def _flatten(text: str) -> str:
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
+    text = _DECORATION.sub(" ", text)
     return " ".join(text.lower().split())
 
 

@@ -228,7 +228,21 @@ class VerificationResult(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0)
     tags: List[Tag] = Field(default_factory=list)
     context_note: str
-    sources: List[Source] = Field(default_factory=list)
+
+    # REQUIRED, deliberately -- no default.
+    #
+    # With a default this field is optional in the JSON schema, so the
+    # constrained grammar lets the model omit it. Observed: it extracted the
+    # right figure, cited nothing, and the quote guardrail then abstained --
+    # an abstention caused by our schema rather than by the evidence.
+    #
+    # The whole design rests on a quote existing. Making it required means the
+    # grammar itself forces one, and an empty list becomes a deliberate
+    # statement that the excerpts prove nothing.
+    sources: List[Source] = Field(
+        description="At least one when the verdict is exact, approximate or "
+        "false. Empty ONLY for unverified or too_vague."
+    )
 
     stated_value: Optional[str] = None
     source_value: Optional[str] = None
