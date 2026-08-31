@@ -1,0 +1,12 @@
+url_origine: "https://www.insee.fr/fr/statistiques/2381412"
+producteur: "INSEE"
+rang: 1
+grandeur: "Taux de prelevements obligatoires (pourcentage du PIB) et montant en milliards d'euros"
+millesime: "2025"
+unite: "% du PIB"
+date_consultation: "2026-08-31"
+empreinte: ""
+note_provenance: >
+  Valeurs relevees le 31/08/2026 depuis la page INSEE citee. A remplacer par le
+  fichier de serie telecharge directement des que possible : une transcription
+  manuelle reste une transcription.

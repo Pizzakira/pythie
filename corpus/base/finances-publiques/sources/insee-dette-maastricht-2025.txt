@@ -1,0 +1,26 @@
+INSEE — Dette publique au sens de Maastricht
+Informations rapides, consulte le 31 aout 2026
+
+Definition : dette brute consolidee de l'ensemble des administrations
+publiques, au sens du traite de Maastricht. Exprimee en POURCENTAGE DU PIB ou
+en milliards d'euros. Reference europeenne.
+
+RATIO DE DETTE :
+
+  fin 2025 (T4) ........................... 115,6 % du PIB
+  fin T3 2025 ............................. 117,4 % du PIB
+  fin T2 2025 ............................. 115,6 % du PIB
+  fin 2024 ................................ 112,6 % du PIB
+
+EN MONTANT :
+
+  fin 2025 ................................ 3 460 milliards d'euros
+  fin T1 2025 ............................. 3 345,4 milliards d'euros
+
+Le ratio varie sensiblement d'un trimestre a l'autre : toujours preciser le
+trimestre de reference. Un point de PIB represente environ 30 milliards
+d'euros.
+
+Sources : insee.fr/fr/statistiques/8956575 (annuel 2025),
+insee.fr/fr/statistiques/8686951 (T3 2025),
+insee.fr/fr/statistiques/8597434 (T1 2025).

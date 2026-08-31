@@ -100,6 +100,14 @@ TERM_TRIGGERS: Dict[str, Tuple[str, ...]] = {
                       "salaire reel"),
     "delinquance": ("delinquance", "insecurite", "faits constates", "criminalite",
                     "victimation"),
+    "prelevements_obligatoires": ("prelevement", "prelevements", "pression fiscale",
+                                  "taxes", "plus taxe", "matraquage fiscal",
+                                  "choc fiscal", "impots de production", "fiscalite"),
+    # "depense" seul plutot que "depense publique" : dans un debat on dit
+    # « 57,3 % de depenses », sans l'adjectif. Sur-declencher est sans danger —
+    # la fiche composee propose des sources, elle n'impose aucun verdict.
+    "depense_publique": ("depense", "depenses", "argent public", "on depense"),
+    "deficit_public": ("deficit", "solde public", "equilibre budgetaire"),
 }
 
 # Which local base domain serves a glossary term.
@@ -112,6 +120,10 @@ TERM_TO_DOMAIN: Dict[str, str] = {
     "immigre": "immigration",
     "pauvrete": "social",
     "delinquance": "securite",
+    "prelevements_obligatoires": "finances-publiques",
+    "depense_publique": "finances-publiques",
+    "deficit_public": "finances-publiques",
+    "dette_publique": "finances-publiques",
 }
 
 

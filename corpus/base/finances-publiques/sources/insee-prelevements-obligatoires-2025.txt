@@ -1,0 +1,23 @@
+INSEE — Taux de prelevements obligatoires rapportes au produit interieur brut
+Serie consultee le 31 aout 2026 sur insee.fr/fr/statistiques/2381412
+
+Definition : les prelevements obligatoires regroupent les impots et les
+cotisations sociales effectives recus par les administrations publiques et les
+institutions europeennes. Exprimes en POURCENTAGE DU PIB.
+
+Taux de prelevements obligatoires :
+
+  2025 .................................... 43,6 % du PIB
+  2024 .................................... 42,7 % du PIB
+  2023 .................................... 43,2 % du PIB
+
+En montant :
+
+  2025 .................................... 1 305 milliards d'euros
+  2024 .................................... 1 254 milliards d'euros
+
+Apres une tendance a la baisse les annees precedentes, le taux repart a la
+hausse en 2025.
+
+NE PAS CONFONDRE avec les depenses publiques (57,2 % du PIB en 2025), qui sont
+une grandeur differente. L'ecart entre les deux correspond au deficit.

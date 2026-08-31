@@ -164,3 +164,43 @@ termes:
         producteur: "SSMSI — enquête VRS"
         source: "https://www.interieur.gouv.fr/Interstats"
         unite: "%"
+
+  prelevements_obligatoires:
+    libelle: "prélèvements obligatoires"
+    alerte: >
+      Ne jamais confondre avec la dépense publique. 43,6 % contre 57,2 % du PIB
+      en 2025 : l'écart entre les deux est le déficit.
+    mesures:
+      - cle: "taux_po"
+        libelle: "Taux de prélèvements obligatoires"
+        definition: >
+          Impôts et cotisations sociales effectives reçus par les
+          administrations publiques et les institutions européennes, rapportés
+          au PIB.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/statistiques/2381412"
+        unite: "% du PIB"
+
+  depense_publique:
+    libelle: "dépense publique"
+    mesures:
+      - cle: "depenses_apu"
+        libelle: "Dépenses des administrations publiques"
+        definition: >
+          Ensemble des dépenses des administrations publiques rapportées au
+          PIB. Périmètre : État, ODAC, collectivités, sécurité sociale.
+        producteur: "INSEE — comptes nationaux"
+        source: "https://www.insee.fr/fr/statistiques/8997691"
+        unite: "% du PIB"
+
+  deficit_public:
+    libelle: "déficit public"
+    mesures:
+      - cle: "besoin_financement"
+        libelle: "Besoin de financement des administrations publiques"
+        definition: >
+          Solde des administrations publiques, en points de PIB ou en euros.
+          À ne pas confondre avec la dette, qui est un stock.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/statistiques/8997691"
+        unite: "% du PIB"
