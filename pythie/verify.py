@@ -113,6 +113,17 @@ def apply_thresholds(
 ) -> VerificationResult:
     """Translate a measured gap into a verdict, using published thresholds.
 
+    THE MODEL IS THE JUDGE. It reads the evidence and returns the verdict.
+    This function is a veto, not a second opinion: it may only WEAKEN what the
+    model returned, never strengthen it.
+
+    Concretely, the program never manufactures a red the model did not return.
+    If the model answered `exact` while reporting a 40% gap, that is an internal
+    inconsistency in its own output -- and the safe reading of an inconsistency
+    is abstention, not accusation. A red is the single most consequential
+    output of this system; it must be something a judge asserted, not something
+    arithmetic produced from a figure the same judge supplied.
+
     Abstention states are never rewritten.
     """
     if result.relative_gap is None:
@@ -126,15 +137,35 @@ def apply_thresholds(
         return result
 
     gap = abs(result.relative_gap)
+
     if gap <= EXACT_THRESHOLD:
+        # Downgrading a red or an orange to exact is a weakening: allowed.
         result.verdict = Verdict.EXACT
         if Tag.APPROXIMATE_MAGNITUDE not in result.tags:
             result.tags.append(Tag.APPROXIMATE_MAGNITUDE)
+
     elif gap <= APPROXIMATE_THRESHOLD:
+        # Red -> orange weakens; exact -> orange is the one upgrade the
+        # published threshold justifies, and it stops short of an accusation.
         result.verdict = Verdict.APPROXIMATE
+
     else:
-        # Beyond the threshold, only a rank 1 source may support a red.
-        result.verdict = Verdict.FALSE if rank == 1 else Verdict.APPROXIMATE
+        # Past the threshold the model's own verdict decides.
+        if result.verdict == Verdict.FALSE:
+            # Only a rank 1 source may support a red; otherwise weaken.
+            if rank != 1:
+                result.verdict = Verdict.APPROXIMATE
+        elif result.verdict == Verdict.EXACT:
+            # "exact" with a 40% gap contradicts itself. Abstain.
+            result.verdict = Verdict.UNVERIFIED
+            result.confidence = min(result.confidence, 0.3)
+            result.context_note += (
+                " (Verdict retire : le modele rend « exact » tout en rapportant "
+                f"un ecart de {gap:.0%}. Incoherence interne, pas une refutation.)"
+            )
+        else:
+            result.verdict = Verdict.APPROXIMATE
+
     return result
 
 
