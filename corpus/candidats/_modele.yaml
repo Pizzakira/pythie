@@ -1,0 +1,84 @@
+# FacTool — dossier candidat (modèle)
+#
+# Constitué AVANT la campagne, à partir de sources de première main.
+# Le même protocole, avec la même profondeur, pour chaque candidat.
+# Toute asymétrie de traitement est un défaut, et c'est l'angle d'attaque
+# principal contre l'outil. Le protocole est publié.
+#
+# Copier ce fichier en <id>.yaml par candidat déclaré.
+
+id: "modele"
+nom_affiche: "Candidat·e modèle"
+date_constitution: "AAAA-MM-JJ"
+constitue_par: ""
+protocole_version: "1.0"
+
+# --------------------------------------------------------------------------
+# SOURCES DE PREMIÈRE MAIN
+# Ce sont elles, et elles seules, qui fondent l'axe `cohérence`.
+# Chaque entrée est datée et versionnée : un programme est un document qui
+# évolue, on cite l'édition consultée, jamais l'URL nue.
+# --------------------------------------------------------------------------
+
+programme:
+  - edition: "2026-09"
+    titre: ""
+    url: ""
+    consulte_le: ""
+    format: "pdf"          # pdf | page | livre
+    empreinte: ""          # sha256 du document archivé — le site peut changer
+
+discours:
+  # Interventions enregistrées, transcrites et horodatées.
+  - date: ""
+    lieu: ""
+    url_source: ""
+    transcription: ""      # chemin local
+    duree_min: 0
+
+ecrits:
+  # Livres, tribunes signées, propositions de loi déposées.
+  - date: ""
+    type: ""               # livre | tribune | proposition_de_loi
+    titre: ""
+    url: ""
+
+votes:
+  # Scrutins publics uniquement — Assemblée, Sénat. Vérifiables par le lecteur.
+  - date: ""
+    scrutin: ""
+    position: ""           # pour | contre | abstention | absent
+    url: ""
+
+# --------------------------------------------------------------------------
+# PRÉ-INDEXATION
+# --------------------------------------------------------------------------
+
+chiffres_recurrents:
+  # Valeurs que le locuteur cite habituellement, avec la source RÉELLE de
+  # chacune. Indexés à l'avance : la vérification devient instantanée.
+  - enonce_type: ""
+    grandeur_invoquee: ""   # la mesure exacte, pas le thème
+    valeur_citee: ""
+    source_reelle:
+      url: ""
+      domaine: ""
+      rang: 1
+      valeur: ""
+      millesime: ""
+
+erreurs_recurrentes:
+  # Énoncés DÉJÀ vérifiés et démentis, constitués en amont sur les
+  # vérifications publiées et les analyses universitaires.
+  #
+  # GARDE-FOU ABSOLU : une correspondance ici n'est JAMAIS un verdict.
+  # Elle déclenche la vérification normale contre la source primaire.
+  # Sans cette règle, l'outil condamnerait quelqu'un pour ce qu'il a dit une
+  # autre fois, et l'antériorité deviendrait un préjugé.
+  - enonce_type: ""
+    premiere_occurrence: ""
+    dementi_par:
+      url: ""
+      rang: 1
+    note: ""
+    usage: "piste_uniquement"

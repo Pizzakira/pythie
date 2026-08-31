@@ -1,0 +1,166 @@
+# FacTool — glossaire sourcé
+#
+# RÈGLE : aucune définition n'est affirmée par l'outil. Chacune est adossée à
+# la source qui la produit, avec un lien PROFOND que le lecteur peut ouvrir et
+# vérifier lui-même. Une définition sans source n'entre pas dans ce fichier.
+#
+# Indexé À L'AVANCE : le glossaire est consulté AVANT toute recherche web. Il
+# tranche déterministiquement la grandeur invoquée, ce qui est à la fois plus
+# rapide qu'une recherche et plus fiable qu'un jugement de modèle.
+#
+# Les URL sont à revérifier avant chaque campagne (les sites publics
+# réorganisent leurs permaliens) — voir CHANGELOG.md.
+
+version: "2026-08-31"
+
+termes:
+
+  chomage:
+    libelle: "chômage"
+    alerte: >
+      Terme le plus piégeux du débat français. Un taux et un effectif sont
+      systématiquement confondus, par les locuteurs comme par les vérificateurs.
+    mesures:
+      - cle: "bit"
+        libelle: "Taux de chômage au sens du BIT"
+        definition: >
+          Personnes sans emploi, disponibles pour travailler et ayant cherché
+          activement un emploi. Exprimé en POURCENTAGE de la population active.
+        producteur: "INSEE — enquête Emploi"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1129"
+        unite: "%"
+      - cle: "categorie_a"
+        libelle: "Demandeurs d'emploi en catégorie A"
+        definition: >
+          Personnes inscrites à France Travail tenues de rechercher un emploi,
+          sans aucune activité dans le mois. Exprimé en EFFECTIF.
+        producteur: "France Travail / DARES"
+        source: "https://www.francetravail.org/statistiques-analyses/"
+        unite: "personnes"
+      - cle: "categories_abc"
+        libelle: "Catégories A, B et C"
+        definition: >
+          Ajoute aux précédents ceux ayant exercé une activité réduite.
+          Périmètre nettement plus large.
+        producteur: "France Travail / DARES"
+        source: "https://www.francetravail.org/statistiques-analyses/"
+        unite: "personnes"
+
+  inflation:
+    libelle: "inflation"
+    mesures:
+      - cle: "ipc"
+        libelle: "Indice des prix à la consommation (IPC)"
+        definition: "Mesure de référence en France, panier national."
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1502"
+        unite: "%"
+      - cle: "ipch"
+        libelle: "Indice des prix à la consommation harmonisé (IPCH)"
+        definition: >
+          Périmètre harmonisé européen. Seul indice valable pour comparer la
+          France à ses voisins — l'IPC ne l'est pas.
+        producteur: "INSEE / Eurostat"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1501"
+        unite: "%"
+
+  pib:
+    libelle: "PIB"
+    mesures:
+      - cle: "volume"
+        libelle: "PIB en volume (croissance réelle)"
+        definition: "Corrigé de l'évolution des prix. C'est la « croissance »."
+        producteur: "INSEE — comptes nationaux"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1155"
+        unite: "%"
+      - cle: "valeur"
+        libelle: "PIB en valeur (courant)"
+        definition: "Non corrigé des prix. Gonflé mécaniquement par l'inflation."
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1155"
+        unite: "€"
+
+  immigre:
+    libelle: "immigré"
+    alerte: >
+      « Immigré », « étranger » et « issu de l'immigration » désignent trois
+      populations différentes et NON emboîtées. Un immigré peut être français ;
+      un étranger peut être né en France.
+    mesures:
+      - cle: "immigre_insee"
+        libelle: "Immigré (définition INSEE)"
+        definition: >
+          Personne née étrangère à l'étranger et résidant en France. Reste
+          immigrée même après acquisition de la nationalité française.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1328"
+        unite: "personnes"
+      - cle: "etranger"
+        libelle: "Étranger"
+        definition: >
+          Personne résidant en France sans la nationalité française. Inclut des
+          personnes nées en France.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1024"
+        unite: "personnes"
+      - cle: "titres_sejour"
+        libelle: "Titres de séjour délivrés"
+        definition: "FLUX annuel, à ne jamais confondre avec un stock de population."
+        producteur: "DGEF — ministère de l'Intérieur"
+        source: "https://www.immigration.interieur.gouv.fr/Info-ressources/Donnees-statistiques"
+        unite: "titres/an"
+
+  dette_publique:
+    libelle: "dette publique"
+    mesures:
+      - cle: "maastricht"
+        libelle: "Dette au sens de Maastricht"
+        definition: >
+          Dette brute consolidée de toutes les administrations publiques.
+          Référence européenne, exprimée en % du PIB ou en euros.
+        producteur: "INSEE / Eurostat"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1810"
+        unite: "% du PIB"
+
+  pauvrete:
+    libelle: "pauvreté"
+    mesures:
+      - cle: "seuil_60"
+        libelle: "Taux de pauvreté monétaire (seuil à 60 %)"
+        definition: >
+          Part de la population sous 60 % du niveau de vie médian. Seuil
+          conventionnel : à 50 %, le chiffre est très différent. Mesure
+          RELATIVE — elle peut baisser si la médiane baisse.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1653"
+        unite: "%"
+
+  pouvoir_achat:
+    libelle: "pouvoir d'achat"
+    mesures:
+      - cle: "rdb_uc"
+        libelle: "Revenu disponible brut par unité de consommation"
+        definition: >
+          Mesure de référence. Le RDB total peut croître alors que le RDB par
+          unité de consommation stagne, sous l'effet démographique.
+        producteur: "INSEE"
+        source: "https://www.insee.fr/fr/metadonnees/definition/c1997"
+        unite: "€ constants"
+
+  delinquance:
+    libelle: "délinquance"
+    mesures:
+      - cle: "faits_constates"
+        libelle: "Faits constatés par les services"
+        definition: >
+          Ne compte que ce qui est enregistré. Dépend du taux de plainte : une
+          hausse peut refléter une hausse des plaintes, pas des faits.
+        producteur: "SSMSI — ministère de l'Intérieur"
+        source: "https://www.interieur.gouv.fr/Interstats"
+        unite: "faits"
+      - cle: "victimation"
+        libelle: "Victimation déclarée"
+        definition: "Enquête en population générale, indépendante du dépôt de plainte."
+        producteur: "SSMSI — enquête VRS"
+        source: "https://www.interieur.gouv.fr/Interstats"
+        unite: "%"

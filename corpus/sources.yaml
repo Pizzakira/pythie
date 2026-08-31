@@ -1,0 +1,181 @@
+# FacTool — corpus de sources
+#
+# Règle centrale : le RANG de la source détermine la FORCE de verdict qu'elle autorise.
+#   rang 1 → peut fonder un FAUX (rouge) ou un EXACT (vert)
+#   rang 2 → au mieux un intermédiaire (vert + étiquettes)
+#   rang 3 → jamais un verdict, seulement une piste de recherche
+#
+# Les domaines de rang 1 et 2 sont passés à l'API comme `allowed_domains` du
+# server tool web_search. L'interdit est donc appliqué côté serveur : le modèle
+# ne PEUT PAS consulter autre chose. Ce n'est pas une consigne de prompt.
+#
+# Toute modification de ce fichier doit être datée dans CHANGELOG.md.
+
+version: "2026-08-31b"
+
+rang1:
+  description: >
+    Producteurs de la donnée. Seuls habilités à fonder un verdict rouge.
+    Publient la mesure elle-même, pas un commentaire sur la mesure.
+  domaines:
+    # Statistique publique française
+    - insee.fr
+    - dares.travail-emploi.gouv.fr
+    - drees.solidarites-sante.gouv.fr
+    - francetravail.org
+    - statistiques.developpement-durable.gouv.fr   # SDES — énergie, environnement
+    - interieur.gouv.fr                            # SSMSI — sécurité, élections
+    - immigration.interieur.gouv.fr                # DGEF — titres de séjour
+    - santepubliquefrance.fr
+    - banque-france.fr
+    - tresor.economie.gouv.fr
+    - douane.gouv.fr
+    - data.gouv.fr
+    # Budget et finances publiques
+    - budget.gouv.fr
+    - performance.gouv.fr
+    - securite-sociale.fr
+    # Droit positif
+    - legifrance.gouv.fr
+    - journal-officiel.gouv.fr
+    # International (comparaisons)
+    - ec.europa.eu                                 # Eurostat
+    - oecd.org
+    - imf.org
+    - worldbank.org
+    # Recherche academique — rang 1 pour les affirmations SCIENTIFIQUES, sur
+    # lesquelles la statistique publique n'a rien a dire. Les preprints
+    # (arxiv, ssrn, hal en depot simple) ne sont PAS relus par les pairs :
+    # le verificateur doit poser le marqueur `prepublication`.
+    - arxiv.org
+    - hal.science
+    - theses.fr
+    - persee.fr
+    - openedition.org
+    - cairn.info
+    - doi.org
+    - pubmed.ncbi.nlm.nih.gov
+    - nature.com
+    - science.org
+    - thelancet.com
+
+rang2:
+  description: >
+    Institutions d'analyse, de contrôle et d'évaluation. Interprètent ou
+    chiffrent la donnée primaire. Autorisent au mieux un verdict intermédiaire.
+  domaines:
+    - ccomptes.fr                                  # Cour des comptes
+    - hcfp.fr                                      # Haut Conseil des finances publiques
+    - strategie.gouv.fr                            # France Stratégie / CAE
+    - ofce.sciences-po.fr
+    - ipp.eu                                       # Institut des politiques publiques
+    - assemblee-nationale.fr                       # scrutins, comptes rendus, rapports
+    - senat.fr
+    - conseil-constitutionnel.fr
+    - conseil-etat.fr
+    - defenseurdesdroits.fr
+    - anses.fr
+    - has-sante.fr
+    - ipcc.ch
+    - cnil.fr
+    - arcom.fr
+    - autoritedelaconcurrence.fr
+
+rang3:
+  description: >
+    Vérifications déjà publiées. ORIENTENT, ne PROUVENT jamais.
+    Ne sont PAS passées à allowed_domains : on ne les consulte pas pendant la
+    vérification, pour éviter de republier le verdict d'un tiers. Cette liste
+    sert uniquement au POC 3, pour construire la vérité terrain.
+  domaines:
+    - factuel.afp.com
+    - lemonde.fr/les-decodeurs
+    - liberation.fr/checknews
+    - francetvinfo.fr/vrai-ou-faux
+    - lessurligneurs.eu
+    - science-feedback.co
+
+rang_parole:
+  description: >
+    STATUT PARTICULIER. Ces sources sont INTERDITES comme preuve d'un fait sur
+    le monde, et OBLIGATOIRES comme preuve de ce que le locuteur a lui-même
+    publié. Le site d'un candidat n'établit pas que le chômage a baissé ; il
+    établit que le candidat s'est engagé à créer 50 000 places de prison.
+
+    Admissibles UNIQUEMENT pour l'axe `coherence`. Le vérificateur de faits
+    (étage 2) ne les reçoit jamais dans allowed_domains ; le vérificateur de
+    cohérence (étage 2 bis) ne reçoit qu'elles, plus les scrutins publics.
+  usage_autorise: ["coherence"]
+  usage_interdit: ["verdict_de_fait"]
+  domaines:
+    # À compléter par candidat déclaré, avec la date de consultation.
+    # Un programme est un document versionné : on cite l'édition, pas l'URL nue.
+    - assemblee-nationale.fr    # scrutins publics — la cohérence des votes
+    - senat.fr
+    - nosdeputes.fr             # agrégat de scrutins, rang 2 pour la cohérence
+    - vie-publique.fr           # discours officiels archivés et datés
+
+# ---------------------------------------------------------------------------
+# INTERDITS — jamais une preuve, en aucune circonstance.
+# Cette liste est documentaire : l'exclusion réelle est obtenue par le fait que
+# ces domaines ne figurent PAS dans allowed_domains. Elle est ici pour être
+# publiée avec la méthodologie.
+# ---------------------------------------------------------------------------
+interdits:
+  - motif: "Presse généraliste — rapporte la donnée, ne la produit pas."
+    exemples: [lemonde.fr, lefigaro.fr, liberation.fr, lesechos.fr, bfmtv.com]
+  - motif: "Encyclopédies collaboratives — tertiaire et mutable."
+    exemples: [wikipedia.org, wikiwand.com]
+  - motif: "Réseaux sociaux — sans exception."
+    exemples: [x.com, facebook.com, tiktok.com, youtube.com, reddit.com]
+  - motif: >
+      Partis, campagnes, candidats — partie prenante. Interdits comme preuve
+      d'un FAIT. Voir `rang_parole` : les mêmes domaines sont recevables, et
+      seulement eux, pour établir ce que le locuteur a lui-même engagé.
+    exemples: []
+  - motif: "Blogs, tribunes, éditoriaux — opinion, pas donnée."
+    exemples: []
+  - motif: >
+      LES PARAMÈTRES DU MODÈLE. Aucun chiffre, aucune date, aucun fait ne peut
+      provenir de ce que le modèle « sait ». Toute valeur affichée doit avoir
+      été extraite d'un document effectivement récupéré pendant l'analyse.
+      C'est l'interdit qui prime sur tous les autres.
+    exemples: []
+
+# ---------------------------------------------------------------------------
+# PIÈGES DE DÉFINITION
+# Deux sources de rang 1, deux chiffres justes, deux définitions incompatibles.
+# Le vérificateur doit confirmer que la grandeur invoquée par le locuteur
+# correspond à celle de la source. Sinon → étiquette `definition_non_comparable`.
+# ---------------------------------------------------------------------------
+pieges_definition:
+  - sujet: "chômage"
+    mesures:
+      - "taux de chômage au sens du BIT (INSEE, enquête Emploi) — un pourcentage"
+      - "demandeurs d'emploi catégorie A (France Travail) — un effectif"
+      - "catégories A+B+C (France Travail) — un effectif plus large"
+    note: "Confondre un taux BIT et un effectif catégorie A est l'erreur la plus fréquente."
+  - sujet: "inflation"
+    mesures:
+      - "IPC (INSEE, indice des prix à la consommation)"
+      - "IPCH (indice harmonisé, comparaisons européennes)"
+      - "inflation sous-jacente (hors énergie et alimentaire)"
+  - sujet: "dette publique"
+    mesures:
+      - "dette au sens de Maastricht (% du PIB)"
+      - "dette brute toutes administrations publiques (en euros)"
+      - "dette de l'État seul"
+  - sujet: "immigration"
+    mesures:
+      - "titres de séjour délivrés dans l'année (flux)"
+      - "étrangers résidant en France (stock)"
+      - "immigrés au sens INSEE (nés étrangers à l'étranger, nationalité actuelle indifférente)"
+      - "demandes d'asile (OFPRA)"
+  - sujet: "délinquance"
+    mesures:
+      - "faits constatés par les services (SSMSI) — dépend du taux de plainte"
+      - "victimation déclarée (enquête Cadre de vie et sécurité)"
+  - sujet: "pouvoir d'achat"
+    mesures:
+      - "revenu disponible brut par unité de consommation (INSEE)"
+      - "salaire moyen nominal vs réel"

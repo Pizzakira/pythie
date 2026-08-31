@@ -1,0 +1,21 @@
+FRANCE TRAVAIL / DARES — Demandeurs d'emploi inscrits
+Situation du marche du travail, juin 2026 (donnees CVS-CJO, France entiere)
+
+Definition : les demandeurs d'emploi en categorie A sont les personnes
+inscrites a France Travail, tenues de rechercher un emploi, SANS AUCUNE
+ACTIVITE au cours du mois. Il s'agit d'un EFFECTIF, non d'un taux.
+
+Effectifs par categorie, juin 2026 :
+
+  Categorie A ................................ 2 710 400
+  Categorie B ...................................  812 300
+  Categorie C ................................ 1 445 900
+  Categories A, B, C ......................... 4 968 600
+
+Evolution de la categorie A :
+  sur un mois ................................ -0,4 %
+  sur un an .................................. -2,1 %
+
+Rappel : la categorie A ne se compare pas au taux de chomage au sens du BIT
+mesure par l'INSEE, qui repose sur une enquete et s'exprime en pourcentage de
+la population active. Les deux grandeurs peuvent evoluer en sens opposes.

@@ -1,0 +1,489 @@
+<title>FacTool</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#f6f7f9; --surface:#ffffff; --sunken:#eef0f4;
+  --ink:#14181f; --muted:#5c6470; --faint:#8b93a1; --rule:#dfe3ea;
+  --accent:#3b5878; --accent-ink:#ffffff;
+  --exact-bg:#e9f2e8; --exact-fg:#2c6430; --exact-line:#4e8a52;
+  --approx-bg:#fbf2df; --approx-fg:#8a5a00; --approx-line:#b98511;
+  --faux-bg:#fbe6e3; --faux-fg:#a3170d; --faux-line:#c8352a;
+  --wait-fg:#7b8492;
+  --shadow:0 1px 2px rgba(20,24,31,.05),0 8px 24px -16px rgba(20,24,31,.18);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#101319; --surface:#171b23; --sunken:#1e232c;
+  --ink:#e7eaef; --muted:#9aa3b2; --faint:#6b7484; --rule:#2a3038;
+  --accent:#8fb0d0; --accent-ink:#0d1017;
+  --exact-bg:#18271a; --exact-fg:#8fcb94; --exact-line:#4e8a52;
+  --approx-bg:#2b2312; --approx-fg:#e0b45f; --approx-line:#b98511;
+  --faux-bg:#2e1614; --faux-fg:#f0958b; --faux-line:#c8352a;
+  --wait-fg:#798391;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --ground:#101319; --surface:#171b23; --sunken:#1e232c;
+  --ink:#e7eaef; --muted:#9aa3b2; --faint:#6b7484; --rule:#2a3038;
+  --accent:#8fb0d0; --accent-ink:#0d1017;
+  --exact-bg:#18271a; --exact-fg:#8fcb94; --exact-line:#4e8a52;
+  --approx-bg:#2b2312; --approx-fg:#e0b45f; --approx-line:#b98511;
+  --faux-bg:#2e1614; --faux-fg:#f0958b; --faux-line:#c8352a;
+  --wait-fg:#798391;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.gris{filter:grayscale(1)}
+.avis{background:var(--accent);color:var(--accent-ink);font-size:.72rem;
+  letter-spacing:.04em;padding:.5rem 1rem;text-align:center;font-weight:500}
+header{border-bottom:1px solid var(--rule);background:var(--surface)}
+.hwrap{max-width:80rem;margin:0 auto;padding:1.1rem 1.25rem;
+  display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+h1{font-family:Spectral,Georgia,serif;font-size:1.5rem;font-weight:600;margin:0;letter-spacing:-.015em}
+.ctx{color:var(--muted);font-size:.8rem;margin:0}
+.live{margin-left:auto;display:flex;align-items:center;gap:.45rem;font-size:.72rem;
+  font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faux-fg)}
+.dot{width:.5rem;height:.5rem;border-radius:50%;background:currentColor;animation:blink 1.8s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.shell{max-width:80rem;margin:0 auto;padding:1.25rem;display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:64rem){.shell{grid-template-columns:19rem 1fr;align-items:start}}
+.rail{position:sticky;top:.75rem;display:flex;flex-direction:column;gap:.95rem;
+  background:var(--surface);border:1px solid var(--rule);border-radius:.6rem;
+  padding:1rem;box-shadow:var(--shadow);max-height:calc(100vh - 1.5rem);overflow-y:auto}
+.lab{font-size:.66rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 .5rem;display:flex;justify-content:space-between;align-items:baseline}
+.compteurs{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.kpi{background:var(--sunken);border-radius:.4rem;padding:.5rem .3rem;text-align:center}
+.kpi b{display:block;font-family:"IBM Plex Mono",monospace;font-size:1.3rem;font-weight:500;
+  font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi span{font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.kpi.e b{color:var(--exact-fg)} .kpi.a b{color:var(--approx-fg)} .kpi.f b{color:var(--faux-fg)}
+.reste{font-size:.72rem;color:var(--muted);margin:.5rem 0 0;font-variant-numeric:tabular-nums}
+.seg{display:flex;border:1px solid var(--rule);border-radius:.4rem;overflow:hidden}
+.seg button{flex:1;font:inherit;font-size:.72rem;padding:.4rem .2rem;cursor:pointer;
+  background:var(--surface);color:var(--muted);border:0;transition:.12s}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* intervenants */
+.gens{display:flex;flex-direction:column;gap:.3rem}
+.qui-l{display:flex;align-items:center;gap:.5rem;padding:.4rem .5rem;border-radius:.4rem;
+  border:1px solid var(--rule);background:var(--surface);cursor:pointer;font:inherit;
+  font-size:.78rem;color:var(--ink);text-align:left;width:100%;transition:.12s}
+.qui-l:hover{border-color:var(--faint)}
+.qui-l[aria-pressed="true"]{border-color:var(--accent);background:var(--sunken)}
+.qui-l .nom{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qui-l .role{font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+.mini{display:flex;gap:.22rem;font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+  font-variant-numeric:tabular-nums}
+.mini i{font-style:normal;padding:.02rem .28rem;border-radius:.2rem}
+.mini .e{background:var(--exact-bg);color:var(--exact-fg)}
+.mini .a{background:var(--approx-bg);color:var(--approx-fg)}
+.mini .f{background:var(--faux-bg);color:var(--faux-fg)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{font:inherit;font-size:.74rem;padding:.28rem .6rem;border-radius:1rem;cursor:pointer;
+  border:1px solid var(--rule);background:var(--surface);color:var(--muted);
+  display:inline-flex;align-items:center;gap:.3rem;transition:.12s}
+.chip:hover{border-color:var(--faint)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.chip .n{font-family:"IBM Plex Mono",monospace;font-size:.68rem;opacity:.75;font-variant-numeric:tabular-nums}
+.rech{position:relative}
+.rech input{width:100%;font:inherit;font-size:.82rem;padding:.5rem .6rem .5rem 1.9rem;
+  border:1px solid var(--rule);border-radius:.4rem;background:var(--sunken);color:var(--ink)}
+.rech svg{position:absolute;left:.55rem;top:50%;transform:translateY(-50%);
+  width:.85rem;height:.85rem;stroke:var(--faint);fill:none;stroke-width:2}
+.note-s{font-size:.7rem;line-height:1.5;color:var(--muted);margin:.45rem 0 0}
+.outil{font:inherit;font-size:.72rem;color:var(--muted);background:none;border:1px dashed var(--rule);
+  border-radius:.4rem;padding:.4rem;cursor:pointer;width:100%}
+.outil[aria-pressed="true"]{border-style:solid;border-color:var(--accent);color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* flux */
+.flux{background:var(--surface);border:1px solid var(--rule);border-radius:.6rem;
+  padding:1.6rem 1.5rem 2rem;box-shadow:var(--shadow);min-height:26rem}
+.bloc{padding:0 0 1.3rem;margin:0 0 1.3rem;border-bottom:1px solid var(--rule);
+  animation:entre .45s ease both;position:relative}
+.bloc:last-child{border-bottom:0;margin-bottom:0}
+@keyframes entre{from{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){.bloc{animation:none}.dot{animation:none}mark{transition:none!important}}
+.tete{display:flex;align-items:center;gap:.5rem;margin:0 0 .45rem}
+.qui{font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0}
+.badge{font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);
+  border:1px solid var(--rule);border-radius:1rem;padding:.05rem .4rem}
+.retirer{margin-left:auto;font:inherit;font-size:.66rem;color:var(--faint);background:none;
+  border:1px solid var(--rule);border-radius:.3rem;padding:.15rem .45rem;cursor:pointer}
+.retirer:hover{border-color:var(--faux-line);color:var(--faux-fg)}
+.bloc p{font-family:Spectral,Georgia,serif;font-size:1.06rem;line-height:1.75;margin:0;max-width:62ch;color:var(--ink)}
+.tc{display:block;text-align:right;margin-top:.5rem;font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;color:var(--faint);font-variant-numeric:tabular-nums}
+mark{background:none;color:inherit;padding:.02em .12em;border-radius:.16em;cursor:pointer;
+  transition:background .35s ease,color .35s ease;text-decoration-thickness:2px;text-underline-offset:.22em}
+mark .g{font-family:"IBM Plex Sans",sans-serif;font-size:.7em;margin-left:.18em;
+  vertical-align:.12em;opacity:.9;font-weight:600}
+mark.m-exact{background:var(--exact-bg);color:var(--exact-fg);text-decoration:underline solid var(--exact-line)}
+mark.m-approx{background:var(--approx-bg);color:var(--approx-fg);text-decoration:underline dashed var(--approx-line)}
+mark.m-faux{background:var(--faux-bg);color:var(--faux-fg);font-weight:600;text-decoration:underline wavy var(--faux-line)}
+mark.m-attente{color:var(--wait-fg);text-decoration:underline dashed var(--wait-fg);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+mark.m-nonverif{background:var(--sunken);color:var(--muted);text-decoration:underline dotted var(--muted)}
+mark.eteint{opacity:.22}
+mark.corrige{box-shadow:0 0 0 2px var(--accent);animation:flash 1.4s ease}
+@keyframes flash{0%,40%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+.rev{font-family:"IBM Plex Sans";font-size:.6em;vertical-align:.35em;color:var(--accent);
+  margin-left:.15em;font-weight:600}
+/* bloc retiré : l'analyse est débranchée, le texte reste */
+.bloc.retire p{color:var(--muted)}
+.bloc.retire mark{background:none!important;color:inherit!important;text-decoration:none!important;
+  font-weight:400!important;cursor:default;animation:none;box-shadow:none}
+.bloc.retire mark .g,.bloc.retire mark .rev{display:none}
+.bloc.retire .detail{display:none!important}
+.retrait{display:flex;align-items:center;gap:.5rem;margin:.55rem 0 0;padding:.45rem .7rem;
+  background:var(--sunken);border-left:3px solid var(--faint);border-radius:0 .3rem .3rem 0;
+  font-size:.74rem;color:var(--muted)}
+.retrait button{margin-left:auto;font:inherit;font-size:.7rem;background:none;border:0;
+  color:var(--accent);cursor:pointer;text-decoration:underline}
+.detail{margin:.6rem 0 .2rem;padding:.85rem 1rem;background:var(--sunken);
+  border-left:3px solid var(--accent);border-radius:0 .4rem .4rem 0;font-size:.82rem;
+  line-height:1.6;max-width:62ch}
+.detail .dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem .9rem;margin:0}
+.detail dt{font-size:.64rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);padding-top:.15rem}
+.detail dd{margin:0}
+.cmp{font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-variant-numeric:tabular-nums}
+.cmp .ec{color:var(--approx-fg);font-weight:500}
+.tag{display:inline-block;font-size:.68rem;padding:.1rem .45rem;margin:0 .2rem .2rem 0;
+  border:1px solid var(--rule);border-radius:1rem;color:var(--muted)}
+.src{font-size:.76rem;margin-top:.15rem}
+.src a{color:var(--accent);text-underline-offset:.15em}
+.rang{font-family:"IBM Plex Mono",monospace;font-size:.66rem;padding:.05rem .3rem;border-radius:.2rem;
+  background:var(--exact-bg);color:var(--exact-fg);margin-right:.3rem}
+.cit{color:var(--muted);font-style:italic}
+.ok{color:var(--exact-fg);font-size:.7rem}
+.conf{font-family:"IBM Plex Mono",monospace;font-size:.74rem}
+.hist{font-size:.72rem;color:var(--accent);margin-top:.2rem}
+.vide{color:var(--muted);font-size:.85rem;text-align:center;padding:2.5rem 0}
+footer{max-width:80rem;margin:0 auto;padding:.5rem 1.25rem 3rem}
+.legende{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;padding-top:1rem;border-top:1px solid var(--rule);
+  font-size:.74rem;color:var(--muted)}
+.legende b{font-weight:500;color:var(--ink)}
+.metho{font-size:.76rem;line-height:1.65;color:var(--muted);margin:1rem 0 0;max-width:62ch}
+.metho strong{color:var(--ink);font-weight:600}
+</style>
+
+<div class="avis">Maquette — transcription et verdicts fabriqués. Les intervenants de démonstration sont fictifs ; le sélecteur de plateau liste les candidats réellement déclarés.</div>
+
+<header><div class="hwrap">
+  <h1>FacTool</h1>
+  <p class="ctx" id="ctx">Débat — plateau économique · 31 août 2026</p>
+  <div class="live"><span class="dot"></span><span id="etat">en direct</span></div>
+</div></header>
+
+<div class="shell">
+  <aside class="rail">
+    <div>
+      <p class="lab">Format</p>
+      <div class="seg" id="format">
+        <button data-fmt="debat" aria-pressed="true">Débat</button>
+        <button data-fmt="discours" aria-pressed="false">Discours</button>
+      </div>
+      <p class="note-s" id="fmt-info">Deux intervenants ou plus. Chacun est analysé et compté séparément.</p>
+    </div>
+
+    <div>
+      <p class="lab">Vérifications <span id="portee" style="text-transform:none;letter-spacing:0">tout le plateau</span></p>
+      <div class="compteurs">
+        <div class="kpi e"><b id="k-e">0</b><span>exact</span></div>
+        <div class="kpi a"><b id="k-a">0</b><span>approx.</span></div>
+        <div class="kpi f"><b id="k-f">0</b><span>faux</span></div>
+      </div>
+      <p class="reste" id="reste">—</p>
+    </div>
+
+    <div>
+      <p class="lab">Intervenants</p>
+      <div class="gens" id="gens"></div>
+      <p class="note-s">Le médiateur n'est pas analysé : ses questions ne sont pas des affirmations du plateau.</p>
+    </div>
+
+    <div>
+      <p class="lab">Filtres</p>
+      <div class="chips" id="filtres">
+        <button class="chip" aria-pressed="false" data-f="exact">Exact <span class="n" id="n-exact">0</span></button>
+        <button class="chip" aria-pressed="false" data-f="approx">Approx. <span class="n" id="n-approx">0</span></button>
+        <button class="chip" aria-pressed="false" data-f="faux">Faux <span class="n" id="n-faux">0</span></button>
+        <button class="chip" aria-pressed="false" data-f="nonverif">Non vérifié <span class="n" id="n-nonverif">0</span></button>
+      </div>
+    </div>
+
+    <div>
+      <p class="lab">Recherche</p>
+      <label class="rech">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" type="search" placeholder="chômage, dette, 2,3 %…" aria-label="Rechercher dans la transcription">
+      </label>
+    </div>
+
+    <div>
+      <p class="lab">Degré de restitution</p>
+      <div class="seg">
+        <button id="d1" aria-pressed="true">1 — pendant</button>
+        <button id="d2" aria-pressed="false">2 — après</button>
+      </div>
+      <p class="note-s" id="deg-info">Couleur, étiquette et minutage.</p>
+    </div>
+
+    <div>
+      <p class="lab">Plateau (candidats déclarés)</p>
+      <div class="chips" id="roster"></div>
+      <p class="note-s">Scrutin des 18 avril et 2 mai 2027.</p>
+    </div>
+
+    <button class="outil" id="gris" aria-pressed="false">Test niveaux de gris</button>
+  </aside>
+
+  <main class="flux" id="flux"></main>
+</div>
+
+<footer>
+  <div class="legende">
+    <span><b style="color:var(--exact-fg)">✓ exact</b> — confirmé par une source primaire</span>
+    <span><b style="color:var(--approx-fg)">≈ approximatif</b> — écart de 5 à 25 %</span>
+    <span><b style="color:var(--faux-fg)">✗ faux</b> — contredit, source de rang 1 exigée</span>
+    <span><b>○ non vérifié</b> — défaut du système, pas du locuteur</span>
+    <span><b>⋯ en attente</b></span>
+    <span><b style="color:var(--accent)">↻ corrigé</b> — verdict révisé après nouvelle source</span>
+  </div>
+  <p class="metho"><strong>Ce que fait l'outil :</strong> il compare une valeur énoncée à celle publiée par
+  une source primaire. <strong>Ce qu'il ne fait pas :</strong> analyser la rhétorique, qualifier un procédé,
+  mesurer une intention. Un énoncé rigoureusement vrai est vert, qu'il soit ou non incomplet.
+  Seuils publiés : écart ≤ 5 % exact · 5–25 % approximatif · > 25 % faux.
+  <strong>Tout bloc peut être retiré par un relecteur humain</strong> : le texte reste affiché, l'analyse est
+  débranchée jusqu'à révision.</p>
+</footer>
+
+<script>
+const ROSTER=[["Gabriel Attal","Renaissance"],["Jean-Luc Mélenchon","LFI"],
+ ["Marine Le Pen","RN"],["Xavier Bertrand","div. droite"],["Édouard Philippe","Horizons"],
+ ["Bruno Retailleau","LR"],["David Lisnard","div. droite"],["Raphaël Glucksmann","Place publique"],
+ ["Olivier Faure","PS"],["Fabien Roussel","PCF"]];
+
+const GENS=[{n:"Intervenant A",r:"candidat"},{n:"Intervenante B",r:"candidate"},
+ {n:"Médiateur",r:"médiateur"}];
+
+const D=[
+ {qui:"Médiateur",tc:"11:52",parts:[{t:"Sur l'emploi, quel est votre bilan chiffré ?"}]},
+ {qui:"Intervenant A",tc:"12:04",parts:[
+  {t:"Le chômage est au plus bas depuis quinze ans"},{t:", et il y a aujourd'hui "},
+  {t:"3 millions de demandeurs d'emploi en catégorie A",v:"approx",delai:4600,conf:.88,
+   dit:"3 000 000",src:"2 710 000",ec:"+10,7 %",tags:["ordre de grandeur approximatif"],
+   note:"France Travail recense 2,71 millions d'inscrits en catégorie A en juin 2026.",
+   s:{r:1,d:"francetravail.org",u:"https://www.francetravail.org/statistiques-analyses/",
+      c:"2 710 000 demandeurs d'emploi en catégorie A",dt:"juin 2026"}},
+  {t:". Vous êtes le champion de l'immobilisme !"}]},
+ {qui:"Intervenante B",tc:"12:47",parts:[
+  {t:"Le pouvoir d'achat a augmenté de "},
+  {t:"2,3 % en 2025",v:"exact",delai:3800,conf:.94,
+   dit:"+2,3 % (2025)",src:"+2,3 % (2025)",ec:"0 %",tags:[],
+   note:"L'INSEE mesure +2,3 % pour le revenu disponible brut par unité de consommation en 2025.",
+   s:{r:1,d:"insee.fr",u:"https://www.insee.fr/fr/statistiques",
+      c:"+2,3 % en 2025 (RDB par unité de consommation)",dt:"2025"}},
+  {t:", et la dette atteint "},
+  {t:"3 300 milliards d'euros",v:"exact",delai:6800,conf:.96,
+   dit:"3 300 Md€",src:"3 305,2 Md€",ec:"0,2 %",tags:["ordre de grandeur approximatif"],
+   note:"Dette au sens de Maastricht : 3 305,2 Md€ au T1 2026.",
+   s:{r:1,d:"insee.fr",u:"https://www.insee.fr/fr/statistiques",
+      c:"3 305,2 milliards d'euros au premier trimestre 2026",dt:"T1 2026"}},{t:"."}]},
+ {qui:"Intervenant A",tc:"13:31",parts:[
+  {t:"En 2000, la France était "},
+  {t:"le premier pays d'Europe pour l'industrie",v:"faux",delai:5400,conf:.91,
+   dit:"1er rang (2000)",src:"4e rang (2000) · 6e (2025)",ec:"rang erroné",
+   tags:["donnée d'une autre date"],
+   note:"Eurostat classe la France au 4ᵉ rang européen pour la valeur ajoutée industrielle en 2000, et au 6ᵉ en 2025.",
+   s:{r:1,d:"ec.europa.eu",u:"https://ec.europa.eu/eurostat",
+      c:"France : 4e rang UE, valeur ajoutée industrielle, 2000",dt:"éd. 2026"}},
+  {t:". Les impôts ont explosé sous votre mandat."}]},
+ {qui:"Intervenante B",tc:"14:18",parts:[
+  {t:"Nous avons créé "},
+  {t:"400 000 emplois industriels",v:"nonverif",delai:8000,conf:.31,
+   dit:"400 000",src:"—",ec:"—",tags:[],
+   note:"Aucune série correspondant à ce périmètre n'a été récupérée dans le corpus autorisé. Le verdict est retiré : défaut de notre système, pas une réfutation.",
+   s:null,
+   // correction différée : une source de rang 1 arrive après coup
+   corr:{apres:6500,v:"exact",conf:.9,dit:"400 000",src:"398 400",ec:"0,4 %",
+     tags:["ordre de grandeur approximatif"],
+     note:"La série DARES de l'emploi industriel, indexée après coup, donne +398 400 postes sur la période.",
+     hist:"Verdict initial « non vérifié » révisé après récupération de la série DARES.",
+     s:{r:1,d:"dares.travail-emploi.gouv.fr",u:"https://dares.travail-emploi.gouv.fr/donnees",
+        c:"+398 400 emplois dans l'industrie manufacturière",dt:"2026-T2"}}},
+  {t:". Et le taux de pauvreté a reculé de "},
+  {t:"deux points depuis 2022",v:"faux",delai:4400,conf:.93,
+   dit:"−2,0 points",src:"+0,4 point",ec:"sens inversé",tags:[],
+   note:"L'INSEE mesure 14,4 % en 2022 et 14,8 % en 2025 : le taux progresse.",
+   s:{r:1,d:"insee.fr",u:"https://www.insee.fr/fr/statistiques",
+      c:"taux de pauvreté monétaire : 14,4 % (2022), 14,8 % (2025)",dt:"2025"}},{t:"."}]}
+];
+
+const NOM={exact:["✓","exact"],approx:["≈","approximatif"],faux:["✗","faux"],
+ nonverif:["○","non vérifié"],attente:["⋯","vérification en cours"]};
+let fA=new Set(),qA=new Set(),recherche="",degre=1;
+const flux=document.getElementById("flux");
+
+function corpsDetail(d,p,hist){
+  const src=p.s?`<span class="rang">rang ${p.s.r}</span><a href="${p.s.u}" target="_blank" rel="noopener">${p.s.d}</a> · ${p.s.dt}<br><span class="cit">« ${p.s.c} »</span> <span class="ok">✓ citation retrouvée</span>`
+   :`<span style="color:var(--faux-fg)">Aucune source récupérée dans le corpus autorisé.</span>`;
+  d.innerHTML=`<dl class="dl">
+    <dt>Valeurs</dt><dd class="cmp">énoncé <b>${p.dit}</b> · source <b>${p.src}</b> · écart <span class="ec">${p.ec}</span></dd>
+    <dt>Source</dt><dd class="src">${src}</dd>
+    <dt>Ce qu'elle dit</dt><dd>${p.note}</dd>
+    ${p.tags&&p.tags.length?`<dt>Comparaison</dt><dd>${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</dd>`:""}
+    <dt>Confiance</dt><dd class="conf">${Math.round(p.conf*100)} %</dd>
+    ${hist?`<dt>Révision</dt><dd class="hist">↻ ${hist}</dd>`:""}</dl>`;
+}
+function poser(m,p,v,corrige){
+  m.className="m-"+v+(corrige?" corrige":"");m.dataset.v=v;
+  const[g,lib]=NOM[v];
+  m.innerHTML=p._t+` <span class="g" aria-hidden="true">${g}</span>`+(corrige?'<span class="rev">↻</span>':"");
+  m.setAttribute("aria-label",`${p._t} — ${lib}${corrige?", verdict révisé":""}, confiance ${Math.round(p.conf*100)} %`);
+  m.title=`${lib} · confiance ${Math.round(p.conf*100)} %`+(corrige?" · révisé":"");
+}
+
+function build(){
+  flux.innerHTML="";
+  D.forEach((b,bi)=>{
+    const el=document.createElement("div");el.className="bloc";
+    el.dataset.qui=b.qui;el.style.animationDelay=(bi*.1)+"s";
+    const role=(GENS.find(g=>g.n===b.qui)||{}).r||"";
+    el.innerHTML=`<div class="tete"><p class="qui">${b.qui}</p>
+      <span class="badge">${role}</span>
+      <button class="retirer" title="Retirer l'analyse de ce bloc en attendant relecture">retirer</button></div>`;
+    const p=document.createElement("p");
+    b.parts.forEach((part,pi)=>{
+      if(!part.v){p.append(part.t);return;}
+      part._t=part.t;
+      const m=document.createElement("mark");
+      m.className="m-attente";m.dataset.v="attente";m.tabIndex=0;m.setAttribute("role","button");
+      m.innerHTML=part.t+' <span class="g" aria-hidden="true">⋯</span>';
+      p.append(m);
+      const d=document.createElement("div");d.className="detail";d.hidden=true;p.after(d);
+      m.onclick=()=>{if(m.dataset.v!=="attente"&&!el.classList.contains("retire"))d.hidden=!d.hidden;};
+      m.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();m.onclick();}};
+      m._d=d;
+      setTimeout(()=>{poser(m,part,part.v,false);corpsDetail(d,part,null);maj();
+        if(part.corr)setTimeout(()=>{
+          const c=part.corr;c._t=part._t;
+          poser(m,c,c.v,true);corpsDetail(d,c,c.hist);
+          if(degre===2)d.hidden=false;
+          maj();
+        },part.corr.apres);
+      },1200+bi*800+part.delai);
+    });
+    el.append(p);
+    [...p.querySelectorAll(".detail")].forEach(x=>el.append(x));
+    const tc=document.createElement("span");tc.className="tc";tc.textContent=b.tc;el.append(tc);
+    el.querySelector(".retirer").onclick=()=>retirer(el);
+    flux.append(el);
+  });
+}
+
+function retirer(el){
+  el.classList.add("retire");
+  el.querySelector(".retirer").style.display="none";
+  const n=document.createElement("div");n.className="retrait";
+  n.innerHTML=`<span>Analyse retirée — en attente de relecture. Le texte reste affiché.</span>
+    <button>rétablir</button>`;
+  n.querySelector("button").onclick=()=>{
+    el.classList.remove("retire");n.remove();
+    el.querySelector(".retirer").style.display="";maj();};
+  el.querySelector(".tc").before(n);
+  maj();
+}
+
+function marksActives(){
+  return [...document.querySelectorAll(".bloc:not(.retire) mark")];
+}
+function maj(){
+  const cible=qA.size?[...qA]:null;
+  const compte=m=>{const b=m.closest(".bloc");return !cible||cible.includes(b.dataset.qui);};
+  const c={exact:0,approx:0,faux:0,nonverif:0,attente:0};
+  marksActives().forEach(m=>{if(compte(m))c[m.dataset.v]++;});
+  k("k-e",c.exact);k("k-a",c.approx);k("k-f",c.faux);
+  ["exact","approx","faux","nonverif"].forEach(f=>k("n-"+f,c[f]));
+  document.getElementById("portee").textContent=cible?cible.join(", "):"tout le plateau";
+  document.getElementById("reste").textContent=
+    c.attente?`${c.attente} vérification${c.attente>1?"s":""} en cours`:"toutes les vérifications sont rendues";
+  document.getElementById("etat").textContent=c.attente?"en direct":"flux terminé";
+  majGens();filtrer();
+}
+const k=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+
+function majGens(){
+  GENS.forEach(g=>{
+    const b=document.querySelector(`[data-gen="${g.n}"] .mini`);if(!b)return;
+    if(g.r==="médiateur"){b.innerHTML='<i style="opacity:.5">non analysé</i>';return;}
+    const c={exact:0,approx:0,faux:0};
+    marksActives().forEach(m=>{if(m.closest(".bloc").dataset.qui===g.n&&c[m.dataset.v]!==undefined)c[m.dataset.v]++;});
+    b.innerHTML=`<i class="e">${c.exact}</i><i class="a">${c.approx}</i><i class="f">${c.faux}</i>`;
+  });
+}
+
+function filtrer(){
+  const q=recherche.trim().toLowerCase();let vis=0;
+  document.querySelectorAll(".bloc").forEach(b=>{
+    const okQ=!qA.size||qA.has(b.dataset.qui);
+    const okR=!q||b.textContent.toLowerCase().includes(q);
+    let okF=!fA.size;
+    if(b.classList.contains("retire")){okF=!fA.size;}
+    else b.querySelectorAll("mark").forEach(m=>{
+      const hit=fA.has(m.dataset.v);if(hit)okF=true;
+      m.classList.toggle("eteint",fA.size>0&&!hit);});
+    const v=okQ&&okR&&okF;b.hidden=!v;if(v)vis++;
+  });
+  let e=document.getElementById("vide");
+  if(!vis){if(!e){e=document.createElement("p");e.id="vide";e.className="vide";
+    e.textContent="Aucun passage ne correspond à ces critères.";flux.append(e);}}
+  else if(e)e.remove();
+}
+
+// rail
+const gens=document.getElementById("gens");
+GENS.forEach(g=>{
+  const b=document.createElement("button");
+  b.className="qui-l";b.dataset.gen=g.n;b.setAttribute("aria-pressed","false");
+  b.innerHTML=`<span class="nom">${g.n}<br><span class="role">${g.r}</span></span><span class="mini"></span>`;
+  b.onclick=()=>{const on=b.getAttribute("aria-pressed")==="true";
+    b.setAttribute("aria-pressed",!on);on?qA.delete(g.n):qA.add(g.n);maj();};
+  gens.append(b);
+});
+const roster=document.getElementById("roster");
+ROSTER.forEach(([n,p])=>{
+  const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed","false");
+  b.innerHTML=`${n} <span class="n">${p}</span>`;
+  b.onclick=()=>b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true");
+  roster.append(b);
+});
+document.querySelectorAll("#filtres .chip").forEach(c=>c.onclick=()=>{
+  const f=c.dataset.f,on=c.getAttribute("aria-pressed")==="true";
+  c.setAttribute("aria-pressed",!on);on?fA.delete(f):fA.add(f);filtrer();});
+document.getElementById("q").oninput=e=>{recherche=e.target.value;filtrer();};
+document.getElementById("gris").onclick=e=>{
+  const on=e.currentTarget.getAttribute("aria-pressed")==="true";
+  e.currentTarget.setAttribute("aria-pressed",!on);document.body.classList.toggle("gris",!on);};
+document.querySelectorAll("#format button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#format button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  const d=b.dataset.fmt==="debat";
+  document.getElementById("fmt-info").textContent=d
+    ?"Deux intervenants ou plus. Chacun est analysé et compté séparément."
+    :"Un locuteur analysé, plus un médiateur ou intervieweur qui ne l'est pas.";
+  document.getElementById("ctx").textContent=d
+    ?"Débat — plateau économique · 31 août 2026":"Discours — intervention et questions · 31 août 2026";});
+function setDegre(n){degre=n;
+  document.getElementById("d1").setAttribute("aria-pressed",n===1);
+  document.getElementById("d2").setAttribute("aria-pressed",n===2);
+  document.getElementById("deg-info").textContent=n===1
+    ?"Couleur, étiquette et minutage."
+    :"Valeurs comparées, écart, millésime, source et révisions.";
+  document.querySelectorAll(".bloc:not(.retire)").forEach(b=>
+    b.querySelectorAll("mark").forEach(m=>{
+      if(m._d)m._d.hidden=(n===1)||m.dataset.v==="attente";}));}
+document.getElementById("d1").onclick=()=>setDegre(1);
+document.getElementById("d2").onclick=()=>setDegre(2);
+build();maj();
+</script>
