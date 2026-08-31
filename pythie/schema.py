@@ -48,9 +48,28 @@ class Verdict(str, Enum):
 # Orange is reserved for a MEASURABLE NUMERIC gap. It never means "a liberty was
 # taken" -- that framing judgement requires time and inference we refuse to make.
 # A gap, by contrast, is computed and defended with a number.
+#
+# NOT YET CALIBRATED. These values are estimates, not measurements -- see
+# METHODE.md §2. They must be swept against the gold set, not defended.
 EXACT_THRESHOLD = 0.05        # relative gap <= 5%  -> exact, tagged approximate
 APPROXIMATE_THRESHOLD = 0.25  # 5% < gap <= 25%     -> approximate (orange)
 # beyond 25%, or wrong direction, or wrong order of magnitude -> false (red)
+
+# A RELATIVE gap is the wrong instrument when the value is itself a percentage.
+#
+# Found empirically: "45,3 % de prélèvements" against an INSEE 43,8 % is a
+# relative gap of 3.4%, which clears the 5% bar and returns `exact`. But it is
+# 1.5 points of GDP -- roughly 45 billion euros, and a substantial error in a
+# debate about taxation. The relative framing flattens it.
+#
+# So for a quantity expressed in points (tax-to-GDP ratio, unemployment rate,
+# public spending, debt ratio, inflation), the gap is measured IN POINTS.
+EXACT_POINTS = 0.3            # <= 0.3 point -> exact
+APPROXIMATE_POINTS = 1.0      # 0.3 to 1.0 point -> approximate
+# beyond 1 point, or wrong direction -> false
+
+# Units whose values are compared in points rather than relatively.
+POINT_UNITS = {"%", "point", "points", "pp", "% du PIB", "point de PIB"}
 
 
 class Coherence(str, Enum):

@@ -150,3 +150,64 @@ exactement ce qui détermine la justesse du verdict.
 - [ASR Leaderboard — arXiv 2510.06961](https://arxiv.org/html/2510.06961v4)
 - [WhisperX](https://github.com/m-bain/whisperx) · [Choosing between Whisper variants — Modal](https://modal.com/blog/choosing-whisper-variants)
 - [whisper-large-v3-french](https://huggingface.co/bofenghuang/whisper-large-v3-french) · [distil-dec16](https://huggingface.co/bofenghuang/whisper-large-v3-french-distil-dec16)
+
+---
+
+# Banc noms propres — résultat mesuré (31 août 2026)
+
+Protocole et limites : `ETUDES/banc_noms.py`. Fenêtres de 8 s sur l'audio réel
+de LaREF 2026, trois sources comparées sur **la même matière**.
+
+## Le résultat qui tranche
+
+À **58:45**, sur exactement les mêmes 8 secondes :
+
+| Source | Transcription |
+|---|---|
+| Sous-titres YouTube | « Bruno **Rota** » |
+| faster-whisper-large-v3 | « **Bruno Retailleau**, je peux vous dire que les compteurs… » |
+
+Nom complet et correct contre nom détruit. C'est la justification empirique de
+ne pas dépendre des sous-titres pour l'identification des locuteurs.
+
+## Le cas « Talenaissance » — la nature de l'erreur compte
+
+Phrase réelle : « en présence de monsieur Attal, la renaissance de la France »
+(jeu de mots sur le parti).
+
+| Source | Transcription | Récupérable ? |
+|---|---|---|
+| YouTube | `Talenaissance` | **non** — frontière détruite |
+| faster-whisper | « monsieur **Aptal**, la renaissance » | oui, appariement flou |
+| CrisperWhisper | « Monsieur **Abtal**, la renaissance » | oui |
+
+Les trois échouent sur le patronyme. Mais les deux Whisper **préservent la
+frontière** entre le nom et le mot suivant ; YouTube la fusionne en un mot
+inexistant, et plus aucun appariement ne peut rattraper cela.
+
+**Conséquence de conception** : ce n'est pas le taux d'erreur sur les noms qui
+compte, c'est le *type* d'erreur. Une déformation reste exploitable, une fusion
+est définitive.
+
+## Écart hors noms propres
+
+À 150:18, même phrase : CrisperWhisper écrit « dès le début du **quinquennat** »,
+faster-whisper « dès le début du **café** ». Le premier a raison.
+
+## Ce que ce banc ne vaut pas
+
+- **Deux fenêtres sur huit** (18:13, 19:24) reposaient sur des horodatages mal
+  extraits et ne contiennent pas le nom attendu. Les totaux agrégés
+  (70 % / 60 % / 40 %) portent donc sur un échantillon partiellement invalide et
+  **ne sont pas retenus comme mesure**. Seules valent les comparaisons
+  fenêtre par fenêtre sur audio identique.
+- Le biais joue **contre** les Whisper : la colonne YouTube est notée sur un
+  texte qui contient le nom par construction, puisqu'il a servi à choisir la
+  fenêtre.
+- Huit fenêtres, dix patronymes : trop peu pour conclure au-delà des cas cités.
+
+## Décision
+
+Les sous-titres YouTube restent une **troisième source de contrôle**, jamais la
+source d'identification. Les introductions qu'ils contiennent orientent
+l'étiquetage des grappes de diarisation ; elles ne le fondent pas.

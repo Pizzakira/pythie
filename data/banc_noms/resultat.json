@@ -1,0 +1,113 @@
+{
+  "window_s": 8.0,
+  "fuzzy": 0.72,
+  "cases": [
+    {
+      "t": 4,
+      "surnames": [
+        "Retailleau",
+        "Glucksmann"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Bruno Rota Raphaël Guxman",
+        "faster-whisper-large-v3": "Amélie Carwer, vous voyez, qui entre dans l'arène, la première, parce que c'est elle qui anime le débat.  Bruno Retailleau, Raphaël Glucksmann.",
+        "crisperwhisper": "Amélie Carwer, voyez, qui entre dans l'arène la première parce que c'est elle qui anime le débat. Bruno Retailleau, Raphaël Glucksmann."
+      }
+    },
+    {
+      "t": 16,
+      "surnames": [
+        "Tondelier",
+        "Attal"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Marine Tondelier et Gabriel Atal",
+        "faster-whisper-large-v3": "Edouard Philippe, Jean-Luc Mélenchon,  Marine Tondelier et Gabriel Attal.",
+        "crisperwhisper": "Édouard Philippe, Jean-Luc Mélenchon, Marine Tondelier et Gabriel Attal."
+      }
+    },
+    {
+      "t": 376,
+      "surnames": [
+        "Retailleau"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Alors voilà Bronillot, vous avez la parole",
+        "faster-whisper-large-v3": "Et là encore, je précise en toute transparence que l'ordre de prise de parole a été déterminé par un tirage au sort.  Alors voilà, Bruno Rotailleau, vous avez la parole.",
+        "crisperwhisper": "Et là encore, je précise en toute transparence que l'ordre de prise de parole a été déterminé par un tirage au sort. Alors voilà, Bruno Rotailleau, vous avez la parole."
+      }
+    },
+    {
+      "t": 857,
+      "surnames": [
+        "Attal"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Talenaissance",
+        "faster-whisper-large-v3": "redressement, j'oserais même, même en présence de monsieur Aptal, la renaissance de la France.",
+        "crisperwhisper": "redressement, j'oserais même, même en présence de Monsieur Abtal, la renaissance de la France."
+      }
+    },
+    {
+      "t": 1093,
+      "surnames": [
+        "Attal"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Gabriel Atal",
+        "faster-whisper-large-v3": "Si vous n'augmentez pas les salaires, la France va tomber en récession.  Ça, c'est votre responsabilité.",
+        "crisperwhisper": "Si vous n'augmentez pas les salaires, la France va tomber en récession. Ça c'est votre responsabilité."
+      }
+    },
+    {
+      "t": 3525,
+      "surnames": [
+        "Retailleau"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Bruno Rota",
+        "faster-whisper-large-v3": "sur l'écologie, c'est une mauvaise décision  environnementale, mais c'est une mauvaise décision économique.  Bruno Retailleau, je peux vous dire que les compteurs  ils avancent très vite là, sous mes yeux.",
+        "crisperwhisper": "sur l'écologie, c'est une mauvaise décision environnementale, mais c'est une mauvaise décision économique."
+      }
+    },
+    {
+      "t": 9018,
+      "surnames": [
+        "Glucksmann"
+      ],
+      "sources": {
+        "sous-titres YouTube": "Raphael Guxman",
+        "faster-whisper-large-v3": "pour déterminer les textes sur lesquels nous interviendrons dès le début du café.",
+        "crisperwhisper": "pour déterminer les textes sur lesquels nous interviendrons dès le début du quinquennat."
+      }
+    },
+    {
+      "t": 1164,
+      "surnames": [
+        "Mélenchon"
+      ],
+      "sources": {
+        "sous-titres YouTube": "monsieur Mélenchon",
+        "faster-whisper-large-v3": "dans les roues de ceux qui passent leur temps  à empêcher de faire. Et malgré tout ça,  je le dis, moi j'ai confiance pour l'avenir. On est là pour  parler d'avenir. J'ai confiance parce que je crois  que c'est...",
+        "crisperwhisper": "dans les roues de ceux qui passent leur temps à empêcher de faire. Et malgré tout ça, je le dis, moi j'ai confiance pour l'avenir. On est là pour parler d'avenir. J'ai confiance parce que je crois que c'est"
+      }
+    }
+  ],
+  "tally": {
+    "sous-titres YouTube": {
+      "EXACT": 2,
+      "RECOVERABLE": 2,
+      "LOST": 6
+    },
+    "faster-whisper-large-v3": {
+      "EXACT": 5,
+      "RECOVERABLE": 2,
+      "LOST": 3
+    },
+    "crisperwhisper": {
+      "EXACT": 4,
+      "RECOVERABLE": 2,
+      "LOST": 4
+    }
+  }
+}

@@ -5,3 +5,6 @@ data/*.json
 data/*.html
 !data/.gitkeep
 .env
+data/audio/
+data/banc_noms/*.wav
+data/banc_noms/_runner.py
