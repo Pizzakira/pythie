@@ -185,7 +185,7 @@ source → citation n'est pas encore assemblé en un seul enregistrement.
 |---|---|---|
 | 1 | Pré-inscription | **non tenu** |
 | 2 | Degrés de liberté balayés | **non tenu — point le plus faible** |
-| 3 | Reproductibilité | tenu |
+| 3 | Reproductibilité | **protocole oui, verdict non** |
 | 4 | Falsifiabilité | instruments prêts, jamais mesurés |
 | 5 | Couverture avant exactitude | tenu dans le code, non éprouvé |
 | 6 | Comparaison par paires | tenu |
