@@ -251,3 +251,55 @@ ne pèse rien. Réécrire le texte, en revanche, exige une fiabilité qu'aucune 
 deux méthodes n'atteint — et une correction erronée fabrique une citation.
 
 Le signal des noms alimente l'étiquetage des locuteurs. Jamais le texte.
+
+---
+
+# Banc noms propres — version corrigée, quatre sources (1er septembre 2026)
+
+Fenêtres reprises des horodatages ligne à ligne : les trois valeurs
+approximatives de la première version invalidaient un quart de l'échantillon.
+9 fenêtres, 11 patronymes, même audio pour toutes les sources.
+
+| Source | EXACT | RÉCUP | PERDU | Utilisable |
+|---|---|---|---|---|
+| faster-whisper-large-v3 | 8 | 2 | 1 | **91 %** * |
+| whisper-large-v3-french | 8 | 2 | 1 | **91 %** * |
+| CrisperWhisper 2.0 | 5 | 2 | 4 | 64 % |
+| Sous-titres YouTube | 3 | 1 | 7 | **36 %** |
+
+\* même famille Whisper.
+
+## Trois enseignements
+
+**1. Les sous-titres ne suffisent pas.** 36 % contre 91 %. La décision de ne
+jamais fonder l'identification des locuteurs sur eux est confirmée par la
+mesure et non plus par un exemple.
+
+**2. Le fine-tune français n'apporte rien sur les noms propres.** Score
+identique au large-v3 de base. Il conserve son intérêt documenté sur
+l'hallucination en forme longue — qui n'est pas ce que ce banc mesure.
+
+**3. La correspondance des familles est démontrée, pas seulement postulée.**
+À 150:18, sur la même phrase :
+
+| Modèle | Transcription |
+|---|---|
+| faster-whisper-large-v3 | « dès le début du **café** » |
+| whisper-large-v3-french | « dès le début du **café** » |
+| CrisperWhisper | « dès le début du **quinquennat** » ✓ |
+
+Les deux modèles Whisper commettent **la même erreur**, là où une architecture
+différente réussit. C'est exactement pourquoi leur accord ne peut pas servir de
+preuve : ils partagent leurs modes de défaillance.
+
+Corollaire pour l'accord à trois sources : il faut **une source par famille**.
+Whisper (l'une des deux, indifféremment), CrisperWhisper, et les sous-titres —
+ou Kyutai à la place de ces derniers en direct.
+
+## Détail d'exécution
+
+`whisper-large-v3-french` tourne dans l'environnement `karak_crisper` et non
+`karak` : les DLL `torchcodec` de ce dernier échouent au chargement, et
+`transformers` passe par torchcodec dès l'import. Une première exécution a
+rendu 0 % — c'était une panne, pas une mesure, et elle est consignée comme
+telle.

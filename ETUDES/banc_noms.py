@@ -56,23 +56,39 @@ OUT = ROOT / "data" / "banc_noms"
 CONDA = Path.home() / ".conda" / "envs"
 ENVS = {
     "faster-whisper-large-v3": CONDA / "karak" / "python.exe",
+    # Runs in karak_crisper, not karak: the latter's torchcodec DLLs fail to
+    # load, and transformers routes audio through torchcodec at import time.
+    # karak_crisper carries a working transformers stack, which is why
+    # CrisperWhisper runs there too.
+    "whisper-large-v3-french": CONDA / "karak_crisper" / "python.exe",
     "crisperwhisper": CONDA / "karak_crisper" / "python.exe",
 }
+
+# Reminder for reading the table: whisper-large-v3-french is a FINE-TUNE of
+# large-v3. Agreement between those two proves nothing -- they share an
+# architecture and therefore their failure modes. Only their disagreement with
+# CrisperWhisper or with the YouTube captions carries evidential weight.
+SAME_FAMILY = {"faster-whisper-large-v3", "whisper-large-v3-french"}
 
 WINDOW = 8.0
 FUZZY = 0.72
 
 # Reference windows: timestamp, who is actually named, and what the YouTube
 # captions wrote there. Established by reading the caption file.
+# Timestamps taken from the per-line caption file, not from merged blocks.
+# The first run used three approximate values (1093, 3525, 1164) whose windows
+# did not contain the name at all, which silently invalidated a quarter of the
+# sample. Recorded in ETUDES/transcription.md; corrected here.
 CASES = [
     (4,      ["Retailleau", "Glucksmann"], "Bruno Rota Raphaël Guxman"),
+    (7,      ["Glucksmann"],               "Guxman"),
     (16,     ["Tondelier", "Attal"],       "Marine Tondelier et Gabriel Atal"),
     (376,    ["Retailleau"],               "Alors voilà Bronillot, vous avez la parole"),
     (857,    ["Attal"],                    "Talenaissance"),
-    (1093,   ["Attal"],                    "Gabriel Atal"),
+    (958,    ["Mélenchon"],                "Jean-Luc Mélenchon qui a 2 minutes pour"),
+    (1233,   ["Tondelier"],                "C'est à Marine Tondelier,"),
     (3525,   ["Retailleau"],               "Bruno Rota"),
     (9018,   ["Glucksmann"],               "Raphael Guxman"),
-    (1164,   ["Mélenchon"],                "monsieur Mélenchon"),
 ]
 
 
@@ -116,6 +132,23 @@ if kind == "faster-whisper-large-v3":
     segs, _ = m.transcribe(wav, language="fr", beam_size=5,
                            vad_filter=True, condition_on_previous_text=False)
     print(json.dumps({"text": " ".join(s.text for s in segs).strip()}))
+elif kind == "whisper-large-v3-french":
+    import torch, soundfile as sf
+    from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
+    mid = "bofenghuang/whisper-large-v3-french"
+    model = AutoModelForSpeechSeq2Seq.from_pretrained(
+        mid, torch_dtype=torch.float16, low_cpu_mem_usage=True).to("cuda")
+    proc = AutoProcessor.from_pretrained(mid)
+    pipe = pipeline("automatic-speech-recognition", model=model,
+                    tokenizer=proc.tokenizer, feature_extractor=proc.feature_extractor,
+                    torch_dtype=torch.float16, device="cuda")
+    # Read the audio here rather than handing the pipeline a path: transformers
+    # routes file loading through torchcodec, whose DLLs are broken in this
+    # environment. The samples are already 16 kHz mono PCM.
+    audio, sr = sf.read(wav, dtype="float32")
+    out = pipe({"raw": audio, "sampling_rate": sr},
+               generate_kwargs={"language": "fr", "task": "transcribe"})
+    print(json.dumps({"text": (out.get("text") or "").strip()}))
 else:
     import torch
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
@@ -191,11 +224,15 @@ def main() -> None:
     total = sum(len(e["surnames"]) for e in rows)
     print(f"{total} patronymes sur {len(rows)} fenetres de {WINDOW:.0f}s\n")
     print(f"{'source':28} {'EXACT':>6} {'RECUP':>6} {'PERDU':>6}   utilisable")
-    print("-" * 62)
+    print("-" * 66)
     for name, bucket in sorted(tally.items(), key=lambda kv: -kv[1]["EXACT"]):
         usable = 100 * (bucket["EXACT"] + bucket["RECOVERABLE"]) / total
+        famille = " *" if name in SAME_FAMILY else ""
         print(f"{name:28} {bucket['EXACT']:6} {bucket['RECOVERABLE']:6} "
-              f"{bucket['LOST']:6}   {usable:5.0f}%")
+              f"{bucket['LOST']:6}   {usable:5.0f}%{famille}")
+    if any(n in SAME_FAMILY for n in tally):
+        print()
+        print("  * meme famille Whisper : leur accord ne prouve rien.")
 
     (OUT / "resultat.json").write_text(
         json.dumps({"window_s": WINDOW, "fuzzy": FUZZY, "cases": rows, "tally": tally},
