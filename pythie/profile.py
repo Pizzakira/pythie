@@ -35,7 +35,7 @@ from datetime import date
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from .memory import VerdictCache, normalise_claim
+from .memory import ClaimLedger, normalise_claim
 from .schema import Statement, Verdict
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -95,7 +95,7 @@ class RunMemory:
     model's context."""
 
     debate: str
-    cache: VerdictCache = field(default_factory=VerdictCache)
+    ledger: ClaimLedger = field(default_factory=ClaimLedger)
     findings: Dict[str, Finding] = field(default_factory=dict)
 
     def record(self, statement: Statement) -> Optional[Finding]:
