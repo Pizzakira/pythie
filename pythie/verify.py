@@ -175,6 +175,9 @@ def _abstain(note: str, reasoning: str, confidence: float = 0.0) -> Verification
         confidence=confidence,
         context_note=note,
         reasoning=reasoning,
+        # Explicit: an abstention cites nothing, and now says so rather than
+        # relying on a default that no longer exists.
+        sources=[],
     )
 
 
