@@ -140,3 +140,69 @@ Documenté : `SPECIFICATIONS.md` (cahier, lecture pyramidale à quatre niveaux),
 ### État à la clôture
 
 -->
+
+---
+
+## Session 002 — 31 août 2026 (suite)
+
+**Objet** : itération 1 exécutable, bancs de mesure, corpus finances publiques.
+
+### Décisions
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-039** | **Seuils en points pour les grandeurs en pourcentage** | Découvert en testant Qwen : « 45,3 % » contre 43,6 % INSEE donne un écart relatif de 3,4 %, sous la barre des 5 %, donc « exact » — alors que c'est 1,7 point de PIB, ~50 Md€. Le relatif écrase l'écart. |
+| **D-040** | **Liste blanche : seuls les candidats sont analysés** | Une liste noire laissait passer les rôles ajoutés après coup (hôte, chefs d'entreprise). Tout ce qui n'est pas un candidat identifié est laissé tranquille. |
+| **D-041** | **On ne corrige pas les noms dans la transcription** | Mesuré : l'appariement flou fait 4/11 et transforme « le total des dépenses » en Attal ; Qwen fait 5/11 et refuse presque tout. Le signal des noms sert à étiqueter les grappes de diarisation, jamais à réécrire le texte. |
+| **D-042** | **`sources` obligatoire dans le schéma de verdict** | Avec une valeur par défaut, la grammaire contrainte laissait le modèle l'omettre : il extrayait la bonne valeur, ne citait rien, et le garde-fou abstenait. Une abstention causée par le schéma, pas par les preuves. |
+| **D-043** | **Sources stockées sans points de conduite** | Une mise en page « 2025 ......... 43,6 % » rend la citation littérale impossible. Le contrôle testait la typographie et non la fidélité. |
+| **D-044** | **Aucun rouge publié tant que l'accord entre transcriptions n'existe pas** | Voir le constat ci-dessous. |
+
+### Le constat qui commande D-044
+
+Premier rouge produit par la chaîne :
+
+> `FALSE` (99 %) — « Je vous cite de au feu 600 millions de dettes françaises. »
+> 600 millions contre 3 460 milliards (INSEE, fin 2025).
+
+Le texte est corrompu — « de au feu ». Le locuteur a dit tout autre chose ; les
+« 600 millions » sont une corruption d'ASR. Le système a donc marqué faux, avec
+99 % de confiance et un sourçage impeccable, **une phrase que personne n'a
+prononcée**.
+
+Ce n'est pas un défaut de code : le verdict est juste si l'on accepte le texte.
+C'est que la couche d'accord entre transcriptions n'est pas branchée, et que ce
+passage n'aurait jamais dû atteindre l'étage de vérification.
+
+C'est la citation fabriquée que toute l'architecture existe pour empêcher, et
+elle est arrivée dès la première passe réelle.
+
+### Ce qui a bien fonctionné
+
+> `CONFLICTING_SOURCES` (90 %) — « Le déficit de l'État est de 150 milliards. »
+
+Le modèle a refusé de comparer : le locuteur dit « l'État », la source couvre
+l'ensemble des administrations publiques. Deux périmètres. Le piège signalé par
+la fiche d'orientation a été attrapé plutôt que tranché à tort.
+
+### Mesures obtenues
+
+- **Débat LaREF 2026** : 2 233 énoncés, 309 déclencheurs (1,65/min), 173 à
+  vérifier. L'étage 0 écarte 92 % pour zéro appel modèle.
+- **Qwen** : échoue à diagnostiquer un défaut de données, réussit la
+  comparaison de valeur. Le partage supposé est confirmé par la mesure.
+- **Noms propres** : à 58:45, sur le même audio, faster-whisper écrit « Bruno
+  Retailleau » là où YouTube écrit « Bruno Rota ». Et sur « Talenaissance », ce
+  qui compte n'est pas le taux d'erreur mais son type : une déformation reste
+  récupérable, une fusion est définitive.
+- **Sous-titres** : 537 mots/minute avant correction, 179 après. Le chiffre
+  contenait la preuve du bug.
+
+### Reste ouvert
+
+- Seuils en points définis mais **non branchés** dans `apply_thresholds` ; le
+  modèle ne remplit pas toujours `stated_value` / `source_value`, ce qui les
+  empêche de s'appliquer.
+- Corpus : deux domaines sur huit. 24 affirmations sur 40 sortent hors corpus.
+- Aucune empreinte vocale : l'étage d'attribution reste simulé.
+- **Jeu étalon toujours inexistant.**
