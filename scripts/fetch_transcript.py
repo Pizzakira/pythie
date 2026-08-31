@@ -53,9 +53,33 @@ def _secondes(h: str, m: str, s: str, ms: str) -> float:
     return int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1000
 
 
+def _fusionner_chevauchement(precedent: str, nouveau: str, max_mots: int = 25) -> str:
+    """Renvoie la part de `nouveau` qui n'est pas déjà la fin de `precedent`.
+
+    Les sous-titres automatiques de YouTube défilent en fenêtre glissante :
+    chaque segment reprend la fin du précédent avant d'ajouter quelques mots.
+    Une déduplication par égalité stricte ne voit rien, et le texte se retrouve
+    triplé — la même affirmation serait comptée trois fois, et le registre la
+    prendrait pour une répétition à corroborer.
+
+    On cherche donc le plus long suffixe de `precedent` qui soit un préfixe de
+    `nouveau`, et on ne garde que le reste.
+    """
+    mots_p = precedent.split()
+    mots_n = nouveau.split()
+    if not mots_p or not mots_n:
+        return nouveau
+
+    limite = min(len(mots_p), len(mots_n), max_mots)
+    for taille in range(limite, 0, -1):
+        if [m.lower() for m in mots_p[-taille:]] == [m.lower() for m in mots_n[:taille]]:
+            return " ".join(mots_n[taille:])
+    return nouveau
+
+
 def parser_vtt(vtt: str) -> list[dict]:
-    """Extrait des segments horodatés, en supprimant les doublons de défilement
-    propres aux sous-titres automatiques."""
+    """Extrait des segments horodatés, en supprimant le défilement glissant
+    propre aux sous-titres automatiques."""
     segments: list[dict] = []
     debut = fin = None
     lignes: list[str] = []
@@ -66,8 +90,16 @@ def parser_vtt(vtt: str) -> list[dict]:
         texte = " ".join(lignes).strip()
         texte = BALISE.sub("", texte)
         texte = re.sub(r"\s+", " ", texte)
-        if texte and (not segments or segments[-1]["texte"] != texte):
-            segments.append({"debut": debut, "fin": fin, "texte": texte})
+        if not texte:
+            return
+        if segments:
+            texte = _fusionner_chevauchement(segments[-1]["texte"], texte)
+            if not texte.strip():
+                # Segment entièrement contenu dans le précédent : on étend
+                # seulement sa fin, sans dupliquer le texte.
+                segments[-1]["fin"] = fin
+                return
+        segments.append({"debut": debut, "fin": fin, "texte": texte})
 
     for ligne in vtt.splitlines():
         m = HORODATAGE.search(ligne)
