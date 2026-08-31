@@ -1,0 +1,12 @@
+# Erreurs récurrentes — David Lisnard
+#
+# GARDE-FOU ABSOLU : une correspondance ici n'est JAMAIS un verdict. Elle
+# déclenche la vérification normale contre la source primaire.
+#
+# Sans cette règle, l'outil condamnerait quelqu'un pour ce qu'il a dit une
+# autre fois, et l'antériorité deviendrait un préjugé.
+#
+# Rien n'entre ici sans relecture humaine.
+
+usage: piste_uniquement
+erreurs: []

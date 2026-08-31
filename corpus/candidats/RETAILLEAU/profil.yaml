@@ -1,0 +1,41 @@
+# Dossier candidat — Bruno Retailleau
+#
+# Information PUBLIQUE et FACTUELLE uniquement. Ce fichier ne porte aucun
+# jugement : il identifie la personne et référence ses productions de première
+# main. Constitué AVANT la campagne, selon le MÊME protocole et avec la MÊME
+# profondeur que tous les autres dossiers — toute asymétrie de traitement est
+# l'angle d'attaque principal contre l'outil.
+
+id: RETAILLEAU
+nom_affiche: "Bruno Retailleau"
+patronyme: "Retailleau"
+prenom: "Bruno"
+parti: "Les Républicains"
+role: candidate
+declaration_candidature: ""
+
+protocole_version: "1.0"
+constitue_le: "2026-08-31"
+constitue_par: ""
+
+# Scrutin : 18 avril et 2 mai 2027.
+
+# --- SOURCES DE PREMIÈRE MAIN ---------------------------------------------
+# Seules elles fondent l'axe `coherence`. Chaque entrée est datée et
+# versionnée : un programme évolue, on cite l'édition consultée, jamais l'URL
+# nue. Les documents eux-mêmes vont dans les sous-dossiers.
+
+programme: []      # -> programme/    éditions successives, datées, empreintées
+discours: []       # -> discours/     interventions enregistrées et transcrites
+ecrits: []         # -> ecrits/       livres, tribunes signées, propositions de loi
+votes: []          # -> votes/        scrutins publics (Assemblée, Sénat)
+
+# --- EMPREINTE VOCALE ------------------------------------------------------
+# Générée depuis discours/. Minimum TROIS enregistrements distincts : une
+# empreinte bâtie sur un seul extrait capture le micro, pas la voix.
+
+empreinte:
+  fichier: "empreinte.json"
+  enregistrements_utilises: 0
+  secondes_totales: 0
+  statut: "non_enrolee"
