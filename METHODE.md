@@ -55,15 +55,27 @@ la valeur retenue justifiée par cette courbe et non par un avis.
 **L'engagement.** Même entrée, même version de corpus, même verdict — quel que
 soit le jour et l'ordre de traitement.
 
-**État : tenu par construction.**
+**État : tenu pour le PROTOCOLE, PAS pour le verdict.**
 
+Tenu :
 - appels de vérification sans état, sans historique
 - corpus figé pendant un débat, versionné dans git
 - seuils appliqués par le programme, pas interprétés par le modèle
 - température basse, décodage contraint par schéma
 
-**Réserve honnête** : un modèle de langage n'est jamais parfaitement
-déterministe. La reproductibilité porte sur le protocole, pas sur le bit près.
+**Non tenu, mesuré le 31/08/2026.** « Or, nous sommes titulaires de trois
+records, 45,3 % de prélèvement » a reçu `approximate` à une exécution et
+`exact` à la suivante — même corpus, même source, même seuils. Le second
+verdict est de surcroît le plus faux : 1,7 point de PIB n'est pas « exact ».
+
+J'avais écrit ici que la reproductibilité était « tenue par construction ».
+C'était faux au niveau qui compte. Deux conséquences :
+
+1. Le registre d'affirmations (D-025) détecte ce désaccord **entre occurrences
+   d'un même débat**, mais pas entre deux exécutions du même débat. Il faudrait
+   rejouer N fois et traiter la dispersion comme une abstention.
+2. Tant que ce n'est pas fait, un verdict isolé n'est pas un résultat
+   reproductible. C'est une observation unique.
 
 ---
 

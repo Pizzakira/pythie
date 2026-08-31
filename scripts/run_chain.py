@@ -58,12 +58,25 @@ def main() -> None:
                         help="stop after N claims verified (cost control)")
     parser.add_argument("--no-model", action="store_true",
                         help="stages 0 and 4 only -- no model call at all")
+    parser.add_argument("--depuis", type=float, default=None,
+                        help="start at minute N, overriding the panel manifest")
+    parser.add_argument("--minutes", type=float, default=0.0,
+                        help="analyse only N minutes from the start point")
+    parser.add_argument("--rejeu", type=float, default=0.0,
+                        help="replay speed for degree 1 (e.g. 8 = eight times "
+                             "faster). 0 renders a static page.")
     args = parser.parse_args()
 
     panel = load_panel(Path(args.plateau) if args.plateau else None)
-    start_at = float(panel.get("analyse_debut_s", 0.0))
+    start_at = (args.depuis * 60 if args.depuis is not None
+                else float(panel.get("analyse_debut_s", 0.0)))
     payload = json.loads(Path(args.transcript).read_text(encoding="utf-8"))
     blocks = [b for b in payload["blocs"] if b["fin"] > start_at]
+    if args.minutes:
+        # A window, not the whole debate. The experience we are testing is what
+        # a viewer sees unfold, and that does not require three hours.
+        stop_at = start_at + args.minutes * 60
+        blocks = [b for b in blocks if b["debut"] < stop_at]
 
     print(f"=== {payload.get('titre', args.transcript)} ===", file=sys.stderr)
     if start_at:
@@ -179,12 +192,22 @@ def main() -> None:
 def write(statements, args, web_corpus, payload, ledger=None, note="") -> None:
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
+    warning = (
+        "Aucune empreinte vocale enrolee : les prises de parole ne sont pas "
+        "attribuees. Une seule source de transcription : aucun rouge ne doit "
+        "etre publie en l'etat."
+    )
     for degree in (1, 2):
         html = render.render(
             statements,
             title=payload.get("titre", out.stem),
             degree=degree,
             corpus_version=web_corpus.version,
+            subtitle=f"{len(statements)} enonces",
+            warning=warning,
+            # Only degree 1 unfolds. Degree 2 is the consolidation, read at
+            # leisure afterwards -- replaying it would make no sense.
+            replay=args.rejeu if degree == 1 else 0.0,
         )
         (out.parent / f"{out.name}_degre{degree}.html").write_text(html, encoding="utf-8")
     render.export_json(statements, str(out.parent / f"{out.name}.json"))
