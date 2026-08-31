@@ -1,0 +1,16 @@
+{
+  "window_s": 6.0,
+  "counts": {
+    "accord": 3,
+    "desaccord": 1,
+    "seul_a": 23,
+    "seul_b": 25
+  },
+  "desaccords": [
+    {
+      "t": 1493.28,
+      "whisper": "57.3",
+      "sous_titres": "4.8"
+    }
+  ]
+}

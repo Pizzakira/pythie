@@ -1,0 +1,35 @@
+{
+  "extrait": {
+    "depuis_min": 24.0,
+    "minutes": 5.0
+  },
+  "large_v3": {
+    "segments": 69,
+    "seconds": 20.7,
+    "repetition": {
+      "segments": 69,
+      "repetes": 0,
+      "part": 0.0,
+      "plus_longue_serie": 0
+    },
+    "chiffres": 20
+  },
+  "francais": {
+    "segments": 2,
+    "seconds": 88.3,
+    "repetition": {
+      "segments": 2,
+      "repetes": 0,
+      "part": 0.0,
+      "plus_longue_serie": 0
+    },
+    "chiffres": 74
+  },
+  "accord": {
+    "accord": 0,
+    "desaccord": 0,
+    "seul_a": 20,
+    "seul_b": 74
+  },
+  "desaccords": []
+}

@@ -206,3 +206,76 @@ la fiche d'orientation a été attrapé plutôt que tranché à tort.
 - Corpus : deux domaines sur huit. 24 affirmations sur 40 sortent hors corpus.
 - Aucune empreinte vocale : l'étage d'attribution reste simulé.
 - **Jeu étalon toujours inexistant.**
+
+---
+
+## Session 003 — 1er septembre 2026
+
+**Objet** : intégration du modèle français, bancs ASR, restitution progressive.
+
+### Décisions
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-045** | **`faster-whisper-large-v3` est le modèle de référence** | 7/7 sur les patronymes, 14,5× le direct, aucune boucle d'hallucination, formatage correct des nombres. |
+| **D-046** | **Le fine-tune français n'entre pas dans la chaîne en l'état** | Mesuré : boucle d'hallucination d'une quarantaine de répétitions sur 5 minutes, 4× plus lent, écrit « 210 1000000000 » au lieu de « 210 milliards ». Reste candidat après conversion CTranslate2. |
+| **D-047** | **L'accord entre transcriptions exige une source par famille** | Démontré et non plus supposé : à 150:18 les deux modèles Whisper écrivent « début du café », CrisperWhisper écrit « quinquennat », qui est juste. |
+| **D-048** | **Aucune transcription de référence ne sera produite par moi seul** | Je n'ai pas accès au signal audio. Je peux arbitrer entre plusieurs transcriptions, pas transcrire. |
+| **D-049** | **Le degré 1 se rejoue** | Les blocs apparaissent à leur minutage, le verdict rejoint la marque après. Le décalage n'est pas masqué : un verdict ne peut pas précéder sa preuve. |
+| **D-050** | **Fenêtre d'analyse réglable** (`--depuis`, `--minutes`) | On éprouve sur une fenêtre, pas sur trois heures. |
+
+### Mesures
+
+**Banc noms propres, 9 fenêtres, 11 patronymes, même audio**
+
+| Source | Exacts | Utilisable |
+|---|---|---|
+| faster-whisper-large-v3 | 8 | 91 % |
+| whisper-large-v3-french | 8 | 91 % |
+| CrisperWhisper 2.0 | 5 | 64 % |
+| Sous-titres YouTube | 3 | **36 %** |
+
+**Passage d'ouverture (les 7 candidats nommés à la suite)** : les trois modèles
+font 7/7, les sous-titres 4/7 — ils perdent Retailleau et Glucksmann sur la
+phrase même qui présente le plateau. Seul CrisperWhisper récupère « Amélie
+Carrouër ».
+
+**Face-à-face français / large-v3, 5 minutes** : large-v3 gagne sur tous les
+critères. Détail dans `ETUDES/transcription.md`.
+
+**Chaîne complète, fenêtre 22–32 min** : 2 exact, 1 approximatif, 1 faux,
+1 trop vague, 10 non vérifiées.
+
+### Mes erreurs de mesure, consignées
+
+1. **Métrique de répétition aveugle.** `repetition()` a rapporté 0 pour les
+   deux modèles alors que la boucle d'hallucination est manifeste. Elle
+   comptait les segments consécutifs identiques ; la boucle vit à l'intérieur
+   d'un seul bloc de 30 s.
+2. **Alignement des chiffres impossible.** Le banc `banc_chiffres.py` alignait
+   des blocs de sous-titres fusionnés à 25 s contre des segments Whisper de
+   4 s, avec une fenêtre de 6 s. Les « 6 % de part jugeable » ne mesurent rien.
+   Correctif : utiliser le fichier de sous-titres ligne à ligne.
+3. **Estimation de durée mal formulée.** J'ai annoncé « 1 à 2 heures » sans
+   préciser que c'était pour trois modèles sur 3h12. Pour un seul modèle,
+   3h12 d'audio prend 10 à 20 minutes.
+4. **Quatre fichiers cassés** par le même défaut d'échappement dans des
+   heredocs. À proscrire pour tout code contenant des séquences d'échappement.
+
+### Reproductibilité : engagement non tenu
+
+« 45,3 % de prélèvement » a reçu `approximate` à une exécution et `exact` à la
+suivante — même corpus, mêmes seuils. `METHODE.md` affirmait la
+reproductibilité « tenue par construction » ; c'était faux au niveau du
+verdict. Corrigé dans le document et dans son tableau récapitulatif, qui se
+contredisaient l'un l'autre.
+
+### Reste ouvert
+
+- Accord entre transcriptions : **non implémenté**. Tant qu'il ne l'est pas,
+  aucun rouge ne doit être publié (D-044).
+- Corpus : deux domaines. 24 affirmations sur 40 sortent hors périmètre.
+- Empreintes vocales : aucune. L'attribution reste simulée.
+- Seuils en points : définis, non branchés.
+- **Jeu étalon : toujours inexistant.**
+- POC 2 : rien. POC 3 : outillage prêt, matière absente.

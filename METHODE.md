@@ -193,8 +193,37 @@ source → citation n'est pas encore assemblé en un seul enregistrement.
 | 8 | Incertitude déclarée | tenu, non calibré |
 | 9 | Angles morts déclarés | tenu |
 | 10 | Traçabilité | partiel |
+| 11 | Métriques validées par un témoin | **non tenu — deux métriques aveugles le 01/09** |
 
 **Conclusion.** Le projet est bien construit pour être scientifique, et ne l'est
 pas encore, faute d'avoir mesuré quoi que ce soit. Les deux manques — 1 et 2 —
 se comblent au même endroit : le jeu étalon. Tant qu'il n'existe pas, les
 seuils restent des opinions publiées.
+
+---
+
+## 11. Une métrique peut être aveugle à ce qu'elle mesure
+
+**Constat du 01/09/2026.** La métrique `repetition()` du banc ASR devait
+détecter les boucles d'hallucination. Elle a rapporté **0 pour les deux
+modèles**, alors qu'une boucle d'une quarantaine de répétitions était
+manifeste à la simple lecture du texte.
+
+Cause : elle comptait les *segments consécutifs identiques*. Or la pile
+`transformers` rend des blocs de 30 secondes, et la boucle vivait **à
+l'intérieur** d'un seul bloc.
+
+**La leçon dépasse ce cas.** Une métrique qui rend zéro n'est pas une preuve
+d'absence : c'est d'abord une hypothèse sur la forme du phénomène. Ici
+l'hypothèse — « une boucle se voit entre segments » — était fausse pour l'une
+des deux piles comparées.
+
+**Règle qui en découle** : toute métrique nouvelle est validée sur un cas où
+l'on sait qu'elle doit se déclencher, avant d'être utilisée pour conclure. Un
+témoin, au sens du §1 du banc ASR de KaraK. Sans témoin, un zéro ne se lit pas.
+
+Deuxième occurrence le même jour : l'alignement des chiffres de
+`banc_chiffres.py` comparait des blocs de sous-titres de 25 s à des segments
+Whisper de 4 s avec une tolérance de 6 s. Il a rendu « 6 % de part jugeable ».
+Ce n'était pas une mesure du désaccord entre sources, mais de l'inadéquation
+de ma fenêtre.

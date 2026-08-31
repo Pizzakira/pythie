@@ -178,9 +178,16 @@ sourcé sur une phrase que personne n'a prononcée.
 
 | Rôle | Système | Pourquoi |
 |---|---|---|
-| Direct (degré 1) | **Kyutai `stt-1b-en_fr`** | 0,5 s de délai, français natif, horodatage au mot, VAD sémantique inclus |
-| Référence (degré 2) | **WhisperX + `whisper-large-v3-french-distil`** | alignement forcé à ±50 ms, filtrage anti-hallucination |
-| Contrôle | **Sous-titres YouTube** | gratuit, immédiat, pile totalement étrangère |
+| Direct (degré 1) | **Kyutai `stt-1b-en_fr`** | 0,5 s de délai, français natif, horodatage au mot, VAD sémantique inclus. *Non installé.* |
+| Référence (degré 2) | **`faster-whisper-large-v3`** | 7/7 sur les patronymes, 14,5× le direct, aucune boucle d'hallucination (D-045) |
+| Deuxième voix | **CrisperWhisper 2.0** | architecture distincte : c'est lui qui rattrape « quinquennat » là où les deux Whisper écrivent « café » |
+| Contrôle | **Sous-titres YouTube** | gratuit, immédiat, pile étrangère — mais 36 % seulement sur les patronymes |
+
+> **Écarté le 01/09/2026 (D-046)** : `whisper-large-v3-french`. Mesuré sur
+> 5 minutes réelles — boucle d'hallucination d'une quarantaine de répétitions,
+> 4× plus lent, écrit « 210 1000000000 » au lieu de « 210 milliards ». Reste
+> candidat après conversion CTranslate2, la comparaison actuelle lui étant
+> défavorable pour des raisons de configuration autant que de modèle.
 
 **Piège à ne pas commettre : deux variantes de Whisper ne comptent pas pour deux
 voix.** Un fine-tune partage l'architecture et les modes de défaillance de son
@@ -555,8 +562,16 @@ intentions.
 | **Évaluation** | **inexistant** |
 | Base de connaissances | **1 domaine sur ~8** |
 
-Qualité de sortie du modèle local non réglée : le routage fonctionne, l'étape
-verdict échoue encore par troncature ou citation reconstituée.
+Qualité de sortie du modèle local : le routage fonctionne, l'étape verdict
+rend désormais des verdicts réels et sourcés. Deux défauts corrigés le
+01/09/2026 — des sources mises en page avec des points de conduite, donc
+inquotables, et un champ `sources` facultatif que la grammaire laissait omettre.
+
+Transcription : `faster-whisper-large-v3` retenu comme référence (D-045). Le
+fine-tune français est écarté en l'état (D-046). L'accord entre sources n'est
+pas implémenté, donc **aucun rouge ne doit être publié** (D-044).
+
+Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE §3.
 
 ## Ordre des chantiers
 

@@ -118,15 +118,44 @@ pas la transcription intégrale : seuls les extraits analysés sont affichés.
 - **Documentation, cahier des charges, corpus : français.**
 - Les prompts sont en français : la matière analysée l'est.
 
-## État
+## État au 1er septembre 2026
 
-Étages déterministes implémentés et testés : déclencheurs (insensibles aux
-accents, car l'ASR les mutile), corpus et rangs, règle de provenance, seuils,
-rendu deux degrés.
+**POC 1 réussi.** La chaîne tourne de bout en bout sur le débat LaREF 2026 et
+rend des verdicts réels et sourcés :
 
-Étages modèle branchés sur Qwen3.8-27B local. **Qualité de sortie non encore
-réglée** — le routage fonctionne, l'étape verdict échoue encore souvent par
-troncature ou citation reconstituée. Point ouvert assumé.
+```
+« 57,3 % de dépenses publiques »  -> EXACT        INSEE 57,2 % du PIB 2025
+« 45,3 % de prélèvement »         -> APPROXIMATIF INSEE 43,6 % du PIB 2025
+```
 
-Voir `SPECIFICATIONS.md` pour le cahier complet et `ETUDES/` pour l'étude des
-outils existants.
+Citation retrouvée mot pour mot dans la source stockée, URL INSEE jointe.
+Le degré 1 se rejoue au minutage réel : `--rejeu 12` accélère douze fois.
+
+### Transcription — mesuré
+
+| Source | Patronymes exacts | Utilisable |
+|---|---|---|
+| `faster-whisper-large-v3` | 8/11 | **91 %** — retenu |
+| `whisper-large-v3-french` | 8/11 | 91 % — **écarté**, boucle d'hallucination |
+| CrisperWhisper 2.0 | 5/11 | 64 % — deuxième voix |
+| Sous-titres YouTube | 3/11 | 36 % |
+
+### Ce qui bloque encore
+
+- **Accord entre transcriptions non implémenté** : aucun rouge ne doit être
+  publié. Le premier rouge produit par le système portait sur « de au feu
+  600 millions de dettes françaises » — de la bouillie d'ASR, donc une citation
+  fabriquée.
+- **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
+- **Empreintes vocales** : aucune. L'attribution est simulée.
+- **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
+- **Jeu étalon** : inexistant. Sans lui, les seuils restent des opinions.
+
+### Documentation
+
+| Fichier | Contenu |
+|---|---|
+| `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
+| `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
+| `JOURNAL.md` | 50 décisions datées avec leur motif, et mes erreurs |
+| `ETUDES/` | outils de fact-checking existants, et bancs de transcription |

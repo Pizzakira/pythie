@@ -303,3 +303,72 @@ ou Kyutai à la place de ces derniers en direct.
 `transformers` passe par torchcodec dès l'import. Une première exécution a
 rendu 0 % — c'était une panne, pas une mesure, et elle est consignée comme
 telle.
+
+---
+
+# Face-à-face : whisper-large-v3-french contre faster-whisper-large-v3
+## 1er septembre 2026 — extrait de 5 min (24:00 → 29:00)
+
+Protocole : `ETUDES/banc_fr_vs_v3.py`. Même audio, français forcé sur les deux.
+
+## Verdict : large-v3 gagne nettement
+
+| | large-v3 | français |
+|---|---|---|
+| Segments | ~20 | **9** (blocs de 30 s) |
+| Durée | **20,7 s** | 88,3 s |
+| Vitesse | **14,5× le direct** | 3,4× |
+| Chiffres repérés | 20 | 74 (gonflé, voir plus bas) |
+| Boucle d'hallucination | **aucune** | **oui, ~45 répétitions** |
+
+## L'hallucination, en clair
+
+Le modèle français produit une boucle : la même proposition courte répétée une
+quarantaine de fois d'affilée au milieu d'une phrase, avant de reprendre le fil
+normalement. C'est le mode d'échec classique de Whisper en forme longue — et
+précisément celui que ce fine-tune revendique d'avoir réduit par filtrage de
+2 500 heures de données problématiques.
+
+Sur cet extrait, il fait **pire** que le modèle de base, qui n'en produit
+aucune.
+
+## Deux défauts de formatage
+
+- Il écrit **« 210 1000000000 »** au lieu de « 210 milliards » : l'échelle est
+  développée en chiffres. Pour Pythie, dont tout l'objet est de comparer des
+  valeurs, c'est disqualifiant en l'état.
+- Il écrit « 1er », « 2ème » là où large-v3 écrit « premier », « deuxième ».
+
+## Segmentation
+
+large-v3 rend des segments d'une phrase, horodatés — exploitables directement.
+Le modèle français, via la pile `transformers`, rend des blocs de 30 secondes
+dont les horodatages ne permettent aucun alignement fin. Les 0 appariements de
+chiffres du banc en découlent : ce n'est pas un désaccord, c'est une
+impossibilité d'aligner.
+
+## Réserve sur la portée de ce résultat
+
+Le modèle français tourne ici via `transformers` avec `chunk_length_s=30`, pas
+via une conversion CTranslate2 comme large-v3. Une partie de l'écart — vitesse,
+segmentation, peut-être la boucle — tient à cette configuration et non au
+modèle. **Le résultat vaut pour cette configuration, pas comme jugement absolu
+du fine-tune.** Une conversion CT2 serait la comparaison équitable.
+
+## Défaut de ma métrique, consigné
+
+`repetition()` a rapporté **0 répétition pour les deux modèles**, alors que la
+boucle est manifeste à la lecture. Elle comptait les *segments* identiques
+consécutifs ; or la boucle vit **à l'intérieur** d'un unique bloc de 30
+secondes. La métrique était aveugle au phénomène qu'elle devait mesurer.
+
+Correctif nécessaire : compter les n-grammes répétés *dans* chaque segment,
+pas seulement d'un segment à l'autre.
+
+## Décision
+
+**Le modèle de référence reste `faster-whisper-large-v3`** : plus rapide,
+mieux segmenté, sans boucle, et sans défaut de formatage des nombres.
+
+Le fine-tune français n'entre pas dans la chaîne en l'état. Il reste candidat à
+une reprise en CTranslate2, où la comparaison serait honnête.
