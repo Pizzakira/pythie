@@ -1,0 +1,22 @@
+# Journaliste — Amélie Carrouër
+#
+# Les journalistes et animateurs reviennent d'un plateau a l'autre : une
+# empreinte faite une fois ressert toute la campagne. Leur identification
+# fiable fait appliquer d'elle-meme la regle « le mediateur n'est pas
+# analyse » — leurs questions ne sont pas des affirmations du plateau.
+
+id: CARROUER
+nom_affiche: "Amélie Carrouër"
+patronyme: "Carrouër"
+prenom: "Amélie"
+media: "LCI"
+role: moderator
+
+constitue_le: "2026-08-31"
+
+enregistrements: []   # -> enregistrements/
+
+empreinte:
+  fichier: "empreinte.json"
+  enregistrements_utilises: 0
+  statut: "non_enrolee"

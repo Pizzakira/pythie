@@ -1,0 +1,74 @@
+debat: laref2026
+titre: '#LAREF26 — Débat Présidentielle 2027'
+organisateur: MEDEF
+date: 2026-08
+source: https://www.youtube.com/watch?v=VM8cGxOtUvA
+duree_s: 11541
+analyse_debut_s: 286
+analyse_debut_note: 'Amélie Carrouër prend l''antenne à 4:46. Avant : cérémonie.'
+intervenants:
+- id: CARROUER
+  nom: Amélie Carrouër
+  role: moderator
+  analyse: false
+- id: MARTIN
+  nom: Patrick Martin
+  role: host
+  analyse: false
+  note: président du MEDEF, discours d'ouverture
+- id: ATTAL
+  nom: Gabriel Attal
+  role: candidate
+  analyse: true
+- id: GLUCKSMANN
+  nom: Raphaël Glucksmann
+  role: candidate
+  analyse: true
+- id: LE_PEN
+  nom: Marine Le Pen
+  role: candidate
+  analyse: true
+- id: MELENCHON
+  nom: Jean-Luc Mélenchon
+  role: candidate
+  analyse: true
+- id: PHILIPPE
+  nom: Édouard Philippe
+  role: candidate
+  analyse: true
+- id: RETAILLEAU
+  nom: Bruno Retailleau
+  role: candidate
+  analyse: true
+- id: TONDELIER
+  nom: Marine Tondelier
+  role: candidate
+  analyse: true
+- id: BRAJON
+  nom: Joris Brajon
+  role: business
+  analyse: false
+  org: Joker Log
+- id: FURLAN
+  nom: Vincent Furlan
+  role: business
+  analyse: false
+  org: Feelinks
+- id: LECOUFLE
+  nom: Colombe Lecoufle
+  role: business
+  analyse: false
+  org: Vacherot et Lecoufle
+- id: MALENFER
+  nom: Eric Malenfer
+  role: business
+  analyse: false
+  org: Gexpertise
+- id: NEUVILLE
+  nom: Julie Neuville
+  role: business
+  analyse: false
+  org: Materrup
+note_asr: 'Les sous-titres automatiques massacrent les patronymes : « Bruno Rota Raphaël
+  Guxman » pour Retailleau et Glucksmann, « Talenaissance » pour Attal/Renaissance,
+  « Amie Carouer » pour Carrouër. Les introductions orientent, elles ne prouvent pas.'

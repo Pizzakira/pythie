@@ -1,0 +1,7 @@
+# Chiffres récurrents — Marine Tondelier
+#
+# Valeurs que le locuteur cite habituellement, avec la source RÉELLE de
+# chacune. Indexés à l'avance : la vérification devient immédiate.
+# Se remplit par la file de relecture (data/review/), jamais automatiquement.
+
+chiffres: []
