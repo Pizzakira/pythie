@@ -27,8 +27,23 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pythie.media.provenance import probe_youtube, timestamped  # noqa: E402
+
 SAMPLE_BITRATE = "32k"   # parole mono : intelligible, et la page reste légère
 MAX_SECONDS = 18.0
+
+
+def clip_start(clip: dict) -> float:
+    """La seconde exacte de l'extrait.
+
+    `debut_s` est la donnée depuis le 01/09 ; les fichiers écrits avant ne
+    portaient la seconde que dans le lien vidéo, qu'il faut alors décomposer.
+    """
+    if "debut_s" in clip:
+        return float(clip["debut_s"])
+    return float(clip["video"].rsplit("&t=", 1)[1].rstrip("s"))
 
 
 def cut(wav: Path, start: float, seconds: float) -> bytes:
@@ -63,26 +78,42 @@ def main() -> None:
     ap.add_argument("--plateau", default="data/laref2026.plateau.yaml")
     ap.add_argument("--sortie", default="data/ecoute_de_controle.html")
     ap.add_argument("--gabarit", default="scripts/confirmation_page.html")
+    ap.add_argument("--sans-controle", action="store_true",
+                    help="ne pas sonder l'URL d'origine (hors ligne)")
     args = ap.parse_args()
 
     confirmation = yaml.safe_load(Path(args.confirmation).read_text(encoding="utf-8"))
     panel = yaml.safe_load(Path(args.plateau).read_text(encoding="utf-8"))
     blocks = json.loads(Path(args.transcription).read_text(encoding="utf-8"))["blocs"]
 
+    # La provenance se vérifie au lancement, pas au premier clic d'un lecteur :
+    # une page qui embarque quarante-deux liens vers une vidéo privée est une
+    # page dont chaque lien ment. On ne refuse pas de produire la page -- les
+    # extraits embarqués suffisent à l'écoute -- mais on le dit, et la page le
+    # dit aussi.
+    source_url = panel.get("source", "")
+    seen = None if args.sans_controle else probe_youtube(source_url)
+    if seen is not None:
+        print(seen.describe(), file=sys.stderr)
+        if seen.status == "private_or_removed":
+            print("  -> corriger `source:` dans le manifeste avant de diffuser "
+                  "cette page ; les liens vidéo y seraient tous morts.",
+                  file=sys.stderr)
+
     clusters = []
     for grappe in confirmation["grappes"]:
         extraits = []
         for clip in grappe["ecouter"]:
-            # Le minutage est dans le nom de fichier produit par enrol.py ; on
-            # repart de la seconde exacte portée par le lien video.
-            start = float(clip["video"].rsplit("&t=", 1)[1].rstrip("s"))
+            start = clip_start(clip)
             seconds = MAX_SECONDS
             audio = cut(Path(args.wav), start, seconds)
             extraits.append({
                 "debut": start,
                 "duree": seconds,
                 "minutage": clip["minutage"],
-                "video": clip["video"],
+                # Reconstruit depuis le manifeste, jamais recopié depuis le
+                # YAML : la source de vérité de l'URL est unique.
+                "video": timestamped(source_url, start),
                 "texte": spoken_text(blocks, start, start + seconds),
                 "audio": "data:audio/mpeg;base64," + base64.b64encode(audio).decode(),
             })
@@ -106,7 +137,11 @@ def main() -> None:
 
     payload = {
         "debat": panel.get("titre", ""),
-        "video": panel.get("source", ""),
+        "debatId": panel.get("debat", "debat"),
+        "video": source_url,
+        "videoEtat": ({"statut": seen.status, "titre": seen.title,
+                       "chaine": seen.channel, "verifiee_le": seen.checked_on}
+                      if seen is not None else None),
         "intervenants": people,
         "grappes": clusters,
     }

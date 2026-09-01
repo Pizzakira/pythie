@@ -33,6 +33,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pythie.media.embed import Embedder, Window, cosine  # noqa: E402
+from pythie.media.provenance import timestamped  # noqa: E402
 from pythie.media.voiceprint import Registry, Role  # noqa: E402
 
 # Pré-inscrits. Ne pas modifier après avoir vu un résultat.
@@ -48,6 +49,9 @@ MIN_CANDIDATES = 4
 # question de l'animateur, puis la réponse : le nom précède la prise de parole
 # de plusieurs secondes, et parfois de plusieurs dizaines.
 LOOKAHEAD = (5.0, 90.0)
+
+# Trois à écouter, deux de réserve (voir la page d'écoute).
+CLIPS_PER_VOICE = 5
 
 
 def strip_accents(text: str) -> str:
@@ -311,7 +315,12 @@ def main() -> None:
         if len(members) < 10:
             continue
         person = people.get(evidence["id"], {})
-        longest = sorted(members, key=lambda m: -windows[index[m]].duration)[:3]
+        # Cinq extraits, dont deux de réserve : la page d'écoute en montre
+        # trois et n'en révèle un autre que si l'oreille en écarte un (voix
+        # mêlées, son inaudible). Sans réserve, un seul extrait inutilisable
+        # laissait deux morceaux, sous la règle des trois -- et la voix
+        # devenait inenrôlable pour une raison qui ne tient pas à elle.
+        longest = sorted(members, key=lambda m: -windows[index[m]].duration)[:CLIPS_PER_VOICE]
         # Trois extraits découpés pour de bon : ouvrir un wav de 370 Mo et
         # chercher 140:44 est une corvée, et une corvée ne se fait pas. Le
         # lien vidéo est là pour ceux qui préfèrent le contexte à l'extrait.
@@ -327,11 +336,16 @@ def main() -> None:
                      "-i", args.wav, "-ac", "1", "-b:a", "64k", str(clip)],
                     check=False,
                 )
+            # `debut_s` est la donnée ; le minutage et le lien en dérivent.
+            # Tant que le lien était la seule trace de la seconde exacte, la
+            # page d'écoute devait le décomposer pour la retrouver -- et un
+            # changement d'URL d'origine cassait la page au lieu de changer un
+            # lien.
             clips.append({
                 "extrait": str(clip),
+                "debut_s": round(float(window.start), 2),
                 "minutage": f"{int(window.start) // 60}:{int(window.start) % 60:02d}",
-                "video": (f"{source_url}&t={int(window.start)}s"
-                          if source_url else ""),
+                "video": timestamped(source_url, window.start),
             })
 
         propositions.append({

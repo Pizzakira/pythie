@@ -91,6 +91,9 @@ a { color: var(--accent); }
 }
 .masthead h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
 .masthead p { margin: 6px 0 0; color: var(--ink-soft); max-width: 62ch; }
+.video-state { font-size: .84rem; color: var(--ink-faint); }
+.video-state[data-state="ok"] { color: var(--confirmed); }
+.video-state[data-state="warn"] { color: var(--attention); }
 .eyebrow {
   font-family: "IBM Plex Mono", monospace; font-size: .7rem;
   letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint);
@@ -140,6 +143,9 @@ a { color: var(--accent); }
 .progress-fill { height: 100%; width: 0%; background: var(--confirmed); transition: width .3s ease; }
 .progress-label { font-size: .85rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .saved-note { font-size: .8rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.sync-note { font-size: .8rem; color: var(--ink-faint); }
+.sync-note[data-mode="shared"] { color: var(--confirmed); }
+.sync-note[data-mode="error"] { color: var(--attention); }
 
 button {
   font: inherit; cursor: pointer; border-radius: 8px;
@@ -191,6 +197,8 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 .verdict[data-kind="done"] { background: var(--confirmed-soft); color: var(--confirmed); }
 .verdict[data-kind="split"] { background: var(--attention-soft); color: var(--attention); }
+.verdict[data-kind="unusable"] { background: var(--attention-soft); color: var(--attention); }
+.voice[data-state="unusable"] { border-color: var(--attention); }
 .evidence {
   display: flex; align-items: center; gap: 10px;
   font-size: .8rem; color: var(--ink-faint); font-variant-numeric: tabular-nums;
@@ -205,6 +213,46 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .clip { padding: 18px 20px; border-bottom: 1px solid var(--line); }
 .clip:last-child { border-bottom: 0; }
+.clip:focus { outline: none; }
+.clip:focus-within { box-shadow: inset 3px 0 0 var(--accent); }
+.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.pos {
+  margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: .86rem;
+  color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap;
+  padding: 4px 10px; border-radius: 6px; background: var(--surface-sunk);
+}
+.pos[data-hint="1"] { background: var(--attention-soft); color: var(--attention); font-family: inherit; }
+audio.native { display: block; width: 100%; height: 36px; margin-top: 8px; }
+.keys { margin: 0 0 12px; font-size: .78rem; color: var(--ink-faint); }
+.speed { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; }
+.speed button { border: 0; border-radius: 0; padding: 5px 9px; font-variant-numeric: tabular-nums; }
+.speed button + button { border-left: 1px solid var(--line-strong); }
+.speed button[aria-pressed="true"] { background: var(--accent); color: var(--surface); font-weight: 600; }
+.chip-spare {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem; padding: 2px 8px;
+  border-radius: 999px; background: var(--attention-soft); color: var(--attention);
+}
+
+/* --- extrait inutilisable ---------------------------------------------- */
+
+.unusable {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line);
+  font-size: .82rem; color: var(--ink-faint);
+}
+.unusable button { padding: 4px 10px; font-size: .82rem; border-radius: 999px; }
+.unusable button[aria-pressed="true"] {
+  background: var(--attention); border-color: var(--attention); color: var(--surface); font-weight: 600;
+}
+.clip[data-unusable] .strip, .clip[data-unusable] .tools, .clip[data-unusable] .who,
+.clip[data-unusable] .clip-said, .clip[data-unusable] .keys { opacity: .4; pointer-events: none; }
+.clip[data-unusable] .unusable { color: var(--attention); }
+.keys kbd {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem; padding: 1px 5px;
+  border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px;
+  background: var(--surface); color: var(--ink-soft); margin: 0 1px;
+}
 
 .clip-top { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
 .play {
@@ -231,8 +279,9 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .strip {
   position: relative; height: 56px; background: var(--surface-sunk);
   border: 1px solid var(--line); border-radius: 8px;
-  overflow: hidden; cursor: text; user-select: none;
+  overflow: hidden; cursor: pointer; user-select: none; touch-action: none;
 }
+.seg { pointer-events: none; }
 .seg {
   position: absolute; top: 0; bottom: 0;
   border-right: 1px solid var(--line-strong);
@@ -244,6 +293,15 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   background: var(--confirmed-soft); color: var(--confirmed); font-weight: 600;
 }
 .seg[data-selected="1"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.seg[data-bad="1"] {
+  color: var(--attention); font-weight: 600;
+  background: repeating-linear-gradient(135deg, var(--attention-soft) 0 6px, transparent 6px 12px);
+}
+.who .bad-label { font-size: .82rem; color: var(--ink-faint); margin: 0 4px 0 10px; }
+.who button[data-bad][aria-pressed="true"] {
+  background: var(--attention); border-color: var(--attention); color: var(--surface); font-weight: 600;
+}
+.who button[data-role="candidate"] { letter-spacing: .02em; }
 .handle {
   position: absolute; top: 0; bottom: 0; width: 13px; margin-left: -6px;
   cursor: ew-resize; z-index: 3; background: transparent; border: 0; padding: 0;
@@ -315,6 +373,7 @@ textarea {
       <h1>Écoute de contrôle</h1>
       <p id="lede"></p>
       <p style="margin-top:10px"><a id="video-link" href="#" target="_blank" rel="noopener">Ouvrir le débat en entier dans un autre onglet ↗</a></p>
+      <p class="video-state" id="video-state"></p>
     </div>
     <div class="tally">
       <div class="tally-figure"><b id="count-done">0</b><span>voix nommées</span></div>
@@ -331,16 +390,31 @@ textarea {
         cliquez son nom : c'est tout.</li>
       <li><b>Si plusieurs personnes se relaient</b> — une journaliste qui
         relance trois fois, par exemple — découpez : lecture, pause à l'instant
-        du changement, <b>Couper ici</b>, puis nommez le morceau. Autant de fois
-        qu'il y a de tours. Chaque coupure se règle ensuite au dixième de
-        seconde : tirez la poignée, ou sélectionnez-la et utilisez les flèches
-        du clavier, ou tapez la seconde exacte.</li>
+        du changement, <b>Couper ici</b> (ou la touche <b>c</b>), puis nommez le
+        morceau. Autant de fois qu'il y a de tours. Chaque coupure se règle
+        ensuite au dixième de seconde : tirez la poignée, ou sélectionnez-la et
+        utilisez les flèches du clavier, ou tapez la seconde exacte.</li>
+      <li><b>Pour se déplacer</b> : un clic dans la bande place la lecture et
+        choisit le morceau sous le clic ; le lecteur sous la bande donne la
+        barre, le volume et la vitesse ; <b>espace</b> lit ou met en pause,
+        les <b>flèches</b> avancent d'une demi-seconde. La position courante
+        est affichée en clair à droite de chaque extrait.</li>
       <li><b>Trois extraits par voix</b>, pris à des moments éloignés. S'ils ne
         donnent pas la même personne, la grappe mélange deux locuteurs et ne
         doit pas devenir une empreinte.</li>
+      <li><b>Applaudissements, voix mêlées, son inaudible</b> : coupez le
+        passage et marquez le morceau <b>inutilisable</b> avec son motif, à
+        droite des noms. Il sort de l'empreinte, qui se calcule sur les bornes
+        exactes des morceaux nommés. Un second clic revient en arrière.</li>
+      <li><b>Un extrait sans issue d'un bout à l'autre</b> se déclare
+        inutilisable en entier, tout en bas. Un extrait de réserve apparaît
+        alors à sa place : il faut trois extraits exploitables par voix, et
+        cette règle ne se contourne pas. Là aussi, un second clic annule.</li>
     </ol>
     <p class="warn">Chaque clic est enregistré dans ce navigateur, et repris au
-      retour. Les sept premières voix pèsent 13 à 20 minutes de débat chacune :
+      retour ; ouverte depuis claude.ai ou lancée par
+      <code>Ecoute-Demarrer.bat</code>, la page l'enregistre aussi pour le
+      projet, et le résultat n'a plus besoin d'être copié. Les sept premières voix pèsent 13 à 20 minutes de débat chacune :
       ce sont elles qui comptent. Une empreinte fausse attribuerait une citation
       à quelqu'un qui ne l'a pas prononcée — d'où la découpe plutôt qu'un nom
       approximatif.</p>
@@ -350,6 +424,7 @@ textarea {
     <div class="progress-rail"><div class="progress-fill" id="progress"></div></div>
     <span class="progress-label" id="progress-label">0 / 0</span>
     <span class="saved-note" id="saved-note">enregistré dans ce navigateur</span>
+    <span class="sync-note" id="sync-note" data-mode="local">dans ce navigateur seulement</span>
     <button id="btn-export" class="btn-primary">Copier le résultat</button>
     <button id="btn-reset">Tout effacer</button>
   </div>
@@ -375,12 +450,33 @@ textarea {
 const DATA = /*__DONNEES__*/null;
 const OLD_STORE = "pythie-ecoute-laref-v1";
 const STORE = "pythie-ecoute-laref-v2";
+const STAMP = STORE + ":stamp";
+const DOC_PATH = "ecoute/" + (DATA.debatId || "debat");
+/* Hors de claude.ai, un serveur local du projet (scripts/ecoute_serveur.py)
+   joue le rôle de la base : même document, même règle. Servie par lui, la
+   page lui parle à sa propre adresse ; ouverte en file://, elle le cherche
+   au port par défaut. */
+const LOCAL_URL = (location.protocol === "http:" && /^(127\.0\.0\.1|localhost)$/.test(location.hostname))
+  ? location.origin + "/etat" : "http://127.0.0.1:8765/etat";
 
 const ICON_PLAY = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"></path></svg>';
 const ICON_STOP = '<svg viewBox="0 0 12 14" aria-hidden="true"><rect x="0" y="0" width="4.5" height="14"></rect><rect x="7.5" y="0" width="4.5" height="14"></rect></svg>';
 
+const STEP = 0.5;        // flèches : un demi-seconde, assez fin pour un tour de parole
+const BIG_STEP = 2.0;    // avec Maj
+const SHOWN = 3;         // extraits à écouter par voix ; les autres sont de réserve
+const SPEEDS = [0.75, 1, 1.5];
+const REASONS = { superposition: "voix mêlées", applaudissements: "applaudissements", inaudible: "son inaudible" };
+
 let state = readState();
+let stamp = readStamp();      // ISO de la dernière modification locale
 let playing = null;
+let store = null;             // la base de l'artefact, quand la vue l'accorde
+let pushTimer = null;
+
+function readStamp() {
+  try { return localStorage.getItem(STAMP) || ""; } catch (e) { return ""; }
+}
 
 /** Ce qui a déjà été fait est repris, jamais jeté : l'ancien format — un seul
  *  locuteur pour tout l'extrait, ou une paire de bornes — devient un découpage
@@ -404,17 +500,136 @@ function readState() {
 
 function save() {
   const note = document.getElementById("saved-note");
+  const now = new Date();
+  stamp = now.toISOString();
   try {
     localStorage.setItem(STORE, JSON.stringify(state));
-    const now = new Date();
+    localStorage.setItem(STAMP, stamp);
     note.textContent = "enregistré à " + String(now.getHours()).padStart(2, "0")
       + " h " + String(now.getMinutes()).padStart(2, "0");
   } catch (e) {
     note.textContent = "ce navigateur refuse d'enregistrer — copiez le résultat avant de fermer";
   }
+  schedulePush();
+}
+
+/* --- persistance hors du navigateur --------------------------------------
+   Le navigateur garde le travail pour la personne qui écoute ; la base de
+   l'artefact le garde pour le projet. Un seul document par débat, réécrit en
+   entier après chaque geste (quelques kilooctets) : la version la plus
+   récente gagne, et le résultat n'a plus besoin d'être copié-collé. */
+
+function setSync(mode, detail) {
+  const note = document.getElementById("sync-note");
+  note.dataset.mode = mode;
+  note.textContent = mode === "shared" ? "et enregistré pour le projet"
+    : mode === "local-server" ? "et enregistré dans le dossier du projet"
+    : mode === "error" ? "enregistrement pour le projet en échec" + (detail ? " (" + detail + ")" : "")
+    : "dans ce navigateur seulement";
+}
+
+/* Le serveur local présente la même surface que la base : un document. */
+const localStore = {
+  async get() {
+    const response = await fetch(LOCAL_URL, { cache: "no-store" });
+    if (response.status === 404) return null;
+    if (!response.ok) throw { code: "http_" + response.status };
+    return response.json();
+  },
+  async set(document) {
+    const response = await fetch(LOCAL_URL, {
+      method: "PUT", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(document),
+    });
+    if (!response.ok) throw { code: "http_" + response.status };
+  },
+};
+let localServer = false;
+
+function schedulePush() {
+  if (!store && !localServer) return;
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(push, 600);
+}
+
+async function push() {
+  if (!store && !localServer) return;
+  const sent = stamp;
+  const document_ = { debat: DATA.debat, misAJour: sent, etat: state };
+  try {
+    if (store) await store.doc(DOC_PATH).set(document_);
+    else await localStore.set(document_);
+    setSync(store ? "shared" : "local-server");
+  } catch (e) {
+    setSync("error", e && e.code);
+    if (e && e.code === "unavailable") setTimeout(() => { if (stamp === sent) push(); }, 1500 + Math.random() * 1500);
+  }
+}
+
+async function connectLocal() {
+  let remote;
+  try { remote = await localStore.get(); }
+  catch (e) { setSync("local"); return; }
+  localServer = true;
+  if (remote && remote.etat && (!stamp || String(remote.misAJour || "") > stamp)) {
+    adopt(remote);
+  } else if (Object.keys(state).length) {
+    push();
+  }
+  setSync("local-server");
+}
+
+function adopt(remote) {
+  state = remote.etat || {};
+  stamp = remote.misAJour || "";
+  try {
+    localStorage.setItem(STORE, JSON.stringify(state));
+    localStorage.setItem(STAMP, stamp);
+  } catch (e) {}
+  render();
+}
+
+async function connect() {
+  if (!window.claude || typeof window.claude.use !== "function") { connectLocal(); return; }
+  store = await claude.use("db");
+  if (!store) { connectLocal(); return; }
+  const ref = store.doc(DOC_PATH);
+  let snap;
+  try { snap = await ref.get(); }
+  catch (e) { store = null; setSync("error", e && e.code); return; }
+  const remote = snap.exists ? snap.data() : null;
+  if (remote && remote.etat && (!stamp || String(remote.misAJour || "") > stamp)) {
+    adopt(remote);
+  } else if (Object.keys(state).length) {
+    push();
+  }
+  setSync("shared");
+  ref.onSnapshot(s => {
+    if (!s.exists || s.metadata.hasPendingWrites) return;
+    const d = s.data();
+    if (d && String(d.misAJour || "") > stamp) adopt(d);
+  }, e => { store = null; setSync("error", e && e.code); });
 }
 
 const keyOf = (cluster, index) => cluster + ":" + index;
+
+/** Pourquoi un extrait a été écarté, ou "" s'il est exploitable. */
+function unusableOf(cluster, index) {
+  const entry = state[keyOf(cluster, index)];
+  return (entry && entry.inutilisable) || "";
+}
+
+/** Les extraits qui comptent : les trois premiers, plus un extrait de réserve
+ *  pour chaque extrait écarté — jusqu'à épuisement de la réserve. */
+function activeClips(cluster) {
+  const active = [];
+  let usable = 0;
+  for (let i = 0; i < cluster.extraits.length && usable < SHOWN; i++) {
+    active.push(i);
+    if (!unusableOf(cluster.grappe, i)) usable += 1;
+  }
+  return active;
+}
 
 /** Les morceaux d'un extrait : une partition contiguë de [0, durée]. */
 function segmentsOf(cluster, index, duration) {
@@ -446,7 +661,7 @@ function clock(seconds) {
   const m = Math.floor((total % 3600) / 60);
   const s = total % 60;
   return (h ? h + " h " + String(m).padStart(2, "0") : String(m))
-    + (h ? " min " : " min ") + String(s).padStart(2, "0") + " s";
+    + " min " + String(s).padStart(2, "0") + " s";
 }
 function shortClock(seconds) {
   const total = Math.max(0, Math.round(seconds));
@@ -461,6 +676,9 @@ function preciseClock(seconds) {
   const tenth = Math.round((seconds - whole) * 10);
   return shortClock(whole) + "," + (tenth === 10 ? 9 : tenth);
 }
+function tenths(seconds) {
+  return Math.max(0, seconds).toFixed(1).replace(".", ",");
+}
 function nameOf(id) {
   if (id === "inconnu") return "aucun des intervenants";
   const person = DATA.intervenants.find(p => p.id === id);
@@ -470,7 +688,9 @@ function shortName(id) {
   if (!id) return "";
   if (id === "inconnu") return "?";
   const person = DATA.intervenants.find(p => p.id === id);
-  return person ? person.nom.split(" ").slice(-1)[0] : id;
+  if (!person) return id;
+  const surname = person.nom.split(" ").slice(-1)[0];
+  return person.role === "candidate" ? surname.toUpperCase() : surname;
 }
 
 /* --- verdict d'une grappe ----------------------------------------------- */
@@ -487,15 +707,23 @@ function dominant(cluster, index, duration) {
 }
 
 function verdict(cluster) {
-  const answers = cluster.extraits
-    .map((clip, i) => dominant(cluster.grappe, i, clip.duree))
+  const usable = activeClips(cluster).filter(i => !unusableOf(cluster.grappe, i));
+  if (!usable.length) {
+    return { kind: "unusable", label: "aucun extrait exploitable", nom: "" };
+  }
+  const answers = usable
+    .map(i => dominant(cluster.grappe, i, cluster.extraits[i].duree))
     .filter(Boolean);
   if (!answers.length) return { kind: "todo", label: "à écouter", nom: "" };
   const unique = [...new Set(answers)];
   if (unique.length > 1) return { kind: "split", label: "voix mélangées", nom: "plusieurs" };
-  if (answers.length < cluster.extraits.length) {
+  if (answers.length < usable.length) {
     return { kind: "partial", nom: unique[0],
-             label: answers.length + " / " + cluster.extraits.length + " extraits" };
+             label: answers.length + " / " + usable.length + " extraits" };
+  }
+  if (usable.length < SHOWN) {
+    return { kind: "partial", nom: unique[0],
+             label: usable.length + " extrait(s) seulement — réserve épuisée" };
   }
   return { kind: "done", label: nameOf(unique[0]), nom: unique[0] };
 }
@@ -548,6 +776,9 @@ function card(cluster) {
 function clipRow(cluster, clip, index) {
   const row = document.createElement("div");
   row.className = "clip";
+  row.tabIndex = 0;
+  row.setAttribute("aria-label", "Extrait de " + clock(clip.debut)
+    + ". Espace : lecture ou pause. Flèches : un demi-seconde. C : couper ici.");
   const duration = clip.duree;
   let selected = 0;
 
@@ -562,8 +793,12 @@ function clipRow(cluster, clip, index) {
   meta.innerHTML =
     '<span class="span-abs">' + clock(clip.debut) + " → " + shortClock(clip.debut + duration) + "</span>" +
     "<span>" + Math.round(duration) + " secondes d'extrait</span>" +
+    (index >= SHOWN ? '<span class="chip-spare">extrait de réserve</span>' : "") +
     (clip.video ? '<a href="' + clip.video + '" target="_blank" rel="noopener">ouvrir la vidéo à cet instant ↗</a>' : "");
-  top.append(play, meta);
+  const pos = document.createElement("span");
+  pos.className = "pos";
+  pos.setAttribute("aria-live", "off");
+  top.append(play, meta, pos);
   row.appendChild(top);
 
   if (clip.texte) {
@@ -575,7 +810,19 @@ function clipRow(cluster, clip, index) {
 
   const strip = document.createElement("div");
   strip.className = "strip";
+  strip.title = "Cliquer : placer la lecture ici et choisir ce morceau";
   row.appendChild(strip);
+
+  /* Le lecteur natif donne, sans une ligne de code, ce qui manquait : barre
+     de progression, volume, vitesse (menu de Firefox), clavier. La bande
+     au-dessus reste l'outil de découpe ; les deux suivent la même lecture. */
+  const audio = document.createElement("audio");
+  audio.className = "native";
+  audio.controls = true;
+  audio.preload = "metadata";
+  audio.src = clip.audio;
+  audio.setAttribute("aria-label", "Lecteur de l'extrait de " + clock(clip.debut));
+  row.appendChild(audio);
 
   const tools = document.createElement("div");
   tools.className = "tools";
@@ -583,41 +830,125 @@ function clipRow(cluster, clip, index) {
     '<button data-act="cut">Couper ici</button>' +
     '<button data-act="play-seg">Écouter ce morceau</button>' +
     '<button data-act="merge">Fusionner à gauche</button>' +
+    '<span class="speed" role="group" aria-label="Vitesse de lecture">' +
+      SPEEDS.map(rate => '<button data-act="speed" data-rate="' + rate + '" aria-pressed="'
+        + (rate === 1) + '">' + String(rate).replace(".", ",") + '×</button>').join("") +
+    "</span>" +
     '<span class="bound-read" data-role="read"></span>' +
     "<label>début <input type='number' step='0.1' min='0' data-role='from'></label>" +
     "<label>fin <input type='number' step='0.1' min='0' data-role='to'></label>";
   row.appendChild(tools);
 
+  const keys = document.createElement("p");
+  keys.className = "keys";
+  keys.innerHTML = "<kbd>espace</kbd> lecture / pause &nbsp;·&nbsp; <kbd>←</kbd><kbd>→</kbd> ± 0,5 s "
+    + "(<kbd>Maj</kbd> : ± 2 s) &nbsp;·&nbsp; <kbd>c</kbd> couper ici";
+  row.appendChild(keys);
+
   const who = document.createElement("div");
   who.className = "who";
   who.innerHTML = "<span class='who-label'>le morceau choisi, c'est :</span>";
   DATA.intervenants.forEach(person => who.appendChild(
-    whoButton(person.id, person.nom, person.role)));
+    whoButton(person.id, person.role === "candidate" ? person.nom.toUpperCase() : person.nom,
+              person.role)));
   who.appendChild(whoButton("inconnu", "aucun / je ne sais pas", "neutral"));
+  /* Un morceau peut être inutilisable sans que l'extrait le soit : des
+     applaudissements entre deux phrases, trois secondes de voix mêlées. Le
+     marquer le retire de l'empreinte et garde le motif ; un second clic
+     revient en arrière, nommer quelqu'un aussi. */
+  const badLabel = document.createElement("span");
+  badLabel.className = "bad-label";
+  badLabel.textContent = "ou ce morceau est inutilisable :";
+  who.appendChild(badLabel);
+  Object.keys(REASONS).forEach(reason => {
+    const button = document.createElement("button");
+    button.textContent = REASONS[reason];
+    button.dataset.bad = reason;
+    button.setAttribute("aria-pressed", "false");
+    who.appendChild(button);
+  });
   row.appendChild(who);
 
-  /* --- audio ------------------------------------------------------------ */
-  const audio = new Audio(clip.audio);
-  audio.preload = "none";
-  let stopAt = null;
+  /* Un extrait sans issue s'écarte, avec son motif. Le motif est une donnée :
+     « voix mêlées » est précisément ce qu'aucun détecteur n'attrape ici, et
+     une oreille qui le note fait ce que la machine ne sait pas faire. */
+  const unusable = document.createElement("div");
+  unusable.className = "unusable";
+  unusable.innerHTML = "<span>cet extrait est inutilisable :</span>" +
+    Object.keys(REASONS).map(reason =>
+      '<button data-reason="' + reason + '" aria-pressed="false">' + REASONS[reason] + "</button>").join("");
+  row.appendChild(unusable);
 
-  play.addEventListener("click", () => {
+  function applyUnusable() {
+    const reason = unusableOf(cluster.grappe, index);
+    if (reason) row.dataset.unusable = reason; else delete row.dataset.unusable;
+    unusable.querySelectorAll("button[data-reason]").forEach(button =>
+      button.setAttribute("aria-pressed", String(button.dataset.reason === reason)));
+  }
+  unusable.addEventListener("click", event => {
+    const reason = event.target.dataset.reason;
+    if (!reason) return;
+    const key = keyOf(cluster.grappe, index);
+    const entry = state[key] || (state[key] = { segments: null });
+    entry.inutilisable = entry.inutilisable === reason ? "" : reason;
+    if (entry.inutilisable && !audio.paused) audio.pause();
+    applyUnusable();
+    save(); refresh();
+  });
+  applyUnusable();
+
+  /* --- lecture ---------------------------------------------------------- */
+  let stopAt = null;
+  let hintTimer = null;
+
+  function showPos() {
+    if (hintTimer) return;
+    const t = audio.currentTime || 0;
+    pos.textContent = tenths(t) + " s sur " + Math.round(duration) + " · " + preciseClock(clip.debut + t);
+  }
+  function hint(text) {
+    clearTimeout(hintTimer);
+    pos.textContent = text;
+    pos.dataset.hint = "1";
+    hintTimer = setTimeout(() => {
+      hintTimer = null; delete pos.dataset.hint; showPos();
+    }, 2200);
+  }
+  function tick() {
+    movePlayhead(); showPos();
+    if (!audio.paused && !audio.ended) requestAnimationFrame(tick);
+  }
+  function toggle() {
     if (playing && playing.audio !== audio) playing.stop();
     if (!audio.paused) { audio.pause(); return; }
     stopAt = null;
     audio.play();
-  });
+  }
+  function seek(delta) {
+    audio.currentTime = Math.min(Math.max(0, (audio.currentTime || 0) + delta), duration);
+    stopAt = null;
+    movePlayhead(); showPos();
+  }
+  function seekTo(seconds) {
+    audio.currentTime = Math.min(Math.max(0, seconds), duration);
+    stopAt = null;
+    movePlayhead(); showPos();
+  }
+
+  play.addEventListener("click", toggle);
   audio.addEventListener("play", () => {
     play.dataset.playing = "1"; play.innerHTML = ICON_STOP;
     playing = { audio: audio, stop: () => audio.pause() };
+    requestAnimationFrame(tick);
   });
   ["pause", "ended"].forEach(event => audio.addEventListener(event, () => {
     play.dataset.playing = "0"; play.innerHTML = ICON_PLAY;
+    movePlayhead(); showPos();
   }));
   audio.addEventListener("timeupdate", () => {
     if (stopAt !== null && audio.currentTime >= stopAt) { audio.pause(); stopAt = null; }
-    movePlayhead();
   });
+  audio.addEventListener("seeked", () => { movePlayhead(); showPos(); });
 
   /* --- la bande --------------------------------------------------------- */
   const playhead = document.createElement("div");
@@ -626,26 +957,36 @@ function clipRow(cluster, clip, index) {
   function movePlayhead() {
     playhead.style.left = (100 * (audio.currentTime || 0) / duration) + "%";
   }
+  function timeAt(clientX) {
+    const rect = strip.getBoundingClientRect();
+    return Math.min(Math.max(0, (clientX - rect.left) / rect.width * duration), duration);
+  }
+  function segmentAt(seconds) {
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    const hit = segments.findIndex(seg => seconds >= seg.a && seconds < seg.b);
+    return hit < 0 ? segments.length - 1 : hit;
+  }
 
   function paint() {
     const segments = segmentsOf(cluster.grappe, index, duration);
     if (selected >= segments.length) selected = segments.length - 1;
     strip.textContent = "";
 
+    /* Les morceaux ne prennent aucun événement : un clic dans la bande est
+       toujours reçu par la bande, qui place la lecture ET choisit le morceau
+       sous le clic. L'ancienne version laissait le morceau intercepter le
+       clic pour se sélectionner, et la bande ne recevait jamais rien. */
     segments.forEach((seg, position) => {
       const block = document.createElement("div");
       block.className = "seg";
       block.style.left = (100 * seg.a / duration) + "%";
       block.style.width = (100 * (seg.b - seg.a) / duration) + "%";
       block.dataset.labelled = seg.who ? "1" : "0";
+      block.dataset.bad = seg.bad ? "1" : "0";
       block.dataset.selected = position === selected ? "1" : "0";
-      block.textContent = seg.who ? shortName(seg.who) : (seg.b - seg.a > 2.5 ? "à nommer" : "");
+      block.textContent = seg.who ? shortName(seg.who)
+        : seg.bad ? REASONS[seg.bad] : (seg.b - seg.a > 2.5 ? "à nommer" : "");
       block.title = preciseClock(clip.debut + seg.a) + " → " + preciseClock(clip.debut + seg.b);
-      block.addEventListener("mousedown", event => {
-        event.stopPropagation();
-        selected = position;
-        paint();
-      });
       strip.appendChild(block);
     });
 
@@ -656,20 +997,22 @@ function clipRow(cluster, clip, index) {
       handle.style.left = (100 * seg.a / duration) + "%";
       handle.setAttribute("aria-label", "Coupure à " + preciseClock(clip.debut + seg.a)
         + " — flèches pour déplacer");
-      handle.addEventListener("mousedown", event => {
+      handle.addEventListener("pointerdown", event => {
+        if (event.button !== 0) return;
         event.preventDefault(); event.stopPropagation();
         drag(position);
       });
       handle.addEventListener("keydown", event => {
         const step = event.shiftKey ? 1 : 0.1;
-        if (event.key === "ArrowLeft") { event.preventDefault(); nudge(position, -step); }
-        if (event.key === "ArrowRight") { event.preventDefault(); nudge(position, step); }
+        if (event.key === "ArrowLeft") { event.preventDefault(); event.stopPropagation(); nudge(position, -step); }
+        if (event.key === "ArrowRight") { event.preventDefault(); event.stopPropagation(); nudge(position, step); }
       });
       strip.appendChild(handle);
     });
 
     strip.appendChild(playhead);
     movePlayhead();
+    showPos();
 
     const seg = segments[selected];
     tools.querySelector('[data-role="read"]').textContent =
@@ -681,6 +1024,8 @@ function clipRow(cluster, clip, index) {
     if (document.activeElement !== to) to.value = seg.b.toFixed(1);
     who.querySelectorAll("button[data-who]").forEach(button =>
       button.setAttribute("aria-pressed", String(button.dataset.who === seg.who)));
+    who.querySelectorAll("button[data-bad]").forEach(button =>
+      button.setAttribute("aria-pressed", String(!!seg.bad && button.dataset.bad === seg.bad)));
   }
 
   function commit() { save(); paint(); refresh(); }
@@ -701,41 +1046,62 @@ function clipRow(cluster, clip, index) {
     if (handles[position - 1]) handles[position - 1].focus();
   }
   function drag(position) {
-    const rect = strip.getBoundingClientRect();
-    const move = event => {
-      boundary(position, (event.clientX - rect.left) / rect.width * duration);
-      paint();
-    };
+    const move = event => { boundary(position, timeAt(event.clientX)); paint(); };
     const up = () => {
-      document.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseup", up);
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerup", up);
+      document.removeEventListener("pointercancel", up);
       commit();
     };
-    document.addEventListener("mousemove", move);
-    document.addEventListener("mouseup", up);
+    document.addEventListener("pointermove", move);
+    document.addEventListener("pointerup", up);
+    document.addEventListener("pointercancel", up);
   }
 
-  strip.addEventListener("mousedown", event => {
-    const rect = strip.getBoundingClientRect();
-    audio.currentTime = (event.clientX - rect.left) / rect.width * duration;
-    movePlayhead();
+  function cutHere() {
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    const at = audio.currentTime || 0;
+    const position = segments.findIndex(seg => at > seg.a + 0.2 && at < seg.b - 0.2);
+    if (position < 0) {
+      hint(at < 0.2 ? "placez d'abord la lecture là où couper"
+                    : "trop près d'une coupure existante");
+      return;
+    }
+    const seg = segments[position];
+    segments.splice(position, 1,
+      { a: seg.a, b: at, who: seg.who },
+      { a: at, b: seg.b, who: seg.who });
+    selected = position + 1;
+    commit();
+    hint("coupé à " + tenths(at) + " s");
+  }
+
+  /* Un seul geste : placer la lecture et choisir le morceau sous le clic. */
+  strip.addEventListener("pointerdown", event => {
+    if (event.button !== 0) return;
+    if (event.target.closest(".handle")) return;
+    const t = timeAt(event.clientX);
+    seekTo(t);
+    selected = segmentAt(t);
+    paint();
+    row.focus({ preventScroll: true });
+  });
+
+  row.addEventListener("keydown", event => {
+    const target = event.target;
+    if (target.matches("input, textarea, a, .handle")) return;
+    if (target.tagName === "BUTTON" && event.key === " ") return;   // espace active le bouton
+    if (event.key === " ") { event.preventDefault(); toggle(); }
+    else if (event.key === "ArrowLeft") { event.preventDefault(); seek(-(event.shiftKey ? BIG_STEP : STEP)); }
+    else if (event.key === "ArrowRight") { event.preventDefault(); seek(event.shiftKey ? BIG_STEP : STEP); }
+    else if (event.key === "c" || event.key === "C") { event.preventDefault(); cutHere(); }
   });
 
   tools.addEventListener("click", event => {
     const action = event.target.dataset.act;
     if (!action) return;
     const segments = segmentsOf(cluster.grappe, index, duration);
-    if (action === "cut") {
-      const at = audio.currentTime;
-      const position = segments.findIndex(seg => at > seg.a + 0.2 && at < seg.b - 0.2);
-      if (position < 0) return;
-      const seg = segments[position];
-      segments.splice(position, 1,
-        { a: seg.a, b: at, who: seg.who },
-        { a: at, b: seg.b, who: seg.who });
-      selected = position + 1;
-      commit();
-    }
+    if (action === "cut") cutHere();
     if (action === "merge") {
       if (selected === 0 || segments.length < 2) return;
       segments[selected - 1].b = segments[selected].b;
@@ -749,6 +1115,12 @@ function clipRow(cluster, clip, index) {
       audio.currentTime = seg.a;
       stopAt = seg.b;
       audio.play();
+    }
+    if (action === "speed") {
+      const rate = parseFloat(event.target.dataset.rate);
+      audio.playbackRate = rate;
+      tools.querySelectorAll('[data-act="speed"]').forEach(button =>
+        button.setAttribute("aria-pressed", String(parseFloat(button.dataset.rate) === rate)));
     }
   });
 
@@ -765,10 +1137,16 @@ function clipRow(cluster, clip, index) {
 
   who.addEventListener("click", event => {
     const id = event.target.dataset.who;
-    if (!id) return;
+    const bad = event.target.dataset.bad;
+    if (!id && !bad) return;
     const segments = segmentsOf(cluster.grappe, index, duration);
     const seg = segments[selected];
-    seg.who = seg.who === id ? "" : id;
+    if (id) {
+      seg.who = seg.who === id ? "" : id;
+      if (seg.who) delete seg.bad;
+    } else {
+      if (seg.bad === bad) delete seg.bad; else { seg.bad = bad; seg.who = ""; }
+    }
     commit();
   });
 
@@ -803,9 +1181,14 @@ function refresh() {
     const badge = box.querySelector('[data-role="verdict"]');
     badge.textContent = result.label;
     badge.dataset.kind = result.kind;
-    cluster.extraits.forEach((clip, index) => {
+    const active = activeClips(cluster);
+    box.querySelectorAll(".clip").forEach((rowEl, index) => {
+      rowEl.hidden = !active.includes(index);
+    });
+    active.forEach(index => {
       total += 1;
-      if (dominant(cluster.grappe, index, clip.duree)) answered += 1;
+      if (unusableOf(cluster.grappe, index)
+          || dominant(cluster.grappe, index, cluster.extraits[index].duree)) answered += 1;
     });
     if (result.kind === "done") done += 1;
   });
@@ -819,7 +1202,9 @@ function refresh() {
 
 function exportYaml() {
   const lines = ["# Ecoute de controle — LaREF 2026",
+                 "# video : " + (DATA.video || "(aucune)"),
                  "# morceaux : [debut, fin, qui] en secondes depuis le debut du debat",
+                 "# inutilisables : [debut, fin, motif] — extraits ecartes a l'oreille",
                  "grappes:"];
   DATA.grappes.forEach(cluster => {
     const result = verdict(cluster);
@@ -827,9 +1212,21 @@ function exportYaml() {
     lines.push("  nom_suggere: " + cluster.nomSuggere);
     lines.push("  confirme: " + (result.kind === "done" ? result.nom
       : result.kind === "split" ? "plusieurs" : ""));
-    const marked = [];
-    cluster.extraits.forEach((clip, index) => {
+    const marked = [], dropped = [];
+    activeClips(cluster).forEach(index => {
+      const clip = cluster.extraits[index];
+      const reason = unusableOf(cluster.grappe, index);
+      if (reason) {
+        dropped.push("  - [" + clip.debut.toFixed(1) + ", " + (clip.debut + clip.duree).toFixed(1)
+          + ", " + reason + "]   # " + shortClock(clip.debut) + " — " + REASONS[reason]);
+        return;
+      }
       segmentsOf(cluster.grappe, index, clip.duree).forEach(seg => {
+        if (seg.bad) {
+          dropped.push("  - [" + (clip.debut + seg.a).toFixed(1) + ", " + (clip.debut + seg.b).toFixed(1)
+            + ", " + seg.bad + "]   # " + shortClock(clip.debut + seg.a) + " — " + REASONS[seg.bad]);
+          return;
+        }
         if (!seg.who) return;
         marked.push("  - [" + (clip.debut + seg.a).toFixed(1) + ", "
           + (clip.debut + seg.b).toFixed(1) + ", " + seg.who + "]   # "
@@ -839,6 +1236,10 @@ function exportYaml() {
     if (marked.length) {
       lines.push("  morceaux:");
       marked.forEach(line => lines.push(line));
+    }
+    if (dropped.length) {
+      lines.push("  inutilisables:   # [debut, fin, motif] — superposition ou inaudible");
+      dropped.forEach(line => lines.push(line));
     }
   });
   return lines.join("\n");
@@ -873,5 +1274,30 @@ document.getElementById("lede").textContent =
 const link = document.getElementById("video-link");
 if (DATA.video) { link.href = DATA.video; } else { link.remove(); }
 
+/* La provenance, telle qu'elle a été vue au moment de fabriquer la page :
+   un lien vers une vidéo privée est un lien qui ment, et la page le dit
+   avant que quelqu'un ne clique. */
+const videoState = document.getElementById("video-state");
+const seen = DATA.videoEtat;
+if (!seen) {
+  videoState.textContent = "Source non vérifiée à la fabrication de cette page.";
+} else if (seen.statut === "public") {
+  videoState.textContent = "Vidéo vérifiée le " + frenchDate(seen.verifiee_le)
+    + " : « " + seen.titre + " » (" + seen.chaine + ").";
+  videoState.dataset.state = "ok";
+} else if (seen.statut === "private_or_removed") {
+  videoState.textContent = "Le lien vidéo ne répondait plus le " + frenchDate(seen.verifiee_le)
+    + " (vidéo privée ou retirée). Les extraits embarqués suffisent à l'écoute.";
+  videoState.dataset.state = "warn";
+} else {
+  videoState.textContent = "Vidéo non vérifiable le " + frenchDate(seen.verifiee_le) + ".";
+}
+function frenchDate(iso) {
+  if (!iso) return "?";
+  const [y, m, d] = iso.split("-");
+  return d + "/" + m + "/" + y;
+}
+
 render();
+connect();
 </script>

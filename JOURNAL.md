@@ -653,3 +653,155 @@ sous-titres ont-ils réellement été tirés ?
 
 Rien n'a été corrigé ce soir : la reprise est préparée dans
 [`PROCHAINE-SESSION.md`](PROCHAINE-SESSION.md), qui ouvre la session 005.
+
+---
+
+## Session 005 — 1er septembre 2026 (soir)
+
+**Objet** : reprise à froid depuis `PROCHAINE-SESSION.md`. Chantier 1 :
+la provenance, puis la page d'écoute.
+
+### La provenance : le manifeste n'était pas faux, la source a bougé
+
+La passation posait la question dans le bon ordre — *de quelle vidéo les
+sous-titres viennent-ils réellement ?* — mais avec une prémisse fausse : « une
+mauvaise URL depuis la session 001 ». Vérifié avant de corriger quoi que ce
+soit :
+
+| Pièce | Ce qu'elle dit |
+|---|---|
+| `data/audio/laref2026.webm` | téléchargé le **31/08 à 21 h 32**, 11 541 s |
+| `data/laref2026.json` | récupéré le 31/08 à 21 h 06, dernier bloc à 11 541,2 s, `source: VM8cGxOtUvA` |
+| `VM8cGxOtUvA` | **privée** le 01/09 (oEmbed 403, yt-dlp « Private video ») |
+| `z0gJwsrODEw` | publique, « #LAREF26 \| DÉBAT \| PRÉSIDENTIELLE 2027 », chaîne MEDEF, **mise en ligne le 01/09**, 11 553 s |
+
+`fetch_transcript.py` ne peut pas produire 484 blocs depuis une vidéo privée :
+le 31 août, `VM8cGxOtUvA` était publique, et c'est bien d'elle que viennent
+les sous-titres et l'audio. Le MEDEF l'a retirée et a remis le même débat en
+ligne le lendemain sous un autre identifiant, douze secondes plus long.
+
+**Même enregistrement, prouvé par le texte.** Dix phrases de huit mots prises
+tous les 950 s dans la transcription stockée ont été cherchées dans les
+sous-titres de la vidéo publique : toutes retrouvées, au même instant à
+**± 0,5 s** près — la gigue des sous-titres automatiques. Les minutages du
+projet valent donc pour la nouvelle vidéo sans décalage, et les 42 liens
+horodatés de la page d'écoute sont justes une fois l'identifiant remplacé.
+
+### Décisions
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-065** | **Le manifeste enregistre ce qui a été vu, pas seulement une adresse** : titre, chaîne, durée, date de vérification — et l'adresse initiale quand la source a bougé, avec la preuve que c'est le même enregistrement. | Une URL vraie le 31/08 était privée le 01/09. Sans titre ni durée, « déplacée » et « fausse » sont indiscernables, et la passation a conclu à tort à une faute d'origine. |
+| **D-066** | **La provenance est sondée au lancement.** `fetch_transcript.py` consigne le titre, la chaîne et la date de récupération dans la transcription ; `confirmation_page.py` sonde la source avant de fabriquer la page, et la page affiche l'état constaté. | Rien dans la chaîne n'avait jamais ouvert l'URL déclarée (METHODE §10). Un lien vers une vidéo privée est un lien qui ment, et c'est un lecteur qui l'a trouvé. |
+| **D-067** | **Une donnée dérivée n'est jamais la seule trace d'une donnée primaire.** `confirmation.yaml` porte désormais `debut_s` ; la page reconstruit les liens depuis le manifeste au lieu de les recopier. | La seconde exacte d'un extrait ne vivait que dans le lien vidéo, que la page décomposait pour la retrouver. Changer l'URL cassait la page au lieu de changer un lien. |
+| **D-068** | **Dans la bande, un clic est un seul geste : placer la lecture et choisir le morceau sous le clic.** Les morceaux ne prennent aucun événement. | Chaque morceau interceptait le clic pour se sélectionner, et la bande ne recevait jamais rien : au premier affichage, un seul morceau couvrait tout, donc aucun clic ne déplaçait la lecture. Constaté sous Firefox, cause confirmée par lecture du code avant correction. |
+| **D-069** | **Le lecteur natif est ajouté sous la bande, pas remplacé par elle.** Espace lit ou met en pause, les flèches déplacent d'une demi-seconde (deux avec Maj), `c` coupe à la position courante, et la position est affichée en clair. | « Couper ici » n'a de sens que si l'on sait où est *ici*. Le `<audio controls>` donne barre, volume, vitesse et clavier pour zéro ligne ; la bande reste l'outil de découpe, les deux suivent la même lecture. |
+
+### Constaté à l'usage, pendant la session
+
+L'auteur a écouté. Premier retour : un extrait de Marine Tondelier (2 h 00 min
+31 s) est inutilisable — trop de voix mêlées — et la page n'offrait aucun moyen
+de le dire. Deuxième retour : une vitesse accélérée manquait. Troisième : des
+applaudissements dans un extrait.
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-070** | **Un extrait s'écarte avec son motif** — `superposition` ou `inaudible` — et le motif sort dans le YAML sous `inutilisables`. | Sans cette option, l'oreille était forcée de nommer ou de laisser vide, et un vide ne dit pas pourquoi. « Voix mêlées » est précisément ce qu'aucun détecteur n'attrape ici (pyannote, non installé) : une personne qui le note fait ce que la machine ne sait pas faire, et cette annotation vaut d'être gardée. |
+| **D-071** | **Cinq extraits par voix, trois montrés, deux de réserve.** Un extrait écarté révèle le suivant. | La règle des trois morceaux ne se contourne pas (D-064). Sans réserve, un seul extrait inutilisable laissait deux morceaux, et la voix devenait inenrôlable pour une raison qui ne tient pas à elle. Régénéré par `enrol.py` depuis le cache : les trois premiers extraits de chaque grappe sont inchangés, donc le travail enregistré dans le navigateur reste indexé juste. |
+| **D-072** | **Vitesse à trois positions : 0,75×, 1×, 1,5×.** | Ralentir sert à trancher entre deux voix proches ; accélérer sert à balayer un extrait déjà reconnu. Les deux gestes existent, il faut les deux boutons. |
+
+| **D-073** | **Le résultat de l'écoute est enregistré hors du navigateur**, dans la base de l'artefact : un document par débat (`ecoute/laref2026`), réécrit en entier après chaque geste, la version la plus récente gagne. `scripts/confirmation_merge.py` le convertit en `confirmation.yaml`. | Le navigateur ne garde le travail que pour une personne, un appareil, une origine — la copie locale de la page et la page en ligne ne se voyaient pas. Et un résultat qui doit être copié-collé pour exister dans le projet finit par ne pas l'être. La page rend d'abord depuis le navigateur, se raccorde ensuite ; hors de claude.ai, elle dit « dans ce navigateur seulement ». |
+
+| **D-074** | **Un morceau peut être inutilisable sans que l'extrait le soit** : trois motifs (voix mêlées, applaudissements, inaudible), à droite des noms, réversibles d'un clic. Il sort de l'empreinte et sort dans `inutilisables` avec ses bornes. Les candidats sont en capitales dans les boutons et dans la bande. | Retour d'usage : des applaudissements entre deux phrases ne condamnent pas l'extrait, et laisser le bout « sans nom » ne disait pas pourquoi. Le motif est une donnée. |
+
+**Bug consigné.** Le bouton « cet extrait est inutilisable » ne faisait rien :
+l'état était écrit sous la clé de l'objet grappe (`[object Object]:0`) au lieu
+de son numéro, et relu sous la bonne clé — donc jamais retrouvé. Trouvé par
+l'auteur en cliquant, pas par moi en relisant. Le contrôle de syntaxe ne voit
+pas une clé fausse ; seul l'usage la voit.
+
+| **D-075** | **La page locale porte le projet comme la page en ligne** : `scripts/ecoute_serveur.py` (lancé par `Ecoute-Demarrer.bat`) sert la page sur 127.0.0.1 et reçoit l'état après chaque geste ; il l'écrit dans `data/empreintes/ecoute.json`, versionné, et régénère `confirmation.yaml` dans la foulée. La page cherche la base de l'artefact d'abord, le serveur local ensuite, et dit lequel elle a trouvé. | Un navigateur ne peut pas écrire un fichier, et l'auteur veut travailler hors de claude.ai sans rien perdre ni copier. Le serveur est au projet ce que la base est à l'artefact : le même document, la même règle « la version la plus récente gagne ». Testé de bout en bout : page servie, état reçu, YAML régénéré avec les morceaux et les motifs. |
+
+**Les applaudissements** ne gênent pas l'écoute mais entrent dans l'empreinte :
+l'embedding se calcule sur les bornes exactes des morceaux nommés, et une
+salle qui applaudit n'est la voix de personne. La consigne le dit désormais :
+couper, laisser le bout sans nom. La bande existe pour ça.
+
+### Ce qui a été régénéré, et comment on sait que rien d'autre n'a bougé
+
+`enrol.py` a été relancé depuis le cache de vecteurs (une seconde, sans GPU).
+Le diff de `confirmation.yaml` fait exactement 126 lignes : 42 liens vidéo
+remplacés (84 lignes) et 42 champs `debut_s` ajoutés. Mêmes grappes, mêmes
+trois candidats retenus à la distance 0,60, même échec du bootstrap. Le
+regroupement est déterministe et le travail déjà enregistré dans le navigateur
+— indexé par grappe et par extrait — reste valable.
+
+**Non modifié, à dessein** : le champ `source` de `data/laref2026.json` et de
+`data/laref2026.whisper.json`. Il dit d'où ces fichiers ont réellement été
+tirés, et c'est vrai. La passation demandait de le corriger ; ce serait
+réécrire une provenance exacte pour la faire ressembler à l'état présent. Le
+lien entre l'adresse initiale et l'adresse actuelle vit dans le manifeste, à
+un seul endroit.
+
+### Mon erreur de lecture, consignée
+
+La passation de la session 004 a écrit « mauvaise URL depuis la session 001 »
+sans avoir regardé les durées ni les dates. Une lecture de vingt minutes — la
+date du webm, celle de la mise en ligne, douze secondes d'écart — suffisait à
+voir qu'il s'agissait d'un déplacement. La leçon rejoint le §11 de la méthode :
+avant de conclure qu'une donnée est fausse, vérifier que l'instrument pouvait
+distinguer *fausse* de *déplacée*. Ici il ne le pouvait pas, faute de titre et
+de durée dans le manifeste — d'où D-065.
+
+### Écarté, et pourquoi
+
+- **Refuser de fabriquer la page si la source est privée.** Les extraits sont
+  embarqués ; la page reste utile hors ligne. Elle avertit, et le générateur
+  avertit ; c'est la personne qui diffuse qui tranche.
+- **Vérifier l'identité de la vidéo par le programme.** oEmbed rend un titre,
+  pas une durée ni un contenu. L'identité a été établie une fois, à la main,
+  et consignée dans le manifeste avec sa méthode. Un contrôle automatique
+  demanderait yt-dlp et une comparaison de sous-titres à chaque lancement :
+  disproportionné pour une source qui bouge une fois par an.
+
+### Reste ouvert
+
+- **La confirmation à l'oreille n'a toujours pas eu lieu.** La page est
+  désormais utilisable ; c'est la prochaine action, et elle ne dépend plus de
+  rien d'autre.
+- La page n'a été vérifiée que par lecture de code et contrôle de syntaxe : le
+  premier essai réel sous Firefox dira si le geste est le bon.
+- Tout ce que listait la clôture de la session 004 : rouges bloqués, corpus à
+  deux domaines, troisième famille d'ASR, détecteur de superposition.
+
+---
+
+## Clôture de la session 005 — 2 septembre 2026
+
+**Fait, dans l'ordre.**
+
+1. **La provenance, tranchée avant d'être corrigée** : la source avait bougé,
+   pas menti. Le manifeste enregistre désormais ce qui a été vu (D-065), la
+   chaîne sonde la source au lancement (D-066), et une donnée dérivée n'est
+   plus la seule trace d'une donnée primaire (D-067).
+2. **La page d'écoute rendue utilisable**, puis corrigée quatre fois par
+   l'usage dans la même soirée : navigation et clavier (D-068, D-069), extrait
+   inutilisable et réserve (D-070, D-071), vitesse (D-072), morceau
+   inutilisable avec motif (D-074). Un bug de clé trouvé par l'auteur.
+3. **Le résultat rendu persistant** hors du navigateur, des deux côtés : base
+   de l'artefact en ligne (D-073), serveur local dans le dossier (D-075), et
+   un script qui convertit l'un ou l'autre en YAML de confirmation.
+
+**Ce que la session apprend.** La passation de la veille avait diagnostiqué
+une faute là où il y avait un déplacement : vingt minutes de vérification ont
+suffi à le voir, et rien dans le manifeste ne permettait de le voir plus tôt.
+Et la page, relue et contrôlée, avait un bouton qui n'écrivait rien — trouvé
+en cliquant. Deux fois la même leçon, sous deux formes : **ce qu'on n'a pas
+essayé n'est pas vérifié**.
+
+**Ce qui bloque, dans l'ordre.** L'écoute — commencée, pas finie. Puis tout
+ce que listait la clôture de la session 004 : brancher l'attribution, le
+corpus, une troisième famille d'ASR, un détecteur de superposition.
+
+Reprise préparée dans [`PROCHAINE-SESSION.md`](PROCHAINE-SESSION.md), qui
+commence par la question à poser avant tout : où en est l'écoute ?

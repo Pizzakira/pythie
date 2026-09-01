@@ -1,13 +1,9 @@
 # Une minute d'ecoute par voix, et l'attribution devient utilisable.
 #
-# Pour chaque grappe : ecouter les trois moments indiques dans
-# data/audio/laref2026.wav, puis remplir `confirme` avec le nom entendu, ou
-# `inconnu` si ce n'est aucun des intervenants, ou `plusieurs` si la
-# grappe melange visiblement deux personnes.
-#
-# `nom_suggere` vient des patronymes prononces juste avant la prise de
-# parole. Ils orientent, ils ne prouvent pas -- c'est exactement ce que
-# votre oreille tranche.
+# Rempli par scripts/confirmation_merge.py depuis l'etat enregistre par la
+# page d'ecoute. `morceaux` : [debut, fin, qui] en secondes depuis le debut
+# du debat ; `inutilisables` : [debut, fin, motif] ; `confirme` : le nom
+# unique quand trois extraits exploitables s'accordent.
 #
 # Puis : scripts/enrol.py ... --confirmer data/empreintes/confirmation.yaml
 
@@ -21,14 +17,25 @@ grappes:
   secondes: 1191.4
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe015_1.mp3
+    debut_s: 8444.2
     minutage: '140:44'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8444s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8444s
   - extrait: data\empreintes\a_confirmer\grappe015_2.mp3
+    debut_s: 8379.5
     minutage: '139:39'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8379s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8379s
   - extrait: data\empreintes\a_confirmer\grappe015_3.mp3
+    debut_s: 4490.52
     minutage: '74:50'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=4490s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=4490s
+  - extrait: data\empreintes\a_confirmer\grappe015_4.mp3
+    debut_s: 4331.32
+    minutage: '72:11'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=4331s
+  - extrait: data\empreintes\a_confirmer\grappe015_5.mp3
+    debut_s: 4249.4
+    minutage: '70:49'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=4249s
   confirme: ''
 - grappe: 3
   nom_suggere: Raphaël Glucksmann
@@ -39,14 +46,25 @@ grappes:
   secondes: 1092.5
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe003_1.mp3
+    debut_s: 5132.54
     minutage: '85:32'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5132s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=5132s
   - extrait: data\empreintes\a_confirmer\grappe003_2.mp3
+    debut_s: 10039.93
     minutage: '167:19'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=10039s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=10039s
   - extrait: data\empreintes\a_confirmer\grappe003_3.mp3
+    debut_s: 10152.35
     minutage: '169:12'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=10152s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=10152s
+  - extrait: data\empreintes\a_confirmer\grappe003_4.mp3
+    debut_s: 6899.04
+    minutage: '114:59'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=6899s
+  - extrait: data\empreintes\a_confirmer\grappe003_5.mp3
+    debut_s: 2703.76
+    minutage: '45:03'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=2703s
   confirme: ''
 - grappe: 2
   nom_suggere: Bruno Retailleau
@@ -57,14 +75,25 @@ grappes:
   secondes: 1080.8
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe002_1.mp3
+    debut_s: 3698.56
     minutage: '61:38'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3698s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=3698s
   - extrait: data\empreintes\a_confirmer\grappe002_2.mp3
+    debut_s: 435.18
     minutage: '7:15'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=435s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=435s
   - extrait: data\empreintes\a_confirmer\grappe002_3.mp3
+    debut_s: 7101.58
     minutage: '118:21'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7101s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7101s
+  - extrait: data\empreintes\a_confirmer\grappe002_4.mp3
+    debut_s: 8593.66
+    minutage: '143:13'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8593s
+  - extrait: data\empreintes\a_confirmer\grappe002_5.mp3
+    debut_s: 3593.7
+    minutage: '59:53'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=3593s
   confirme: ''
 - grappe: 0
   nom_suggere: Marine Le Pen
@@ -75,14 +104,25 @@ grappes:
   secondes: 1034.0
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe000_1.mp3
+    debut_s: 3141.32
     minutage: '52:21'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3141s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=3141s
   - extrait: data\empreintes\a_confirmer\grappe000_2.mp3
+    debut_s: 7598.74
     minutage: '126:38'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7598s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7598s
   - extrait: data\empreintes\a_confirmer\grappe000_3.mp3
+    debut_s: 2334.21
     minutage: '38:54'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=2334s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=2334s
+  - extrait: data\empreintes\a_confirmer\grappe000_4.mp3
+    debut_s: 9851.97
+    minutage: '164:11'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9851s
+  - extrait: data\empreintes\a_confirmer\grappe000_5.mp3
+    debut_s: 2246.83
+    minutage: '37:26'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=2246s
   confirme: ''
 - grappe: 4
   nom_suggere: Marine Tondelier
@@ -93,14 +133,25 @@ grappes:
   secondes: 930.7
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe004_1.mp3
+    debut_s: 7231.26
     minutage: '120:31'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7231s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7231s
   - extrait: data\empreintes\a_confirmer\grappe004_2.mp3
+    debut_s: 3472.78
     minutage: '57:52'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3472s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=3472s
   - extrait: data\empreintes\a_confirmer\grappe004_3.mp3
+    debut_s: 1339.96
     minutage: '22:19'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1339s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1339s
+  - extrait: data\empreintes\a_confirmer\grappe004_4.mp3
+    debut_s: 7913.02
+    minutage: '131:53'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7913s
+  - extrait: data\empreintes\a_confirmer\grappe004_5.mp3
+    debut_s: 7281.26
+    minutage: '121:21'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7281s
   confirme: ''
 - grappe: 8
   nom_suggere: Gabriel Attal
@@ -111,14 +162,25 @@ grappes:
   secondes: 795.2
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe008_1.mp3
+    debut_s: 8081.64
     minutage: '134:41'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8081s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8081s
   - extrait: data\empreintes\a_confirmer\grappe008_2.mp3
+    debut_s: 5167.06
     minutage: '86:07'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5167s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=5167s
   - extrait: data\empreintes\a_confirmer\grappe008_3.mp3
+    debut_s: 8171.18
     minutage: '136:11'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8171s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8171s
+  - extrait: data\empreintes\a_confirmer\grappe008_4.mp3
+    debut_s: 1205.02
+    minutage: '20:05'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1205s
+  - extrait: data\empreintes\a_confirmer\grappe008_5.mp3
+    debut_s: 1219.14
+    minutage: '20:19'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1219s
   confirme: ''
 - grappe: 1
   nom_suggere: Édouard Philippe
@@ -129,14 +191,25 @@ grappes:
   secondes: 1087.1
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe001_1.mp3
+    debut_s: 686.9
     minutage: '11:26'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=686s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=686s
   - extrait: data\empreintes\a_confirmer\grappe001_2.mp3
+    debut_s: 4668.26
     minutage: '77:48'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=4668s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=4668s
   - extrait: data\empreintes\a_confirmer\grappe001_3.mp3
+    debut_s: 6635.52
     minutage: '110:35'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=6635s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=6635s
+  - extrait: data\empreintes\a_confirmer\grappe001_4.mp3
+    debut_s: 1960.01
+    minutage: '32:40'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1960s
+  - extrait: data\empreintes\a_confirmer\grappe001_5.mp3
+    debut_s: 4745.58
+    minutage: '79:05'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=4745s
   confirme: ''
 - grappe: 7
   nom_suggere: Patrick Martin
@@ -147,14 +220,25 @@ grappes:
   secondes: 527.6
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe007_1.mp3
+    debut_s: 352.3
     minutage: '5:52'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=352s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=352s
   - extrait: data\empreintes\a_confirmer\grappe007_2.mp3
+    debut_s: 2149.71
     minutage: '35:49'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=2149s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=2149s
   - extrait: data\empreintes\a_confirmer\grappe007_3.mp3
+    debut_s: 7624.78
     minutage: '127:04'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7624s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7624s
+  - extrait: data\empreintes\a_confirmer\grappe007_4.mp3
+    debut_s: 1838.03
+    minutage: '30:38'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1838s
+  - extrait: data\empreintes\a_confirmer\grappe007_5.mp3
+    debut_s: 8221.46
+    minutage: '137:01'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=8221s
   confirme: ''
 - grappe: 5
   nom_suggere: Patrick Martin
@@ -165,14 +249,25 @@ grappes:
   secondes: 253.1
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe005_1.mp3
+    debut_s: 11217.31
     minutage: '186:57'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11217s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11217s
   - extrait: data\empreintes\a_confirmer\grappe005_2.mp3
+    debut_s: 11241.39
     minutage: '187:21'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11241s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11241s
   - extrait: data\empreintes\a_confirmer\grappe005_3.mp3
+    debut_s: 198.34
     minutage: '3:18'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=198s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=198s
+  - extrait: data\empreintes\a_confirmer\grappe005_4.mp3
+    debut_s: 166.48
+    minutage: '2:46'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=166s
+  - extrait: data\empreintes\a_confirmer\grappe005_5.mp3
+    debut_s: 218.68
+    minutage: '3:38'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=218s
   confirme: ''
 - grappe: 17
   nom_suggere: Patrick Martin
@@ -183,14 +278,25 @@ grappes:
   secondes: 148.4
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe017_1.mp3
+    debut_s: 11397.65
     minutage: '189:57'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11397s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11397s
   - extrait: data\empreintes\a_confirmer\grappe017_2.mp3
+    debut_s: 11377.02
     minutage: '189:37'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11377s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11377s
   - extrait: data\empreintes\a_confirmer\grappe017_3.mp3
+    debut_s: 275.66
     minutage: '4:35'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=275s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=275s
+  - extrait: data\empreintes\a_confirmer\grappe017_4.mp3
+    debut_s: 11357.65
+    minutage: '189:17'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11357s
+  - extrait: data\empreintes\a_confirmer\grappe017_5.mp3
+    debut_s: 11093.51
+    minutage: '184:53'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=11093s
   confirme: ''
 - grappe: 6
   nom_suggere: Eric Malenfer
@@ -201,14 +307,25 @@ grappes:
   secondes: 92.1
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe006_1.mp3
+    debut_s: 1530.77
     minutage: '25:30'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1530s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1530s
   - extrait: data\empreintes\a_confirmer\grappe006_2.mp3
+    debut_s: 1435.84
     minutage: '23:55'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1435s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1435s
   - extrait: data\empreintes\a_confirmer\grappe006_3.mp3
+    debut_s: 1579.61
     minutage: '26:19'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1579s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1579s
+  - extrait: data\empreintes\a_confirmer\grappe006_4.mp3
+    debut_s: 1427.88
+    minutage: '23:47'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1427s
+  - extrait: data\empreintes\a_confirmer\grappe006_5.mp3
+    debut_s: 1524.81
+    minutage: '25:24'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=1524s
   confirme: ''
 - grappe: 11
   nom_suggere: Colombe Lecoufle
@@ -219,14 +336,25 @@ grappes:
   secondes: 83.9
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe011_1.mp3
+    debut_s: 7726.1
     minutage: '128:46'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7726s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7726s
   - extrait: data\empreintes\a_confirmer\grappe011_2.mp3
+    debut_s: 7680.4
     minutage: '128:00'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7680s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7680s
   - extrait: data\empreintes\a_confirmer\grappe011_3.mp3
+    debut_s: 7738.48
     minutage: '128:58'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7738s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7738s
+  - extrait: data\empreintes\a_confirmer\grappe011_4.mp3
+    debut_s: 7689.94
+    minutage: '128:09'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7689s
+  - extrait: data\empreintes\a_confirmer\grappe011_5.mp3
+    debut_s: 7746.34
+    minutage: '129:06'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=7746s
   confirme: ''
 - grappe: 13
   nom_suggere: Joris Brajon
@@ -237,14 +365,25 @@ grappes:
   secondes: 62.8
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe013_1.mp3
+    debut_s: 9274.55
     minutage: '154:34'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9274s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9274s
   - extrait: data\empreintes\a_confirmer\grappe013_2.mp3
+    debut_s: 9283.97
     minutage: '154:43'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9283s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9283s
   - extrait: data\empreintes\a_confirmer\grappe013_3.mp3
+    debut_s: 9291.57
     minutage: '154:51'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9291s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9291s
+  - extrait: data\empreintes\a_confirmer\grappe013_4.mp3
+    debut_s: 9322.23
+    minutage: '155:22'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9322s
+  - extrait: data\empreintes\a_confirmer\grappe013_5.mp3
+    debut_s: 9302.79
+    minutage: '155:02'
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=9302s
   confirme: ''
 - grappe: 12
   nom_suggere: Marine Le Pen
@@ -255,12 +394,23 @@ grappes:
   secondes: 67.4
   ecouter:
   - extrait: data\empreintes\a_confirmer\grappe012_1.mp3
+    debut_s: 5.6
     minutage: 0:05
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=5s
   - extrait: data\empreintes\a_confirmer\grappe012_2.mp3
+    debut_s: 79.74
     minutage: '1:19'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=79s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=79s
   - extrait: data\empreintes\a_confirmer\grappe012_3.mp3
+    debut_s: 93.34
     minutage: '1:33'
-    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=93s
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=93s
+  - extrait: data\empreintes\a_confirmer\grappe012_4.mp3
+    debut_s: 0.0
+    minutage: 0:00
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=0s
+  - extrait: data\empreintes\a_confirmer\grappe012_5.mp3
+    debut_s: 24.1
+    minutage: 0:24
+    video: https://www.youtube.com/watch?v=z0gJwsrODEw&t=24s
   confirme: ''

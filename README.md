@@ -131,8 +131,9 @@ Enrôler les voix, puis les faire confirmer par une oreille humaine :
 ```bash
 python scripts/enrol.py data/audio/debat.wav data/debat.whisper.json
 python scripts/confirmation_page.py          # page d'écoute autonome
-# … écoute, découpage, noms …
-python scripts/enrol.py data/audio/debat.wav data/debat.whisper.json     --confirmer data/empreintes/confirmation.yaml
+python scripts/ecoute_serveur.py             # la sert en local et enregistre chaque geste
+# … écoute, découpage, noms — confirmation.yaml se remplit tout seul …
+python scripts/enrol.py data/audio/debat.wav data/debat.whisper.json \n    --confirmer data/empreintes/confirmation.yaml
 ```
 
 On ne télécharge pas la vidéo, seulement les sous-titres — et on ne republie
@@ -198,7 +199,8 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
   les sept plus grosses grappes reçoivent sept noms de candidats différents,
   mais **aucune empreinte n'est vérifiée par une oreille humaine** — et sans
   cela, aucune attribution ne porte de verdict (`human_verified`, METHODE §12).
-  Il manque quelques minutes d'écoute, préparées dans une page dédiée.
+  Il manque quelques minutes d'écoute, dans une page dédiée rendue utilisable
+  le 1er septembre au soir (clic dans la bande, lecteur natif, clavier).
 - **Rouges** : bloqués en bloc par le programme, jusqu'à un banc qui passe.
 - **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
 - **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
@@ -217,6 +219,13 @@ jeu étalon existe et refuse de calibrer sur six couples de valeurs.
 
 Six instruments ont été pris en défaut et corrigés — aucun n'était visible dans
 le nombre qu'il produisait.
+
+**Le soir, la provenance.** L'URL d'origine du débat menait à une vidéo
+privée. Ce n'était pas une faute du manifeste : la source avait été retirée et
+republiée le lendemain sous un autre identifiant, même enregistrement à
+± 0,5 s près, établi par sondage du texte. Depuis, la chaîne **sonde la source
+au lancement** et le manifeste enregistre ce qui a été vu — titre, chaîne,
+durée, date — et non plus seulement une adresse (`METHODE.md` §10).
 
 ### Documentation
 
