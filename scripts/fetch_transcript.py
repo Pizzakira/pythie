@@ -19,6 +19,10 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pythie.media.provenance import probe_youtube  # noqa: E402
+
 
 def recuperer_vtt(url: str, langue: str = "fr") -> str:
     """Télécharge les sous-titres (manuels si disponibles, sinon automatiques)."""
@@ -142,10 +146,23 @@ def main() -> None:
     print(f"Récupération des sous-titres : {args.url}", file=sys.stderr)
     blocs = fusionner(parser_vtt(recuperer_vtt(args.url, args.langue)), args.bloc)
 
+    # Ce qui a été vu, pas seulement l'adresse : une URL peut cesser de
+    # répondre (la première mise en ligne du débat LaREF est devenue privée le
+    # lendemain de sa récupération). Le titre, la chaîne et la date permettent
+    # de retrouver l'enregistrement ailleurs et de prouver que c'est le même.
+    vu = probe_youtube(args.url)
+    print(vu.describe(), file=sys.stderr)
+
     sortie = Path(args.sortie)
     sortie.parent.mkdir(parents=True, exist_ok=True)
     sortie.write_text(
-        json.dumps({"source": args.url, "blocs": blocs}, ensure_ascii=False, indent=2),
+        json.dumps({
+            "source": args.url,
+            "source_titre": vu.title,
+            "source_chaine": vu.channel,
+            "recuperee_le": vu.checked_on,
+            "blocs": blocs,
+        }, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 

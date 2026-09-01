@@ -241,16 +241,34 @@ lien complet verdict → version → source → citation n'est pas encore assemb
 un seul enregistrement.
 
 **Le contre-exemple, trouvé par un lecteur et non par le programme** : le
-manifeste `data/laref2026.plateau.yaml` déclare depuis la session 001 une URL
-d'origine qui n'est pas celle du débat analysé — elle mène à une vidéo privée.
-Tout ce qui en dérive est faux : les liens horodatés produits pour l'écoute de
-contrôle, et le champ `source` recopié dans deux transcriptions.
+1er septembre, l'URL d'origine déclarée dans `data/laref2026.plateau.yaml`
+menait à une vidéo privée, et les 42 liens horodatés de l'écoute de contrôle
+avec elle.
 
-La leçon dépasse la coquille. **Une provenance ne se vérifie pas toute seule** :
-rien dans la chaîne n'a jamais tenté d'ouvrir cette URL, donc rien n'a jamais pu
-signaler qu'elle était fausse. Un manifeste devrait déclarer sa source ET
-prouver qu'elle est atteignable, au lancement, comme une citation doit être
-retrouvée littéralement dans son document.
+**Ce que j'en ai d'abord conclu était faux.** J'ai écrit que le manifeste
+portait « une mauvaise URL depuis la session 001 ». Vérifié le soir même :
+l'URL était juste le 31 août — les sous-titres et l'audio en viennent, on ne
+récupère pas 484 blocs d'une vidéo privée — et le diffuseur a retiré cette
+mise en ligne pour republier le même enregistrement le lendemain sous un autre
+identifiant. Dix sondages textuels répartis sur le débat tombent au même
+instant à ± 0,5 s dans les deux pistes. La source avait **bougé**, pas menti.
+
+Deux leçons, et non une :
+
+1. **Une provenance ne se vérifie pas toute seule.** Rien dans la chaîne
+   n'avait jamais tenté d'ouvrir cette URL, donc rien ne pouvait signaler
+   qu'elle ne répondait plus. Depuis le 01/09, la récupération des sous-titres
+   et la fabrication de la page d'écoute sondent la source et consignent ce
+   qu'elles ont vu (`pythie/media/provenance.py`, D-066).
+2. **Une adresse seule ne permet pas de distinguer « déplacée » de
+   « fausse ».** Il a fallu la date du fichier téléchargé, sa durée et la date
+   de mise en ligne pour trancher — aucune n'était dans le manifeste. Il porte
+   désormais le titre, la chaîne, la durée, la date de vérification et
+   l'adresse initiale avec la preuve d'identité (D-065). C'est la condition
+   pour qu'un lecteur futur puisse refaire ce que j'ai fait à la main.
+
+Ce qui reste vrai de l'engagement : le lien complet verdict → version → source
+→ citation n'est toujours pas assemblé en un seul enregistrement.
 
 ---
 
@@ -267,7 +285,7 @@ retrouvée littéralement dans son document.
 | 7 | Erreur de mesure ≠ phénomène | **transcription oui, voix non** |
 | 8 | Incertitude déclarée | tenu, non calibré |
 | 9 | Angles morts déclarés | tenu |
-| 10 | Traçabilité | **partiel — une URL d'origine fausse depuis la session 001** |
+| 10 | Traçabilité | **partiel — la source sondée au lancement depuis le 01/09 ; le lien verdict → citation pas encore assemblé** |
 | 11 | Métriques validées par un témoin | **six instruments pris en défaut, tous corrigés** |
 | 12 | Ce qu'une machine propose, une personne le confirme | tenu, par un drapeau dans la donnée |
 
