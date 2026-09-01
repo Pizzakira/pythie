@@ -235,9 +235,22 @@ sur le jeu étalon.
 le JJ/MM contre le corpus version X, source Y millésime Z, citation vérifiée
 littéralement »*.
 
-**État : partiel.** La version de corpus est attachée au rendu ; les journaux
-de réutilisation et de révision existent ; le lien complet verdict → version →
-source → citation n'est pas encore assemblé en un seul enregistrement.
+**État : partiel, et pris en défaut le 01/09.** La version de corpus est
+attachée au rendu ; les journaux de réutilisation et de révision existent ; le
+lien complet verdict → version → source → citation n'est pas encore assemblé en
+un seul enregistrement.
+
+**Le contre-exemple, trouvé par un lecteur et non par le programme** : le
+manifeste `data/laref2026.plateau.yaml` déclare depuis la session 001 une URL
+d'origine qui n'est pas celle du débat analysé — elle mène à une vidéo privée.
+Tout ce qui en dérive est faux : les liens horodatés produits pour l'écoute de
+contrôle, et le champ `source` recopié dans deux transcriptions.
+
+La leçon dépasse la coquille. **Une provenance ne se vérifie pas toute seule** :
+rien dans la chaîne n'a jamais tenté d'ouvrir cette URL, donc rien n'a jamais pu
+signaler qu'elle était fausse. Un manifeste devrait déclarer sa source ET
+prouver qu'elle est atteignable, au lancement, comme une citation doit être
+retrouvée littéralement dans son document.
 
 ---
 
@@ -254,7 +267,7 @@ source → citation n'est pas encore assemblé en un seul enregistrement.
 | 7 | Erreur de mesure ≠ phénomène | **transcription oui, voix non** |
 | 8 | Incertitude déclarée | tenu, non calibré |
 | 9 | Angles morts déclarés | tenu |
-| 10 | Traçabilité | partiel |
+| 10 | Traçabilité | **partiel — une URL d'origine fausse depuis la session 001** |
 | 11 | Métriques validées par un témoin | **six instruments pris en défaut, tous corrigés** |
 | 12 | Ce qu'une machine propose, une personne le confirme | tenu, par un drapeau dans la donnée |
 

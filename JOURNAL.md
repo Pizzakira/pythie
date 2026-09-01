@@ -635,3 +635,21 @@ points, et se confronter à un jeu d'étiquettes écrites d'avance.
 4. **Un détecteur de paroles superposées** (pyannote, sous licence) : sans lui,
    la règle « la superposition s'abstient » reste une intention.
 
+### Constaté à l'usage, après clôture
+
+La page d'écoute a été essayée sous Firefox : **inutilisable en l'état**.
+Impossible de cliquer dans la bande pour se déplacer — les morceaux
+interceptent le clic avant la bande, donc le geste le plus élémentaire ne
+marche jamais ; pas de lecture/pause utilisable ni de navigation fine ; et le
+lien vidéo mène à une vidéo **privée**, le manifeste de plateau portant une
+mauvaise URL d'origine depuis le début (`VM8cGxOtUvA` au lieu de
+`z0gJwsrODEw`).
+
+Ce dernier point n'est pas un défaut d'interface mais **un défaut de
+provenance**, celui que `METHODE.md` §10 interdit : la traçabilité d'un
+résultat passe par l'URL d'origine, et elle est fausse dans un fichier
+versionné depuis la session 001. À vérifier avant tout : de quelle vidéo les
+sous-titres ont-ils réellement été tirés ?
+
+Rien n'a été corrigé ce soir : la reprise est préparée dans
+[`PROCHAINE-SESSION.md`](PROCHAINE-SESSION.md), qui ouvre la session 005.

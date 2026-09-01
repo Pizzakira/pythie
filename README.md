@@ -222,6 +222,7 @@ le nombre qu'il produisait.
 
 | Fichier | Contenu |
 |---|---|
+| `PROCHAINE-SESSION.md` | **par où reprendre**, à froid, et ce qu'il ne faut pas faire |
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
 | `JOURNAL.md` | 64 décisions datées avec leur motif, et mes erreurs |
