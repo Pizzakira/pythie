@@ -39,12 +39,16 @@ Un `false` exige une source de rang 1. Mécanique, pas discrétionnaire.
 ## Architecture
 
 ```
-étage 0    triggers   regex, coût nul, auditable            triggers.py
-étage 0.5  accord     chiffre entendu deux fois, ou pas jugé  media/transcripts.py
-étage 1    triage     appel modèle court, sortie tôt        pipeline.py
-étage 2    verify     modèle + base locale fermée           verify.py
-étage 3    render     HTML deux degrés + JSON               render.py
+étage 0    triggers   regex, coût nul, auditable              triggers.py
+étage 0.5  accord     chiffre entendu deux fois, ou pas jugé   media/transcripts.py
+étage 1    triage     appel modèle court, sortie tôt          pipeline.py
+étage 2    verify     modèle + base locale fermée             verify.py
+étage 3    render     HTML deux degrés + JSON                 render.py
 ```
+
+En amont de l'étage 0, l'attribution : les voix sont regroupées
+(`media/embed.py`), nommées par les patronymes prononcés, puis **confirmées à
+l'oreille** — sans quoi rien de ce qu'elles portent ne reçoit de verdict.
 
 Entonnoir à sorties anticipées : un appel modèle n'est payé que sur ce qui a
 franchi l'étage précédent.
@@ -122,6 +126,15 @@ python scripts/run_chain.py data/debat.json --famille youtube \
 python scripts/run_poc.py data/debat.json --degree 2 --out data/debat
 ```
 
+Enrôler les voix, puis les faire confirmer par une oreille humaine :
+
+```bash
+python scripts/enrol.py data/audio/debat.wav data/debat.whisper.json
+python scripts/confirmation_page.py          # page d'écoute autonome
+# … écoute, découpage, noms …
+python scripts/enrol.py data/audio/debat.wav data/debat.whisper.json     --confirmer data/empreintes/confirmation.yaml
+```
+
 On ne télécharge pas la vidéo, seulement les sous-titres — et on ne republie
 pas la transcription intégrale : seuls les extraits analysés sont affichés.
 
@@ -181,11 +194,11 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 
 ### Ce qui bloque encore
 
-- **Attribution des locuteurs** : premier blocage. Les voix du débat sont
-  regroupées et les sept plus grosses grappes reçoivent sept noms de candidats
-  différents, mais **aucune empreinte n'est vérifiée par une oreille humaine**,
-  et sans cela aucune attribution ne peut porter un verdict. Il manque quelques
-  minutes d'écoute : `data/empreintes/confirmation.yaml`.
+- **Attribution des locuteurs** : premier blocage. Les voix sont regroupées et
+  les sept plus grosses grappes reçoivent sept noms de candidats différents,
+  mais **aucune empreinte n'est vérifiée par une oreille humaine** — et sans
+  cela, aucune attribution ne porte de verdict (`human_verified`, METHODE §12).
+  Il manque quelques minutes d'écoute, préparées dans une page dédiée.
 - **Rouges** : bloqués en bloc par le programme, jusqu'à un banc qui passe.
 - **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
 - **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
@@ -194,16 +207,28 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
   calibrer quoi que ce soit : les seuils restent des opinions, et le banc le
   dit au lieu de publier une courbe.
 
+### Ce qui a changé le 1er septembre
+
+Trois protocoles écrits **avant** mesure. Deux mesures ont échoué à leur propre
+critère, et aucun seuil n'a été déplacé pour les sauver. La couche d'accord
+entre transcriptions existe et mesure ; les seuils en points sont branchés ;
+l'interdiction de publier un rouge est devenue une propriété du programme ; le
+jeu étalon existe et refuse de calibrer sur six couples de valeurs.
+
+Six instruments ont été pris en défaut et corrigés — aucun n'était visible dans
+le nombre qu'il produisait.
+
 ### Documentation
 
 | Fichier | Contenu |
 |---|---|
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
-| `JOURNAL.md` | 62 décisions datées avec leur motif, et mes erreurs |
+| `JOURNAL.md` | 64 décisions datées avec leur motif, et mes erreurs |
 | `ETUDES/` | outils de fact-checking existants, et bancs de transcription |
 | `ETUDES/preinscription-accord.md` | le protocole, écrit **avant** la mesure |
 | `ETUDES/preinscription-francais.md` | idem, pour le fine-tune français en CT2 |
 | `ETUDES/accord-transcriptions.md` | ce que la mesure a rendu, y compris son échec |
 | `ETUDES/etalon/` | le jeu étalon, ses étiquettes et le biais de son auteur |
 | `ETUDES/empreintes.md` | regrouper les voix sans les entendre, et où ça s'arrête |
+| `ETUDES/preinscription-*.md` | trois protocoles, écrits avant leurs mesures |

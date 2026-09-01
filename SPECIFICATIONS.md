@@ -558,6 +558,7 @@ intentions.
 | Déclencheurs, corpus et rangs, provenance, seuils, registre, consensus, rendu | écrit et testé |
 | Backends, vérification, alignement, profils, fiche dynamique | écrit, non éprouvé |
 | Empreintes vocales | regroupées et nommées, **aucune vérifiée à l'oreille** |
+| Page d'écoute de contrôle | écrite, publiée, en attente de la confirmation |
 | Transcription | audité, écrite (`scripts/transcribe.py`) |
 | Accord entre transcriptions | écrit et mesuré, **sans autorité de publication** |
 | Diffusion SSE, backoffice | conçu, non écrit |
@@ -631,3 +632,5 @@ Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE �
 | 01/09 | Jeu étalon : étiquettes séparées en « mécaniques » et « dépendantes du seuil » |
 | 01/09 | Un item que la chaîne ne peut pas réussir reste dans le jeu, marqué comme tel |
 | 01/09 | Une empreinte non confirmée à l'oreille n'autorise aucun verdict |
+| 01/09 | La machine propose le découpage des voix, une oreille humaine le tranche |
+| 01/09 | L'enrôlement part des morceaux délimités, et enrôle qui ils nomment |

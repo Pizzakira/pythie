@@ -15,19 +15,27 @@ méthode.
 sont écrits **avant** de regarder le moindre résultat. Sinon on règle les
 paramètres sur la cible et on appelle ça une validation.
 
-**État : tenu une fois, le 01/09/2026.** `ETUDES/preinscription-accord.md` fixe
-la question, deux cas témoins, les valeurs balayées, les seuils de succès et la
-règle de décision — avant exécution du banc d'accord entre transcriptions.
+**État : tenu trois fois, le 01/09/2026.** Trois protocoles écrits avant
+mesure — `preinscription-accord.md`, `preinscription-francais.md`,
+`preinscription-empreintes.md` — chacun fixant la question, les cas témoins,
+les valeurs balayées, les seuils de succès et la règle de décision.
 
-Et la première mesure pré-inscrite a immédiatement servi à quelque chose : le
-cas témoin positif a **échoué**, parce que sa prémisse était fausse. Sans
-pré-inscription, j'aurais réglé un paramètre jusqu'à ce que ce cas passe, et
-j'aurais publié un réglage ajusté contre un cas que j'avais mal lu. Résultats
-dans `ETUDES/accord-transcriptions.md`.
+**Deux des trois ont échoué à leur propre critère, et aucun seuil n'a bougé
+pour les sauver.**
 
-**Ce qui reste** : les autres mesures du projet — seuils de verdict, seuils
-d'empreinte vocale — n'ont toujours aucune pré-inscription. Deux sur huit, la
-seconde étant le banc du fine-tune français.
+- Accord entre transcriptions : le cas témoin positif a échoué **parce que sa
+  prémisse était fausse**. Sans pré-inscription, j'aurais réglé un paramètre
+  jusqu'à ce que ce cas passe, contre un cas que j'avais mal lu.
+- Empreintes vocales : trois candidats enrôlés, quatre exigés. Une bijection
+  entre les sept plus grosses grappes et les sept candidats était sous les yeux
+  — argument plus fort que le critère retenu, et **non invoqué**, faute d'avoir
+  été pré-inscrit.
+
+C'est le premier jour où la méthode sert à trancher plutôt qu'à se décrire.
+
+**Ce qui reste** : les seuils de verdict et les seuils d'acceptation
+d'empreinte n'ont toujours aucune pré-inscription, faute de matière étiquetée
+pour les balayer.
 
 ---
 
@@ -116,16 +124,17 @@ C'était faux au niveau qui compte. Deux conséquences :
 **L'engagement.** Le système doit pouvoir être pris en défaut d'une manière
 qu'on sait détecter.
 
-**État : premier échec réel enregistré le 01/09.**
+**État : deux échecs réels enregistrés le 01/09.**
 
 Trois indicateurs sont produits par le code : taux de faux rouges, taux
 d'abstention, citations non retrouvées. Aucun n'a encore été mesuré sur de la
 matière réelle.
 
-Mais un cas témoin, lui, a été pris en défaut : le T+ du banc d'accord devait
-être bloqué, il ne l'a pas été, et l'explication n'était pas un réglage à
-corriger — c'était ma lecture de l'incident qui était fausse. Une méthode qui
-ne peut pas produire ce genre de résultat ne teste rien.
+Mais deux bancs ont été pris en défaut par leurs propres cas témoins. Le T+ du
+banc d'accord devait être bloqué et ne l'a pas été — l'explication n'était pas
+un réglage à corriger, c'était ma lecture de l'incident qui était fausse. Le
+bootstrap des empreintes n'a enrôlé que trois candidats sur les quatre exigés.
+Une méthode qui ne peut pas produire ce genre de résultat ne teste rien.
 
 ---
 
@@ -236,26 +245,32 @@ source → citation n'est pas encore assemblé en un seul enregistrement.
 
 | # | Engagement | État |
 |---|---|---|
-| 1 | Pré-inscription | **tenue une fois sur sept mesures** (01/09) |
+| 1 | Pré-inscription | **trois protocoles écrits avant mesure** (01/09) |
 | 2 | Degrés de liberté balayés | **un balayage publié, aucun seuil de verdict** |
 | 3 | Reproductibilité | **protocole oui, verdict non** |
-| 4 | Falsifiabilité | un cas témoin a réellement échoué le 01/09 |
+| 4 | Falsifiabilité | **deux bancs ont échoué à leur propre critère** |
 | 5 | Couverture avant exactitude | tenu dans le code, éprouvé une fois |
 | 6 | Comparaison par paires | tenu |
 | 7 | Erreur de mesure ≠ phénomène | **transcription oui, voix non** |
 | 8 | Incertitude déclarée | tenu, non calibré |
 | 9 | Angles morts déclarés | tenu |
 | 10 | Traçabilité | partiel |
-| 11 | Métriques validées par un témoin | **non tenu — deux métriques aveugles le 01/09** |
+| 11 | Métriques validées par un témoin | **six instruments pris en défaut, tous corrigés** |
+| 12 | Ce qu'une machine propose, une personne le confirme | tenu, par un drapeau dans la donnée |
 
-**Conclusion, révisée le 01/09.** Le projet a mesuré quelque chose, une fois,
-selon un protocole écrit d'avance — et cette mesure a corrigé une conclusion
-antérieure au lieu de la confirmer. C'est ce qu'on demande à une méthode.
+**Conclusion, au soir du 01/09.** Trois mesures ont été conduites selon des
+protocoles écrits d'avance. **Deux ont échoué à leur propre critère, et aucun
+seuil n'a été déplacé pour les sauver** — dans un cas en laissant de côté un
+argument plus fort que le critère retenu, faute qu'il ait été pré-inscrit. Une
+de ces mesures a corrigé une conclusion antérieure au lieu de la confirmer :
+j'avais imputé à la transcription un défaut qui venait de l'attribution.
+
+C'est le premier jour où ce document sert à trancher plutôt qu'à décrire des
+intentions.
 
 Ce que ça ne change pas : les seuils de verdict restent des opinions publiées,
-faute de jeu étalon, et l'étage d'attribution reste un bouchon. Le 01/09 a
-aussi montré où je m'étais trompé de coupable — j'avais mis sur le compte de la
-transcription un défaut qui venait de l'attribution.
+faute d'un jeu étalon assez large, et l'étage d'attribution attend une
+confirmation humaine que rien ne peut remplacer.
 
 ---
 
@@ -279,17 +294,55 @@ des deux piles comparées.
 l'on sait qu'elle doit se déclencher, avant d'être utilisée pour conclure. Un
 témoin, au sens du §1 du banc ASR de KaraK. Sans témoin, un zéro ne se lit pas.
 
-Troisième occurrence, le 01/09 au soir : la couche d'accord réclamait qu'un
-témoin répète « 2024 » et « 2028 » — la ponctuation finale (« en 2024, »,
-« jusqu'à 2028. ») empêchait de les reconnaître comme des millésimes, et ils
-devenaient des valeurs à corroborer. Trouvé en **lisant la liste des blocages**,
-jamais en lisant le taux : 74 % ou 78 %, rien dans le nombre ne dit qu'un quart
-des refus porte sur des dates. Un troisième défaut de la même famille — « 150
-milliards. » lu comme 150 — a été trouvé le lendemain, dans la sortie d'un
-autre banc. La ponctuation finale aura coûté trois mesures.
+## L'inventaire des instruments pris en défaut, au 01/09/2026
 
-Deuxième occurrence le même jour : l'alignement des chiffres de
-`banc_chiffres.py` comparait des blocs de sous-titres de 25 s à des segments
-Whisper de 4 s avec une tolérance de 6 s. Il a rendu « 6 % de part jugeable ».
-Ce n'était pas une mesure du désaccord entre sources, mais de l'inadéquation
-de ma fenêtre.
+Six, en deux jours. **Aucun n'était visible dans le nombre qu'il produisait ;
+tous se sont vus en lisant ce que ce nombre recouvrait.**
+
+| # | Le défaut | Ce qu'il faussait |
+|---|---|---|
+| 1 | `repetition()` comptait les segments identiques consécutifs | Rendait 0 sur une boucle de 45 répétitions vivant à l'intérieur d'un bloc de 30 s |
+| 2 | `banc_chiffres.py` alignait des blocs de 25 s sur des segments de 4 s | Rendait « 6 % de part jugeable » — une mesure de ma fenêtre, pas du désaccord |
+| 3 | Millésimes suivis d'une ponctuation lus comme des quantités | La couche d'accord exigeait qu'un témoin répète « 2024 » |
+| 4 | Mots d'échelle amputés par un point final | « 150 milliards. » lu comme 150 — un facteur mille. La couverture passait de 74 % à 78 % une fois corrigé |
+| 5 | Le balayage de seuils comptait des items qu'aucune barre ne produit | Toutes les barres baissaient de la même quantité : invisible dans un classement |
+| 6 | Une mention de patronyme votait pour les dix grappes suivantes | Rendait le critère des 60 % **insatisfaisable par construction** : le banc aurait échoué sur du matériel parfait |
+
+Le sixième est le plus instructif. Un critère peut être hors d'atteinte non
+parce que la réalité lui résiste, mais parce que l'instrument ne peut pas le
+produire. **Un échec ne se lit pas davantage qu'un zéro** : avant de conclure
+qu'une hypothèse est fausse, il faut vérifier que le montage pouvait la
+confirmer.
+
+S'y ajoute un défaut d'un autre genre, qui ne fausse pas une mesure mais la
+rend aveugle à une partie du monde : le patronyme pris comme « le dernier mot
+du nom » réduisait « Marine Le Pen » à « pen », trois lettres, écarté par un
+garde-fou de longueur. Une candidate était **invisible** au mécanisme entier,
+et rien dans aucun taux ne le disait.
+
+---
+
+## 12. Ce qu'une machine propose, une personne le confirme
+
+**L'engagement.** Quand une identification ne peut pas être vérifiée par le
+programme, elle est **marquée comme non vérifiée dans la donnée elle-même**, et
+ce marquage a des effets : tant qu'il est là, rien ne s'appuie dessus.
+
+**Le cas d'espèce.** Les empreintes vocales du 01/09 sont construites sans que
+personne n'ait écouté : on regroupe les voix, puis les patronymes prononcés
+juste avant une prise de parole nomment les grappes. Le montage prouve la
+**constance**, pas l'**identité** — quelqu'un qui parlerait systématiquement
+après avoir prononcé un nom produirait la même régularité sous la mauvaise
+étiquette.
+
+**Ce qui est tenu.** `VoicePrint.human_verified` est faux par défaut, y compris
+pour une empreinte écrite par une version antérieure du format. Une attribution
+issue d'une empreinte non confirmée ne peut porter aucun verdict coloré.
+
+**Le coût de la confirmation est d'une minute d'écoute par voix ; le coût d'une
+erreur est une citation attribuée à quelqu'un qui ne l'a pas prononcée.** Le
+rapport entre les deux est ce qui justifie de bloquer.
+
+**Généralisation.** La même forme s'applique partout où une machine propose une
+identité : le drapeau vit dans la donnée, pas dans une note de documentation,
+et le programme refuse tant qu'il est faux.

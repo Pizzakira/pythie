@@ -550,5 +550,88 @@ accepter) pour refermer ce trou.
 - Un seul témoin de transcription : une paire de familles. Avec un troisième
   (Kyutai, Voxtral), « qui a raison » deviendrait une question posable — et
   aucune variante Whisper ne peut tenir ce rôle, quelle que soit sa qualité.
+### Suite — l'écoute de contrôle, et ce que l'usage a corrigé
+
+La confirmation humaine ne pouvait pas être une corvée : un fichier YAML de 14
+grappes à remplir en cherchant des minutages dans un wav de 370 Mo ne se fait
+pas, et ce qui ne se fait pas ne débloque rien. D'où une page d'écoute, publiée
+comme artefact, avec les extraits embarqués.
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-063** | **La machine propose le découpage, l'humain le tranche au dixième de seconde** | Premier essai : deux curseurs de bornage et un seul locuteur par extrait. Insuffisant — une journaliste relance trois fois au milieu d'un extrait de Glucksmann, et un seul nom ne peut pas décrire cela. Un extrait est désormais une bande qu'on coupe autant de fois qu'il y a de tours. |
+| **D-064** | **L'enrôlement part des morceaux délimités, pas des grappes** | Un morceau confirmé ne contient qu'une voix par construction ; une grappe en contient parfois deux. Et il enrôle **qui il nomme** : une journaliste repérée au milieu d'un extrait de candidat construit sa propre empreinte, alors qu'aucune grappe ne lui aurait été attribuée. Sous trois morceaux, l'empreinte est refusée — la règle des trois échantillons ne se contourne pas. |
+
+**Ce que l'usage a corrigé, et que je n'avais pas vu.**
+
+1. **Un seul locuteur par extrait** : hypothèse fausse. Les extraits sont
+   découpés sur des segments d'ASR, qui ne coupent pas aux tours de parole.
+2. **Des curseurs au lieu d'un point de coupe** : on ne règle pas une frontière
+   qu'on n'entend pas ; on la pose là où on vient de mettre la lecture en
+   pause. « Couper ici » est le geste juste, le réglage fin vient après.
+3. **Minutages illisibles** : « 40:4418 s » collait un minutage relatif et une
+   durée. Tout est passé en heures et minutes absolues — la même faute que
+   l'unité manquante dans un verdict, à une autre échelle.
+4. **Le lien vidéo** doit être là même quand l'extrait suffit : vérifier une
+   voix demande parfois de voir qui parle.
+
+**Ce qui est enregistré l'est vraiment.** Le travail déjà fait sous l'ancien
+format est converti en découpage équivalent au premier affichage, jamais
+effacé, et chaque clic est écrit dans le navigateur avec l'heure affichée.
+
 - Variantes distillées du fine-tune français : non testées, et probablement
   porteuses du même défaut de graphie.
+
+---
+
+## Clôture de la session 004 — 1er septembre 2026
+
+**Fait aujourd'hui, dans l'ordre.**
+
+1. **Couche d'accord entre transcriptions** (étage 0.5), première mesure
+   pré-inscrite du projet : 78 % des énoncés chiffrés corroborés par une
+   seconde famille d'ASR, un cinquième ne l'est pas. Cas témoin en échec, et
+   la cause du premier rouge du projet reclassée — l'attribution, pas la
+   transcription.
+2. **Seuils en points branchés** : « 45,3 % » contre 43,6 % du PIB ne peut plus
+   ressortir « exact ».
+3. **D-044 devenu propriété du programme** : aucun rouge ne sort, sur les deux
+   points d'entrée de la chaîne.
+4. **Fine-tune français repris en CTranslate2** : la boucle venait de la pile,
+   pas des poids. Écarté pour la seule raison qui tienne aux poids — il écrit
+   « 150 1000000000 ».
+5. **Jeu étalon** : 16 énoncés étiquetés, banc de seuils qui refuse de conclure
+   sur six couples.
+6. **Empreintes vocales** : voix regroupées, sept grappes pour sept candidats,
+   bootstrap en échec selon le critère pré-inscrit, page d'écoute livrée.
+
+**Trois pré-inscriptions écrites avant mesure** — accord, fine-tune français,
+empreintes. Sur les trois, **deux mesures ont échoué à leur propre critère**, et
+aucun seuil n'a été déplacé pour les sauver. C'est le premier jour où la
+méthode du projet sert à quelque chose plutôt qu'à se décrire.
+
+**Cinq défauts d'instrument trouvés, tous en lisant ce qu'un nombre recouvrait,
+jamais dans le nombre :** millésimes ponctués comptés comme des valeurs ;
+dénominateur gonflé par des années seules ; mots d'échelle amputés par un point
+final (« 150 milliards. » lu 150) ; balayage de seuils comptant des items
+qu'aucune barre ne produit ; une mention votant pour dix grappes, ce qui rendait
+un critère insatisfaisable par construction. Plus un patronyme tronqué qui
+rendait une candidate invisible.
+
+**Ce que la chaîne peut faire ce soir**, et qu'elle ne pouvait pas ce matin :
+refuser de juger un chiffre qu'une seule oreille a entendu, refuser de publier
+un rouge sans qu'on ait à s'en souvenir, mesurer un écart de pourcentage en
+points, et se confronter à un jeu d'étiquettes écrites d'avance.
+
+**Ce qui bloque, dans l'ordre.**
+
+1. **La confirmation à l'oreille** — quelques minutes, et l'attribution
+   devient réelle. Tout le reste en dépend : sans elle, D-040 est inapplicable
+   et le premier rouge du projet resterait possible.
+2. **Le corpus** — deux domaines sur huit. C'est lui qui empêche le jeu étalon
+   de grandir, donc les seuils d'être calibrés.
+3. **Une troisième famille de transcription** (Kyutai, Voxtral) : avec deux
+   familles on détecte un désaccord, avec trois on peut l'arbitrer.
+4. **Un détecteur de paroles superposées** (pyannote, sous licence) : sans lui,
+   la règle « la superposition s'abstient » reste une intention.
+
