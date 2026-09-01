@@ -24,9 +24,12 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 from .backend import LocalBackend
+from .numbers import Kind, quantities
 from .retrieval import LocalBase, context_for_verification, validate_provenance
 from .schema import (
+    APPROXIMATE_POINTS,
     APPROXIMATE_THRESHOLD,
+    EXACT_POINTS,
     EXACT_THRESHOLD,
     Source,
     Statement,
@@ -108,6 +111,35 @@ quelle date. Aucun commentaire sur le locuteur.
 """
 
 
+def measured_gap(result: VerificationResult) -> Optional[tuple[float, str]]:
+    """The gap between what was said and what the source publishes, in the
+    unit that makes it meaningful.
+
+    A percentage is compared IN POINTS, never relatively. Measured on 31/08:
+    "45,3 % de prelevements" against an INSEE 43,6 % is a relative gap of
+    3,4 %, which clears the 5 % bar and returns `exact` -- while being 1,7
+    point of GDP, some fifty billion euros (D-039). The relative framing
+    flattens exactly the error that matters.
+
+    The point rule needs both values to be readable AS percentages. When the
+    model reports a bare "45,3" we cannot tell a rate from a headcount, so we
+    fall back on the relative gap it computed -- and the fallback is reported
+    rather than silent, because it is the case where the published thresholds
+    are known to be too generous.
+    """
+    stated = quantities(result.stated_value or "")
+    source = quantities(result.source_value or "")
+
+    if (stated and source
+            and stated[0].kind is Kind.PERCENT
+            and source[0].kind is Kind.PERCENT):
+        return abs(stated[0].value - source[0].value), "points"
+
+    if result.relative_gap is not None:
+        return abs(result.relative_gap), "relative"
+    return None
+
+
 def apply_thresholds(
     result: VerificationResult, rank: Optional[int]
 ) -> VerificationResult:
@@ -126,8 +158,6 @@ def apply_thresholds(
 
     Abstention states are never rewritten.
     """
-    if result.relative_gap is None:
-        return result
     if result.verdict in (
         Verdict.UNVERIFIED,
         Verdict.TOO_VAGUE,
@@ -136,15 +166,25 @@ def apply_thresholds(
     ):
         return result
 
-    gap = abs(result.relative_gap)
+    measured = measured_gap(result)
+    if measured is None:
+        return result
 
-    if gap <= EXACT_THRESHOLD:
+    gap, unit = measured
+    if unit == "points":
+        exact_bar, approximate_bar = EXACT_POINTS, APPROXIMATE_POINTS
+        written = f"{gap:.2f} point{'s' if gap >= 2 else ''}".replace(".", ",")
+    else:
+        exact_bar, approximate_bar = EXACT_THRESHOLD, APPROXIMATE_THRESHOLD
+        written = f"{gap:.0%}"
+
+    if gap <= exact_bar:
         # Downgrading a red or an orange to exact is a weakening: allowed.
         result.verdict = Verdict.EXACT
         if Tag.APPROXIMATE_MAGNITUDE not in result.tags:
             result.tags.append(Tag.APPROXIMATE_MAGNITUDE)
 
-    elif gap <= APPROXIMATE_THRESHOLD:
+    elif gap <= approximate_bar:
         # Red -> orange weakens; exact -> orange is the one upgrade the
         # published threshold justifies, and it stops short of an accusation.
         result.verdict = Verdict.APPROXIMATE
@@ -161,10 +201,13 @@ def apply_thresholds(
             result.confidence = min(result.confidence, 0.3)
             result.context_note += (
                 " (Verdict retire : le modele rend « exact » tout en rapportant "
-                f"un ecart de {gap:.0%}. Incoherence interne, pas une refutation.)"
+                f"un ecart de {written}. Incoherence interne, pas une refutation.)"
             )
         else:
             result.verdict = Verdict.APPROXIMATE
+
+    if unit == "points":
+        result.context_note += f" (Ecart mesure en points : {written}.)"
 
     return result
 

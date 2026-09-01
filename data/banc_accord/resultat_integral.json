@@ -1,0 +1,953 @@
+{
+  "fenetre_min": [
+    0.0,
+    0.0
+  ],
+  "principale": {
+    "fichier": "data/laref2026.json",
+    "famille": "youtube"
+  },
+  "temoins": [
+    {
+      "nom": "large-v3",
+      "famille": "whisper"
+    }
+  ],
+  "enonces": 2267,
+  "candidats": 174,
+  "porteurs_de_chiffre": 102,
+  "criteres": {
+    "couverture_min": 0.3,
+    "enonces_min": 20
+  },
+  "balayage": [
+    {
+      "pad": 5.0,
+      "min_anchor": 0.0,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.1,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.2,
+      "couverture": 0.745,
+      "corrobores": 76,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 76,
+        "no_quantity": 72,
+        "divergent": 23,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.35,
+      "couverture": 0.667,
+      "corrobores": 68,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 68,
+        "divergent": 31,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.5,
+      "couverture": 0.569,
+      "corrobores": 58,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 58,
+        "divergent": 41,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.0,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.1,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.2,
+      "couverture": 0.745,
+      "corrobores": 76,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 76,
+        "no_quantity": 72,
+        "divergent": 23,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.35,
+      "couverture": 0.667,
+      "corrobores": 68,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 68,
+        "divergent": 31,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.5,
+      "couverture": 0.569,
+      "corrobores": 58,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 58,
+        "divergent": 41,
+        "absent": 3
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.0,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 22,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.1,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 22,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.2,
+      "couverture": 0.745,
+      "corrobores": 76,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 76,
+        "no_quantity": 72,
+        "divergent": 24,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.35,
+      "couverture": 0.667,
+      "corrobores": 68,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 68,
+        "divergent": 32,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.5,
+      "couverture": 0.569,
+      "corrobores": 58,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 58,
+        "divergent": 42,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.0,
+      "couverture": 0.775,
+      "corrobores": 79,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 79,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.1,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 22,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.2,
+      "couverture": 0.745,
+      "corrobores": 76,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 76,
+        "no_quantity": 72,
+        "divergent": 24,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.35,
+      "couverture": 0.667,
+      "corrobores": 68,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 68,
+        "divergent": 32,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.5,
+      "couverture": 0.569,
+      "corrobores": 58,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 58,
+        "divergent": 42,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.0,
+      "couverture": 0.775,
+      "corrobores": 79,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 79,
+        "no_quantity": 72,
+        "divergent": 21,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.1,
+      "couverture": 0.765,
+      "corrobores": 78,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 78,
+        "no_quantity": 72,
+        "divergent": 22,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.2,
+      "couverture": 0.745,
+      "corrobores": 76,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "confirmed": 76,
+        "no_quantity": 72,
+        "divergent": 24,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.35,
+      "couverture": 0.667,
+      "corrobores": 68,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 68,
+        "divergent": 32,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.5,
+      "couverture": 0.569,
+      "corrobores": 58,
+      "porteurs_de_chiffre": 102,
+      "statuts": {
+        "no_quantity": 72,
+        "confirmed": 58,
+        "divergent": 42,
+        "absent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    }
+  ],
+  "decision": null,
+  "cause_des_blocages": {
+    "enonces_bloques": 26,
+    "chiffres_bloques": {
+      "moins de 60 s": 4,
+      "1 a 5 min": 1,
+      "plus de 5 min": 16,
+      "absent partout": 10
+    }
+  },
+  "blocages": [
+    {
+      "enonce": "Cette identité économique, elle s'appuie sur les entreprises, elle s'appuie sur la nation, elle s'appuie sur l'État, elle s'appuie sur des entreprises qui ont beaucoup souffert dans les 10 dernières a",
+      "statut": "absent",
+      "manquant": [
+        "10"
+      ],
+      "entendu_par_le_temoin": [],
+      "temoin": "Moi, j'appelle à l'union de l'ensemble des acteurs, à l'union des salariés et des entrepreneurs pour opérer le redressement. J'oserais même, même en présence de monsieur Aptal, la renaissance de la Fr"
+    },
+    {
+      "enonce": "Pendant les 2 heures de ce débat, les géants du numérique américain auront investi 100 millions de dollars de la recherche en IA.",
+      "statut": "divergent",
+      "manquant": [
+        "2"
+      ],
+      "entendu_par_le_temoin": [
+        "100 millions"
+      ],
+      "temoin": "La deuxième chose, c'est la Chine. On parle beaucoup des Etats-Unis aujourd'hui dans les médias et dans la presse, il y a une politique chinoise assumée visant à couler notre industrie, on peut avoir "
+    },
+    {
+      "enonce": "Depuis 2000, l'État central a reculé de 05 points.",
+      "statut": "divergent",
+      "manquant": [
+        "05"
+      ],
+      "entendu_par_le_temoin": [
+        "4,8%",
+        "0,5",
+        "3,4",
+        "18"
+      ],
+      "temoin": "4,8% de déficit quand même et pourtant ça ne s'équilibre pas Donc les recettes sont énormes et ça ne s'équilibre pas. Ce n'est pas du tout une opinion, c'est une soustraction. Alors, je ne me demande "
+    },
+    {
+      "enonce": "Mais si nous avons une proposition européenne et si nous motivons au moment où les taux d'intérêt sont les plus élevés, plus de 4 points, nous ferons baisser ces taux d'intérêt parce que le ratio entr",
+      "statut": "divergent",
+      "manquant": [
+        "4"
+      ],
+      "entendu_par_le_temoin": [
+        "3%"
+      ],
+      "temoin": "Donc évitons les caricatures, sinon on ne se comprend pas et on ne sait plus de quoi on parle. Je parle de la dette de la France auprès de la Banque Centrale Européenne. Voilà de quoi je parle. Et cet"
+    },
+    {
+      "enonce": "C'est bien qu'il soi deux d'ailleurs parce que pour défendre ce bilan, faut mieux être deux parce que faire 1000 milliards 1000",
+      "statut": "divergent",
+      "manquant": [
+        "1000"
+      ],
+      "entendu_par_le_temoin": [
+        "80",
+        "90.",
+        "1 000 milliards"
+      ],
+      "temoin": "Donc, maintenant, posons-nous la question de la dette, d'où vient-elle structurellement ? Eh bien, la dette, elle vient de la désindustrialisation des années 80-90. Elle est structurelle dans notre pa"
+    },
+    {
+      "enonce": "Le le gouvernement Barnier 30 milliards dont 20 milliards d'augmentation des impôts sur les entreprises.",
+      "statut": "divergent",
+      "manquant": [
+        "30 milliards"
+      ],
+      "entendu_par_le_temoin": [
+        "1000 milliards",
+        "43 milliards",
+        "30",
+        "20 milliards"
+      ],
+      "temoin": "qui vote contre toutes les provisions, toutes les économies, mais qui se plaint que l'ascenseur soit en panne le lendemain. Ça suffit maintenant. Parce que vos propositions sont injustes, monsieur l'a"
+    },
+    {
+      "enonce": "J'entends madame Le Pen leçons sur l'immigration devant le MEDEF avec lequel je ne suis pas d'accord surtout certes, mais dont j'ai lu le rapport qui expliquait que l'économie française ne pourrait pa",
+      "statut": "divergent",
+      "manquant": [
+        "103,6 millions"
+      ],
+      "entendu_par_le_temoin": [
+        "3,6 millions"
+      ],
+      "temoin": "Je ne vous ai pas beaucoup vu vous opposer tout de même. C'est nous qui nous sommes opposés et qui avons protégé précisément les entreprises de cette augmentation. Faites-moi confiance, on a tout un s"
+    },
+    {
+      "enonce": "Et moi quand je rencontre les pompiers avec qui je ferai une conférence de presse demain, ils me disent \"On jamais fait autant d'accouchement parce que ce système français, il est en train de s'effond",
+      "statut": "divergent",
+      "manquant": [
+        "200"
+      ],
+      "entendu_par_le_temoin": [
+        "16%"
+      ],
+      "temoin": "Madame Le Pen disait tout à l'heure, en plaisantant, oui, comment on calcule la retraite, ça dépend de la jusque à piquaine et de combien de fois on s'est baissé dans la journée. Eh bien non, ça ne dé"
+    },
+    {
+      "enonce": "Euh c'est un sujet majeur parce qu'il y a 90 % des intercommunalités là en France qui n'ont plus de fonciers disponibles dans les 4 ans euh pour l'industrie.",
+      "statut": "divergent",
+      "manquant": [
+        "4"
+      ],
+      "entendu_par_le_temoin": [
+        "90%",
+        "4"
+      ],
+      "temoin": "Mais je tiens à préciser, Marine Le Pen, que vous avez beaucoup d'avance en termes de temps de parole, trois minutes d'avance par exemple sur Jean-Luc Mélenchon. Voilà, les bases sont posées. Allez-y."
+    },
+    {
+      "enonce": "l'Union européenne à partir de 2017-218.",
+      "statut": "absent",
+      "manquant": [
+        "218."
+      ],
+      "entendu_par_le_temoin": [],
+      "temoin": "Juste. Les questions de souveraineté que vous posez, elles se jouent à deux étages, me semble-t-il. En France et en Europe. Et elles sont importantes aux deux étages. En France, on a mis en cause tout"
+    },
+    {
+      "enonce": "Les entreprises françaises, c'est en recherche développement selon seulement 1,4 % du PIB, là où en Allemagne c'est 2 et aux États-Unis c'est 2,8.",
+      "statut": "divergent",
+      "manquant": [
+        "2"
+      ],
+      "entendu_par_le_temoin": [
+        "600",
+        "1,4%",
+        "2%",
+        "2,8%."
+      ],
+      "temoin": "qui soit compétitif et stable et j'étais extrêmement choquée quand monsieur Retailleau avait proposé un moratoire sur les énergies renouvelables parce que pendant ce temps là en Chine dans le plateau "
+    },
+    {
+      "enonce": "Le coût du travail aurait dû augmenter dans la copie qui avait été présentée par le gouvernement de Michel Barnier de 4 milliards5 en 2025.",
+      "statut": "divergent",
+      "manquant": [
+        "4"
+      ],
+      "entendu_par_le_temoin": [
+        "4,5 milliards",
+        "1,5",
+        "1,5 milliard"
+      ],
+      "temoin": "Je ne vais pas m'allonger sur ce sujet-là, puisque je pense que l'important, c'est de répondre aux questions qui sont posées par les chefs d'entreprise. D'abord, ce qu'il aurait fallu faire, c'est ne "
+    },
+    {
+      "enonce": "On s'est mobilisé contre, on a réussi à ramener ça à 1 milliard 5 mais c'est 1liard 5 de trop.",
+      "statut": "divergent",
+      "manquant": [
+        "1 milliard",
+        "5",
+        "1liard",
+        "5"
+      ],
+      "entendu_par_le_temoin": [
+        "4,5 milliards",
+        "1,5",
+        "1,5 milliard"
+      ],
+      "temoin": "Je ne vais pas m'allonger sur ce sujet-là, puisque je pense que l'important, c'est de répondre aux questions qui sont posées par les chefs d'entreprise. D'abord, ce qu'il aurait fallu faire, c'est ne "
+    },
+    {
+      "enonce": "mieux partager la richesse entre les donneurs d'ordre et les sous-traitants et qu'aujourd'hui les grandes entreprises elles sont capables de faire 107 milliards de dividendes en 2025 pour 40 entrepris",
+      "statut": "divergent",
+      "manquant": [
+        "40"
+      ],
+      "entendu_par_le_temoin": [
+        "107 milliards",
+        "40"
+      ],
+      "temoin": "C'est ça qu'il y a derrière le coût du travail, alors moi je le dis. les écologistes promettront et porteront et mettront en place un SMIC à 2000 euros brut et je sais que beaucoup de chefs d'entrepri"
+    },
+    {
+      "enonce": "Et ces exonérations, elles sont aujourd'hui, mais encore une fois, moi j'assume de les maintenir, donc c'est pas le sujet, mais elles sont à 77 milliards.",
+      "statut": "divergent",
+      "manquant": [
+        "77"
+      ],
+      "entendu_par_le_temoin": [
+        "2,9.",
+        "2,9.",
+        "2,9,",
+        "77 milliards",
+        "21 milliards"
+      ],
+      "temoin": "et dont on parle peu, mais qui coûtent également très cher. Mais aujourd'hui, dans la situation budgétaire dans laquelle nous sommes, on ne peut pas faire baisser le coût du travail au-delà de ce qui "
+    },
+    {
+      "enonce": "En 2014, de mémoire, elles étaient à 21 milliards.",
+      "statut": "divergent",
+      "manquant": [
+        "21"
+      ],
+      "entendu_par_le_temoin": [
+        "2,9.",
+        "2,9.",
+        "2,9,",
+        "77 milliards",
+        "21 milliards"
+      ],
+      "temoin": "et dont on parle peu, mais qui coûtent également très cher. Mais aujourd'hui, dans la situation budgétaire dans laquelle nous sommes, on ne peut pas faire baisser le coût du travail au-delà de ce qui "
+    },
+    {
+      "enonce": "Parce qu'on oublie de vous dire, c'est que les dépenses contraintes, elles ont considérablement augmenté depuis les 10 dernières années",
+      "statut": "divergent",
+      "manquant": [
+        "10"
+      ],
+      "entendu_par_le_temoin": [
+        "2,9,",
+        "77 milliards",
+        "21 milliards",
+        "20",
+        "5,5"
+      ],
+      "temoin": "Parce qu'en dessous du salaire à 2,9, il y a quand même un certain nombre d'exonérations. On est d'accord. et ces exonérations elles sont aujourd'hui, mais encore une fois moi j'assume de les mainteni"
+    },
+    {
+      "enonce": "Et c'est pourquoi nous considérons que il est bénéficiaire euh euh il bénéficiera, pardon, aux euh particuliers, aux salariés, mais aussi aux entreprises de faire baisser massivement le coût de l'éner",
+      "statut": "divergent",
+      "manquant": [
+        "55"
+      ],
+      "entendu_par_le_temoin": [
+        "20",
+        "5,5",
+        "30"
+      ],
+      "temoin": "et donc cet allègement du coût du travail pour l'entreprise, donc en l'état c'est compliqué, nous ce que nous pouvons faire là tout de suite, au moment où on se parle, dans la situation budgétaire c'e"
+    },
+    {
+      "enonce": "sera 100 %.",
+      "statut": "divergent",
+      "manquant": [
+        "100 %."
+      ],
+      "entendu_par_le_temoin": [
+        "50%",
+        "75%,",
+        "100%.",
+        "150 000"
+      ],
+      "temoin": "Et moi, ce que je veux, c'est que pour les jeunes, pour les jeunes couples qui vont avoir un enfant, comme ils le souhaitent, à chaque enfant, on puisse déduire des taux d'intérêt de leurs emprunts, q"
+    },
+    {
+      "enonce": "années à 30 milliards 25 milliards de pertes fiscales.",
+      "statut": "divergent",
+      "manquant": [
+        "30 milliards"
+      ],
+      "entendu_par_le_temoin": [
+        "30",
+        "25 milliards"
+      ],
+      "temoin": "compte tenu de leur nombre que par des ordonnances qui massivement nous feront revenir en termes de compétitivité avec la norme minimale qui est exigée par l'Union Européenne. Ça coûte de l'argent les"
+    },
+    {
+      "enonce": "On en a plus une dizaine euh qui représente aujourd'hui un peu plus de 15 % de mon chif d'affair qui représente euh oui 15 % du chiffre d'affair et c'est le 3è poste de charge aujourd'hui dans notre c",
+      "statut": "divergent",
+      "manquant": [
+        "3e"
+      ],
+      "entendu_par_le_temoin": [
+        "83%",
+        "86%",
+        "15%",
+        "15%"
+      ],
+      "temoin": "reprendre de nouvelles surfaces logistiques pour pouvoir accompagner le besoin des clients sauf qu'aujourd'hui on est quand même contraint avec ce niveau de fiscalité qui est très très important pour "
+    },
+    {
+      "enonce": "vérité, la période dont je vous ai parlé, c'était 50 % sur la partie qui partait en dividende et 42 sur celle qui partait dans le réinvestissement.",
+      "statut": "divergent",
+      "manquant": [
+        "42"
+      ],
+      "entendu_par_le_temoin": [
+        "25%",
+        "50%",
+        "42%"
+      ],
+      "temoin": "Eh bien je propose qu'on en revienne à ça, parce que le vrai conflit de notre moment, c'est entre l'investissement productif et l'investissement financier, c'est-à-dire entre le capital spéculatif et "
+    },
+    {
+      "enonce": "été créé, aujourd'hui à 20 % et c'est la possibilité qu'une entreprise a par l'intéressement, la participation, le plan d'épargne retraite par exemple, on en aura besoin pour la capitalisation de fina",
+      "statut": "divergent",
+      "manquant": [
+        "20 %"
+      ],
+      "entendu_par_le_temoin": [
+        "40 milliards",
+        "20%,",
+        "210 milliards",
+        "80 milliards"
+      ],
+      "temoin": "Donc 40 milliards en moins de cotisations sociales, d'impôts de production, les impôts de production que je baisse. sont la C3S, la CVAE, la CFE pour la part outils de production et le forfait social."
+    },
+    {
+      "enonce": "J'en trouve pas 21 milliards, j'en trouve 40 milliards.",
+      "statut": "divergent",
+      "manquant": [
+        "21",
+        "40"
+      ],
+      "entendu_par_le_temoin": [
+        "110",
+        "110 milliards",
+        "210",
+        "40 milliards",
+        "110 milliards",
+        "40 milliards"
+      ],
+      "temoin": "Merci Raphaël Glucksmann. Je tiens à préciser que Bruno Rotailleau, vous avez un peu de retard. Donc si vous souhaitez réagir, vous pouvez le faire. – Non, simplement, ce que je souhaite, c'est que, p"
+    },
+    {
+      "enonce": "Je soustrais les 40 milliards, les vrais 40 milliards d'aide. Ça nous donne 70 milliards.",
+      "statut": "divergent",
+      "manquant": [
+        "40"
+      ],
+      "entendu_par_le_temoin": [
+        "110 milliards",
+        "210",
+        "40 milliards",
+        "110 milliards",
+        "40 milliards",
+        "70"
+      ],
+      "temoin": "110 milliards que les entreprises françaises doivent porter sur leur dos Ce que moi je propose, c'est que j'ai fait ligne par ligne quels étaient les vrais aides aux entreprises J'en trouve pas 210 mi"
+    },
+    {
+      "enonce": "Si on prend toutes les exonérations, enfin les les voilà les avantages fiscaux du pack du Treil, les 2/3 de ces sommes, elles vont à 1 % des bénéficiaires.",
+      "statut": "divergent",
+      "manquant": [
+        "2",
+        "3"
+      ],
+      "entendu_par_le_temoin": [
+        "1%",
+        "4000,"
+      ],
+      "temoin": "Deuxièmement, la fiscalité elle est injuste pour les entreprises comme celle de madame sur le ciment écologique qui sont des entreprises responsables, qui participent à l'économie circulaire et qui pa"
+    }
+  ]
+}

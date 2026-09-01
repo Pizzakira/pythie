@@ -279,3 +279,117 @@ contredisaient l'un l'autre.
 - Seuils en points : définis, non branchés.
 - **Jeu étalon : toujours inexistant.**
 - POC 2 : rien. POC 3 : outillage prêt, matière absente.
+
+---
+
+## Session 004 — 1er septembre 2026 (suite)
+
+**Objet** : couche d'accord entre transcriptions, première mesure pré-inscrite,
+et la correction du diagnostic de la session 002.
+
+### Décisions
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-051** | **La famille d'un ASR est écrite dans le fichier de transcription** | Un fine-tune se renomme, et ce renommage est précisément ce qui le ferait passer pour indépendant. `transcripts.Transcript.load` refuse un fichier sans famille déclarée plutôt que de deviner. |
+| **D-052** | **L'accord porte sur le CHIFFRE, pas sur les mots** | Deux transcriptions du même audio diffèrent toujours en ponctuation, en hésitations et en découpage. Exiger des phrases identiques abstiendrait sur tout et ne mesurerait que le style de l'ASR. Le verdict, lui, repose sur une valeur. |
+| **D-053** | **Une correspondance de chiffre doit être ancrée** | Un débat est plein de nombres : « 3 % » se retrouve dans n'importe quelle fenêtre de 40 s. Un chiffre ne corrobore que si les mots autour de lui partagent le vocabulaire de l'énoncé. |
+| **D-054** | **Le silence du témoin n'est pas une confirmation** | Un témoin qui ne rapporte aucun chiffre là où la source principale en entend un ne corrobore rien. Statut distinct (`absent`), abstention comme le désaccord. |
+| **D-055** | **D-044 devient une propriété du programme** | `guard_red` retire tout rouge, sur les deux points d'entrée de la chaîne, avec `REDS_UNLOCKED_BY_AGREEMENT = False`. Une règle tenue par discipline est une règle qu'on oublie le jour où on ajoute un chemin d'appel. |
+| **D-056** | **Les seuils en points sont branchés** | `measured_gap` compare deux pourcentages en points et non relativement. Le cas D-039 — 45,3 % contre 43,6 % — ne peut plus ressortir « exact ». |
+
+### La mesure : première pré-inscription du projet
+
+`ETUDES/preinscription-accord.md`, écrit avant exécution : question, deux cas
+témoins, 25 combinaisons à balayer, seuils de succès, règle de décision, et ce
+qu'on fait de chacune des deux issues.
+
+Matériel : sous-titres YouTube (famille `youtube`) contre `faster-whisper-large-v3`
+(famille `whisper`), débat entier, 3 h 12 transcrites en **645 s sur RTX 3090**,
+soit 17,9× le direct. 102 énoncés porteurs de chiffre.
+
+**Couverture** : 76 % (ancrage 0), 74 % (0,20), 57 % (0,50).
+**Tolérance temporelle** : 76 % à 5 s, 76 % à 45 s. Aucun effet.
+
+Le paramètre dont je me méfiais ne fait rien ; celui que j'avais posé au passage
+fait tout. J'avais écrit dans le module que la fenêtre devait « absorber la
+dérive » entre deux découpages — c'était l'inquiétude héritée de l'erreur
+d'alignement du matin. Elle ne mesure rien.
+
+**Cause des 26 blocages**, en cherchant chaque chiffre dans toute la
+transcription témoin : 10 chiffres absents partout, 16 présents à plus de 5
+minutes, 1 entre 1 et 5 minutes, **4 à moins de 60 s**. Au plus 4 blocages sur
+31 viennent de ma fenêtre. Le reste est du désaccord réel.
+
+### Ce que j'avais mal lu le 31 août
+
+**Le cas témoin T+ a échoué.** Il devait être bloqué ; il est confirmé à tous
+les réglages.
+
+> sous-titres — « Je vous cite **de au feu** 600 millions de dettes françaises. »
+> faster-whisper — « je vous cite, **de foutre au feu** 600 millions de dettes
+> françaises. »
+
+Les deux familles portent le même chiffre. Le « 600 millions » n'était pas une
+corruption d'ASR : il a été prononcé. Les sous-titres avaient perdu un verbe,
+pas une valeur.
+
+D-044 disait : *« les 600 millions sont une corruption d'ASR, le système a
+marqué faux une phrase que personne n'a prononcée »*. C'est faux. La phrase a
+été dite — **par l'animateur**, citant une proposition de Mélenchon, et se
+trompant vraisemblablement de multiple. Or D-040 pose que seuls les candidats
+sont analysés.
+
+**Le défaut n'était pas dans la transcription, il était dans l'attribution.**
+J'ai passé une session à construire la couche que l'incident semblait réclamer,
+et la mesure dit que cette couche n'aurait rien empêché ce jour-là. Elle sert à
+autre chose — un quart des énoncés chiffrés ne sont pas corroborés entre deux
+familles — mais pas à ça.
+
+Sans les cas témoins écrits d'avance, j'aurais cherché le réglage qui bloque
+cette phrase, je l'aurais trouvé, et j'aurais publié un paramètre ajusté contre
+un cas dont j'avais mal lu la cause. C'est très exactement ce que la
+pré-inscription existe pour empêcher, et c'est arrivé à la première utilisation.
+
+**Le cas témoin négatif passe** : « 45,3 % » et « 57,3 % » sont confirmés par
+les deux familles. Les deux verdicts publiés du POC 1 reposent sur des chiffres
+entendus deux fois.
+
+### La décision appliquée telle qu'écrite
+
+Critère 1 éliminatoire, aucun réglage ne le satisfait → **la couche n'est pas
+branchée sur la publication**. Elle est implémentée, exécutée, mesurée, et sans
+autorité : aucun rouge n'est publié, corroboré ou non.
+
+Je n'ai pas remplacé le cas témoin défaillant par un autre. Un cas choisi après
+avoir vu qu'il passe ne démontre rien — et j'en avais deux sous la main
+(« 05 points » contre « 0,5 », « 103,6 millions » contre « 3,6 millions »).
+
+### Mes erreurs de mesure, consignées
+
+1. **Millésimes ponctués comptés comme des valeurs.** « en 2024, » et
+   « jusqu'à 2028. » : la ponctuation finale empêchait la reconnaissance
+   d'année, et la couche exigeait qu'un témoin les répète. Trouvé en lisant la
+   liste des blocages — le taux, lui, ne dit rien. Troisième occurrence de la
+   leçon du §11.
+2. **Dénominateur du banc mal posé** : il comptait les énoncés ne portant
+   qu'une année, que la couche ne demande à personne de corroborer. 125
+   annoncés, 102 réels.
+3. **Heredoc, encore.** Le remplacement d'une ligne contenant `\n` a été
+   silencieusement transformé en saut de ligne réel, le motif n'a rien
+   trouvé, et le script a écrit un JSON amputé sans que rien n'échoue à
+   l'endroit du défaut. La règle notée le 01/09 au matin — proscrire les
+   heredocs pour tout code contenant des séquences d'échappement — a été
+   enfreinte le 01/09 au soir.
+
+### Reste ouvert
+
+- **Attribution des locuteurs** : c'est maintenant le premier blocage du
+  projet, pas le deuxième. Aucune empreinte enrôlée, donc D-040 est
+  inapplicable, donc des énoncés qui ne devraient jamais être analysés le sont.
+- **Rouges** : toujours bloqués en bloc, désormais par le programme (D-055).
+  Lever le verrou demande un banc pré-inscrit qui passe.
+- Corpus : deux domaines sur huit.
+- **Jeu étalon : toujours inexistant.**
+- Un seul témoin de transcription : une paire de familles. Avec un troisième
+  (Kyutai, Voxtral), « qui a raison » deviendrait une question posable.

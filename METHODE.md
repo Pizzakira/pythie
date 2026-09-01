@@ -15,10 +15,18 @@ méthode.
 sont écrits **avant** de regarder le moindre résultat. Sinon on règle les
 paramètres sur la cible et on appelle ça une validation.
 
-**État : non tenu.** Le banc d'évaluation n'existe pas. Rien n'est pré-inscrit.
+**État : tenu une fois, le 01/09/2026.** `ETUDES/preinscription-accord.md` fixe
+la question, deux cas témoins, les valeurs balayées, les seuils de succès et la
+règle de décision — avant exécution du banc d'accord entre transcriptions.
 
-**Ce qu'il faut** : pour chaque mesure, un document antérieur disant quelle
-question est posée, quel seuil vaut succès, et ce qu'on fait des deux issues.
+Et la première mesure pré-inscrite a immédiatement servi à quelque chose : le
+cas témoin positif a **échoué**, parce que sa prémisse était fausse. Sans
+pré-inscription, j'aurais réglé un paramètre jusqu'à ce que ce cas passe, et
+j'aurais publié un réglage ajusté contre un cas que j'avais mal lu. Résultats
+dans `ETUDES/accord-transcriptions.md`.
+
+**Ce qui reste** : les autres mesures du projet — seuils de verdict, seuils
+d'empreinte vocale — n'ont toujours aucune pré-inscription. Une sur sept.
 
 ---
 
@@ -45,8 +53,17 @@ règles fondées :
 Le dernier est le pire : **il a été relevé de 0,60 à 0,75 après avoir constaté
 qu'un cas déplaisait.** C'est exactement le geste que la méthode interdit.
 
-**Ce qu'il faut** : chaque seuil balayé sur le jeu étalon, la courbe publiée,
-la valeur retenue justifiée par cette courbe et non par un avis.
+**Premier balayage publié, le 01/09.** Les deux paramètres de la couche
+d'accord ont été balayés sur 25 combinaisons et la courbe est publiée
+(`ETUDES/accord-transcriptions.md`). Elle apprend quelque chose qu'aucune
+intuition n'avait vu : la tolérance temporelle, dont je me méfiais, ne déplace
+rien (76 % à 5 s comme à 45 s) ; l'ancrage lexical, posé au passage, déplace la
+couverture de 19 points. Aucune valeur n'a été retenue pour autant — le critère
+éliminatoire du protocole n'est satisfait par aucune combinaison.
+
+**Ce qu'il faut** : le même traitement pour les seuils qui comptent — verdict,
+empreinte vocale, accord entre fenêtres — sur un jeu étalon qui n'existe pas
+encore.
 
 ---
 
@@ -84,11 +101,16 @@ C'était faux au niveau qui compte. Deux conséquences :
 **L'engagement.** Le système doit pouvoir être pris en défaut d'une manière
 qu'on sait détecter.
 
-**État : les instruments existent, la mesure non.**
+**État : premier échec réel enregistré le 01/09.**
 
-Trois indicateurs sont déjà produits par le code : taux de faux rouges, taux
-d'abstention, citations non retrouvées. Aucun n'a jamais été mesuré sur de la
+Trois indicateurs sont produits par le code : taux de faux rouges, taux
+d'abstention, citations non retrouvées. Aucun n'a encore été mesuré sur de la
 matière réelle.
+
+Mais un cas témoin, lui, a été pris en défaut : le T+ du banc d'accord devait
+être bloqué, il ne l'a pas été, et l'explication n'était pas un réglage à
+corriger — c'était ma lecture de l'incident qui était fausse. Une méthode qui
+ne peut pas produire ce genre de résultat ne teste rien.
 
 ---
 
@@ -102,7 +124,10 @@ d'exactitude : son taux d'accord porte sur une population qu'il a lui-même
 choisie.
 
 **État : tenu dans l'ordre d'affichage des métriques** (`run_poc.py`,
-`batch.compare`). Non éprouvé.
+`batch.compare`), et éprouvé une fois le 01/09 : le banc d'accord publie sa
+couverture avant tout autre chiffre, et le critère éliminatoire du protocole
+portait précisément sur elle — une couche qui ne laisse rien passer ne se
+trompe jamais, et ne vaut rien.
 
 *Principe repris du banc ASR du projet KaraK.*
 
@@ -123,9 +148,22 @@ populations différentes n'a aucun sens.
 **L'engagement.** Une erreur de transcription n'est pas une affirmation fausse.
 Une voix mal attribuée n'est pas un mensonge.
 
-**État : tenu par conception.** Désaccord entre transcriptions sur une valeur →
-pas de verdict. Similarité vocale sous le seuil ou paroles superposées → pas
-d'attribution, donc pas de jugement.
+**État : tenu pour la transcription depuis le 01/09, toujours faux pour la
+voix.**
+
+Ce paragraphe affirmait « tenu par conception » alors que la couche d'accord
+entre transcriptions **n'existait pas**. Elle existe désormais
+(`pythie/media/transcripts.py`, étage 0.5) : un chiffre qu'une seconde famille
+d'ASR n'a pas entendu ne reçoit aucun verdict. Mesuré sur le débat entier,
+cela retire un quart des énoncés chiffrés.
+
+Reste faux pour la voix : aucune empreinte n'est enrôlée, donc rien n'est
+attribué, donc la règle « on ne juge pas un locuteur non identifié » n'est pas
+appliquée — elle est contournée par un bouchon qui nomme tout le monde
+« locuteur non identifié » et laisse la vérification suivre son cours. C'est
+ce défaut-là, et non la transcription, qui a produit le premier rouge du
+projet : la phrase était de l'animateur, et D-040 dit que seuls les candidats
+sont analysés.
 
 C'est le corollaire central : **une attribution fausse est pire qu'une absence
 d'attribution**, parce qu'elle fabrique une citation au lieu de se tromper sur
@@ -183,22 +221,26 @@ source → citation n'est pas encore assemblé en un seul enregistrement.
 
 | # | Engagement | État |
 |---|---|---|
-| 1 | Pré-inscription | **non tenu** |
-| 2 | Degrés de liberté balayés | **non tenu — point le plus faible** |
+| 1 | Pré-inscription | **tenue une fois sur sept mesures** (01/09) |
+| 2 | Degrés de liberté balayés | **un balayage publié, aucun seuil de verdict** |
 | 3 | Reproductibilité | **protocole oui, verdict non** |
-| 4 | Falsifiabilité | instruments prêts, jamais mesurés |
-| 5 | Couverture avant exactitude | tenu dans le code, non éprouvé |
+| 4 | Falsifiabilité | un cas témoin a réellement échoué le 01/09 |
+| 5 | Couverture avant exactitude | tenu dans le code, éprouvé une fois |
 | 6 | Comparaison par paires | tenu |
-| 7 | Erreur de mesure ≠ phénomène | tenu |
+| 7 | Erreur de mesure ≠ phénomène | **transcription oui, voix non** |
 | 8 | Incertitude déclarée | tenu, non calibré |
 | 9 | Angles morts déclarés | tenu |
 | 10 | Traçabilité | partiel |
 | 11 | Métriques validées par un témoin | **non tenu — deux métriques aveugles le 01/09** |
 
-**Conclusion.** Le projet est bien construit pour être scientifique, et ne l'est
-pas encore, faute d'avoir mesuré quoi que ce soit. Les deux manques — 1 et 2 —
-se comblent au même endroit : le jeu étalon. Tant qu'il n'existe pas, les
-seuils restent des opinions publiées.
+**Conclusion, révisée le 01/09.** Le projet a mesuré quelque chose, une fois,
+selon un protocole écrit d'avance — et cette mesure a corrigé une conclusion
+antérieure au lieu de la confirmer. C'est ce qu'on demande à une méthode.
+
+Ce que ça ne change pas : les seuils de verdict restent des opinions publiées,
+faute de jeu étalon, et l'étage d'attribution reste un bouchon. Le 01/09 a
+aussi montré où je m'étais trompé de coupable — j'avais mis sur le compte de la
+transcription un défaut qui venait de l'attribution.
 
 ---
 
@@ -221,6 +263,13 @@ des deux piles comparées.
 **Règle qui en découle** : toute métrique nouvelle est validée sur un cas où
 l'on sait qu'elle doit se déclencher, avant d'être utilisée pour conclure. Un
 témoin, au sens du §1 du banc ASR de KaraK. Sans témoin, un zéro ne se lit pas.
+
+Troisième occurrence, le 01/09 au soir : la couche d'accord réclamait qu'un
+témoin répète « 2024 » et « 2028 » — la ponctuation finale (« en 2024, »,
+« jusqu'à 2028. ») empêchait de les reconnaître comme des millésimes, et ils
+devenaient des valeurs à corroborer. Trouvé en **lisant la liste des blocages**,
+jamais en lisant le taux : 74 % ou 76 %, rien dans le nombre ne dit qu'un quart
+des refus porte sur des dates.
 
 Deuxième occurrence le même jour : l'alignement des chiffres de
 `banc_chiffres.py` comparait des blocs de sous-titres de 25 s à des segments

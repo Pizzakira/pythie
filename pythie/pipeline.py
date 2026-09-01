@@ -1,6 +1,7 @@
 """Stage orchestration.
 
   0.  triggers      regex, zero cost, auditable            triggers.py
+  0.5 agreement     figure heard twice, or not judged      media/transcripts.py
   1.  triage        short model call, early exit           (model)
   2.  verification  model + closed local base              verify.py
   3.  rendering     two-degree HTML + JSON                 render.py
@@ -8,16 +9,22 @@
 An early-exit funnel: a model call is only paid for what cleared the previous
 stage. Degree 1 stops after stage 2 on triggered spans only; degree 2 replays
 the whole thing with a full sweep.
+
+Stage 0.5 sits where it does for a reason: an uncorroborated figure must be
+stopped BEFORE it costs a model call, and above all before it can come back
+wearing a verdict. It is the cheapest stage and the one that matters most.
 """
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional
+from enum import Enum
+from typing import Callable, Dict, List, Optional, Sequence
 
 from . import triggers as trig
 from .backend import LocalBackend
+from .media import transcripts
 from .retrieval import LocalBase
 from .schema import Category, Statement, TriageResult, Verdict
 from .verify import verify
@@ -57,6 +64,113 @@ testable en l'état contre une source primaire.
 unité — « effectif de demandeurs d'emploi en catégorie A », jamais « chômage ».
 Cette précision sert à détecter les confusions de définition.
 """
+
+
+class Strictness(str, Enum):
+    """How much the agreement layer is allowed to stop.
+
+    `REDS` is the floor, not a setting to choose lightly: a green also quotes
+    the speaker, and quoting a sentence nobody said is the same fabrication
+    whatever colour it wears. It exists because a red is the one verdict that
+    accuses, and because forbidding reds outright (D-044) was until now a rule
+    kept by discipline rather than by the program.
+    """
+
+    STRICT = "strict"   # no coloured verdict on an uncorroborated figure
+    REDS = "rouges"     # verify anyway, but never publish a red
+
+
+def gate(
+    statements: Sequence[Statement],
+    spans: Dict[str, tuple[float, float]],
+    witnesses: Sequence["transcripts.Transcript"],
+    *,
+    strictness: Strictness = Strictness.STRICT,
+    settings: Optional["transcripts.Settings"] = None,
+) -> tuple[List[Statement], Dict[str, "transcripts.Agreement"]]:
+    """Stage 0.5. Split the candidates into those a second transcription heard
+    and those it did not.
+
+    Returns the statements that may proceed, and the agreement found for every
+    statement examined -- including the ones that passed, because a corroborated
+    verdict must be able to name the witness that corroborated it.
+
+    Statements stopped here are marked `unverified` and carry the reason in
+    their own words: this is a defect of OUR measurement chain, never a
+    refutation of the speaker, and the page must say so.
+    """
+    allowed: List[Statement] = []
+    found: Dict[str, transcripts.Agreement] = {}
+
+    for statement in statements:
+        start, end = spans.get(statement.id, (statement.timestamp or 0.0,
+                                              statement.timestamp or 0.0))
+        agreement = transcripts.corroborate(
+            statement.text, start, end, witnesses, settings
+        )
+        found[statement.id] = agreement
+
+        blocked = (
+            strictness is Strictness.STRICT
+            and agreement.status is not transcripts.Status.CONFIRMED
+            and agreement.status is not transcripts.Status.NO_QUANTITY
+        )
+        if blocked:
+            statement.verdict = Verdict.UNVERIFIED
+            statement.confidence = 0.0
+            statement.context_note = agreement.note()
+        else:
+            allowed.append(statement)
+
+    return allowed, found
+
+
+# D-044 is not lifted. The agreement layer exists and measures, but the
+# pre-registered bench of 01/09 did NOT validate it: `ETUDES/banc_accord.py`
+# found no setting satisfying the criteria written before the measurement, so
+# by the decision rule published in `ETUDES/preinscription-accord.md` the layer
+# is not authorised to unlock anything. Corroboration is reported; it does not
+# grant permission. Lifting this requires a bench that passes, not a flag
+# flipped because the layer now exists.
+REDS_UNLOCKED_BY_AGREEMENT = False
+
+
+def guard_red(
+    statement: Statement,
+    agreement: Optional["transcripts.Agreement"],
+    *,
+    unlock: bool = REDS_UNLOCKED_BY_AGREEMENT,
+) -> bool:
+    """Last line: no red is published.
+
+    Applied AFTER verification, whatever the strictness and whatever the
+    caller did, so that a red cannot reach the page through a path that forgot
+    to gate. D-044 stops being a rule someone has to remember and becomes a
+    property of the program.
+
+    `unlock=True` lets a corroborated figure carry a red. It is off, and stays
+    off until a pre-registered bench says the corroboration is worth that
+    permission -- the one on 01/09 did not.
+    """
+    if statement.verdict is not Verdict.FALSE:
+        return False
+    if unlock and agreement is not None and agreement.corroborated:
+        return False
+
+    note = (
+        "D-044 : aucun rouge n'est publie tant que la couche d'accord entre "
+        "transcriptions n'a pas ete validee par un banc pre-inscrit."
+        if not unlock else
+        (agreement.note() if agreement else
+         "Aucune transcription independante : le chiffre n'est corrobore par "
+         "aucune seconde source.")
+    )
+    statement.verdict = Verdict.UNVERIFIED
+    statement.confidence = min(statement.confidence or 0.0, 0.3)
+    statement.context_note = (
+        f"{statement.context_note or ''} (Rouge retire : {note})".strip()
+    )
+    return True
 
 
 @dataclass
@@ -118,11 +232,19 @@ def analyze(
     backend: Optional[LocalBackend] = None,
     degree: int = 2,
     on_progress: Optional[Callable[[str], None]] = None,
+    witnesses: Sequence["transcripts.Transcript"] = (),
+    spans: Optional[Dict[str, tuple[float, float]]] = None,
+    strictness: Strictness = Strictness.STRICT,
 ) -> tuple[List[Statement], Stats]:
     """Run the statements through the stages and fill the statistics.
 
     Sequential on purpose: a single local model serves one request at a time,
     so parallelism would only queue.
+
+    `witnesses` are independent transcriptions of the same audio. With none,
+    every figure is uncorroborated and no red is published -- D-044 holds here
+    too, by default and without the caller having to remember it. That is why
+    the guard runs on both entry points rather than in the runner script.
     """
     backend = backend or LocalBackend()
     stats = Stats(statements=len(statements))
@@ -136,6 +258,18 @@ def analyze(
 
     stats.triggered = len(candidates)
     log(f"stage 0 -- {len(candidates)}/{len(statements)} statements triggered")
+
+    # --- stage 0.5: agreement between transcriptions ----------------------
+    candidates, agreements = gate(
+        candidates, spans or {}, witnesses, strictness=strictness
+    )
+    if witnesses:
+        summary = transcripts.report(list(agreements.values()))
+        log(f"stage 0.5 -- {summary['corroborated']}/{summary['with_figures']} "
+            f"figures corroborated, {summary['blocked_share']:.0%} stopped")
+    else:
+        log("stage 0.5 -- no witness transcription: no figure is corroborated, "
+            "no red will be published")
 
     # --- stage 1: triage ---------------------------------------------------
     measures: Dict[str, Optional[str]] = {}
@@ -191,9 +325,12 @@ def analyze(
         statement.source_value = result.source_value
         statement.relative_gap = result.relative_gap
 
+        # Last line, whatever the strictness and whatever the caller did.
+        guard_red(statement, agreements.get(statement.id))
+
         stats.verified += 1
-        stats.by_verdict[result.verdict.value] = (
-            stats.by_verdict.get(result.verdict.value, 0) + 1
+        stats.by_verdict[statement.verdict.value] = (
+            stats.by_verdict.get(statement.verdict.value, 0) + 1
         )
         stats.unverified_quotes += sum(1 for s in result.sources if not s.quote_verified)
 

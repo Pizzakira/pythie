@@ -6,6 +6,7 @@
 Stages, and what each does today:
 
   0  triggers      REAL      regex, no model, tested
+  0.5 agreement    REAL      needs --temoin; without one, no red can be published
   1  speakers      STUB      no voice prints enrolled yet -> everyone unknown
   2  triage        REAL      local model, or --no-model to skip
   3  verification  REAL      local base, currently one domain
@@ -32,6 +33,7 @@ from pythie import brief as brief_mod  # noqa: E402
 from pythie import corpus as corpus_mod  # noqa: E402
 from pythie import pipeline, render, retrieval, triggers  # noqa: E402
 from pythie.backend import BackendError, LocalBackend  # noqa: E402
+from pythie.media import transcripts  # noqa: E402
 from pythie.media.voiceprint import UNKNOWN  # noqa: E402
 from pythie.memory import ClaimLedger, Groundwork  # noqa: E402
 from pythie.schema import Statement, TriageResult, Verdict  # noqa: E402
@@ -62,6 +64,17 @@ def main() -> None:
                         help="start at minute N, overriding the panel manifest")
     parser.add_argument("--minutes", type=float, default=0.0,
                         help="analyse only N minutes from the start point")
+    parser.add_argument("--temoin", action="append", default=[],
+                        help="transcription independante du meme audio, pour "
+                             "l'accord entre transcriptions. Repetable.")
+    parser.add_argument("--famille", default="",
+                        help="famille ASR de la transcription principale "
+                             "(youtube, whisper, crisper...) si le fichier ne "
+                             "la declare pas.")
+    parser.add_argument("--accord", choices=["strict", "rouges"], default="strict",
+                        help="strict : aucun verdict colore sur un chiffre non "
+                             "corrobore. rouges : on verifie quand meme, mais "
+                             "aucun rouge n'est publie.")
     parser.add_argument("--rejeu", type=float, default=0.0,
                         help="replay speed for degree 1 (e.g. 8 = eight times "
                              "faster). 0 renders a static page.")
@@ -95,12 +108,18 @@ def main() -> None:
     print(f"             ({len(speakers_ok)} candidats seraient analyses)", file=sys.stderr)
 
     statements: list[Statement] = []
+    spans: dict[str, tuple[float, float]] = {}
     for block in blocks:
-        statements.extend(
-            pipeline.split(block["texte"], UNKNOWN,
-                           start_time=block["debut"],
-                           duration=block["fin"] - block["debut"])
-        )
+        produced = pipeline.split(block["texte"], UNKNOWN,
+                                  start_time=block["debut"],
+                                  duration=block["fin"] - block["debut"])
+        # The block's real boundaries, not the interpolated timestamp: the
+        # agreement layer aligns two transcriptions on time, and interpolation
+        # inside a 25-second block is exactly the drift that made the 01/09
+        # figure bench measure nothing (METHODE.md §11).
+        for statement in produced:
+            spans[statement.id] = (block["debut"], block["fin"])
+        statements.extend(produced)
 
     # --- stage 0 (REAL) ---------------------------------------------------
     minutes = (blocks[-1]["fin"] - blocks[0]["debut"]) / 60
@@ -109,6 +128,41 @@ def main() -> None:
     candidates = [s for s in statements if triggers.deserves_verification(s.triggers)]
     print(f"etage 0 REEL -- {len(statements)} enonces, {density['total']} declencheurs "
           f"({density['per_minute']}/min), {len(candidates)} a verifier", file=sys.stderr)
+
+    # --- stage 0.5 (REAL): agreement between transcriptions ---------------
+    primary = transcripts.Transcript(
+        name=Path(args.transcript).stem,
+        family=args.famille or payload.get("transcription", {}).get("famille", ""),
+        blocks=[transcripts.Block(b["debut"], b["fin"], b["texte"]) for b in blocks],
+    )
+    if args.temoin and not primary.family:
+        # Without a declared family we cannot tell a second reading from a
+        # sibling of the first, and counting a fine-tune as a witness would
+        # void the whole layer. Refuse rather than guess.
+        sys.exit("famille de la transcription principale non declaree : "
+                 "impossible d'ecarter un temoin de la meme famille (--famille).")
+    loaded = [transcripts.Transcript.load(path) for path in args.temoin]
+    witnesses = transcripts.independent(primary, loaded)
+    if len(loaded) != len(witnesses):
+        same = [t.name for t in loaded if t not in witnesses]
+        print(f"etage 0.5   -- temoin(s) ecarte(s), meme famille que la source : "
+              f"{', '.join(same)}", file=sys.stderr)
+
+    strictness = pipeline.Strictness(args.accord)
+    candidates, agreements = pipeline.gate(
+        candidates, spans, witnesses, strictness=strictness
+    )
+    accord = transcripts.report(list(agreements.values()))
+    if witnesses:
+        print(f"etage 0.5 REEL -- temoins : "
+              f"{', '.join(f'{t.name} ({t.family})' for t in witnesses)}",
+              file=sys.stderr)
+        print(f"             {accord['corroborated']}/{accord['with_figures']} "
+              f"chiffres corrobores, {accord['blocked_share']:.0%} bloques "
+              f"({strictness.value}) -- {accord['by_status']}", file=sys.stderr)
+    else:
+        print("etage 0.5   -- aucune transcription temoin : aucun chiffre n'est "
+              "corrobore, aucun rouge ne sera publie", file=sys.stderr)
 
     web_corpus = corpus_mod.load()
     base = retrieval.load()
@@ -120,7 +174,8 @@ def main() -> None:
         for statement in statements:
             if statement.verdict is None:
                 statement.verdict = Verdict.OUT_OF_SCOPE
-        write(statements, args, web_corpus, payload, note="--no-model")
+        write(statements, args, web_corpus, payload, note="--no-model",
+              witnesses=witnesses, accord=accord)
         return
 
     backend = LocalBackend()
@@ -132,7 +187,7 @@ def main() -> None:
 
     # --- stage 2 + 3 (REAL) -----------------------------------------------
     ledger = ClaimLedger()
-    counts = {"triage_fail": 0, "no_source": 0, "verified": 0}
+    counts = {"triage_fail": 0, "no_source": 0, "verified": 0, "reds_withdrawn": 0}
     todo = candidates[: args.limit] if args.limit else candidates
 
     for index, statement in enumerate(todo, 1):
@@ -165,6 +220,8 @@ def main() -> None:
         statement.source_value = result.source_value
         statement.relative_gap = result.relative_gap
         counts["verified"] += 1
+        if pipeline.guard_red(statement, agreements.get(statement.id)):
+            counts["reds_withdrawn"] += 1
 
         for revision in ledger.record(
             statement.id, statement.text, result,
@@ -189,14 +246,25 @@ def main() -> None:
     write(statements, args, web_corpus, payload, ledger=ledger)
 
 
-def write(statements, args, web_corpus, payload, ledger=None, note="") -> None:
+def write(statements, args, web_corpus, payload, ledger=None, note="",
+          witnesses=(), accord=None) -> None:
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    warning = (
-        "Aucune empreinte vocale enrolee : les prises de parole ne sont pas "
-        "attribuees. Une seule source de transcription : aucun rouge ne doit "
-        "etre publie en l'etat."
-    )
+
+    # The banner states what the chain actually did, not what it is meant to do
+    # one day. A page produced without a witness transcription must say that no
+    # figure was corroborated -- otherwise the reader cannot tell an abstention
+    # caused by our chain from a claim the sources failed to support.
+    warning = ("Aucune empreinte vocale enrolee : les prises de parole ne sont "
+               "pas attribuees. ")
+    if witnesses:
+        heard = ", ".join(f"{t.name} ({t.family})" for t in witnesses)
+        share = f"{accord['corroborated']}/{accord['with_figures']}" if accord else "?"
+        warning += (f"Accord entre transcriptions actif — temoin(s) : {heard}. "
+                    f"{share} chiffres corrobores ; les autres ne sont pas juges.")
+    else:
+        warning += ("Une seule source de transcription : aucun chiffre n'est "
+                    "corrobore et aucun rouge n'est publie.")
     for degree in (1, 2):
         html = render.render(
             statements,

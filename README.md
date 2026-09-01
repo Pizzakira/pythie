@@ -39,10 +39,11 @@ Un `false` exige une source de rang 1. Mécanique, pas discrétionnaire.
 ## Architecture
 
 ```
-étage 0  triggers    regex, coût nul, auditable        triggers.py
-étage 1  triage      appel modèle court, sortie tôt    pipeline.py
-étage 2  verify      modèle + base locale fermée       verify.py
-étage 3  render      HTML deux degrés + JSON           render.py
+étage 0    triggers   regex, coût nul, auditable            triggers.py
+étage 0.5  accord     chiffre entendu deux fois, ou pas jugé  media/transcripts.py
+étage 1    triage     appel modèle court, sortie tôt        pipeline.py
+étage 2    verify     modèle + base locale fermée           verify.py
+étage 3    render     HTML deux degrés + JSON               render.py
 ```
 
 Entonnoir à sorties anticipées : un appel modèle n'est payé que sur ce qui a
@@ -80,6 +81,11 @@ propriété physique du corpus, pas une consigne.
 Seuils publiés à l'avance et appliqués **par le programme**, jamais par le
 modèle : ≤ 5 % exact · 5–25 % approximatif · > 25 % faux.
 
+**Une grandeur en pourcentage se compare en points**, jamais relativement :
+≤ 0,3 point exact · 0,3–1 point approximatif · au-delà, le modèle tranche.
+Sans cette règle, 45,3 % contre 43,6 % du PIB donne un écart relatif de 3,4 %
+— donc « exact » — pour 1,7 point de PIB, soit une cinquantaine de milliards.
+
 ## Accessibilité
 
 La couleur n'est jamais le seul canal : chaque état porte un soulignement et un
@@ -106,6 +112,13 @@ export PYTHIE_LLM_MODEL=Qwen3.8-27B
 
 ```bash
 python scripts/fetch_transcript.py "<url youtube>" --sortie data/debat.json
+
+# une seconde oreille, d'une AUTRE famille : sans elle, aucun chiffre n'est corroboré
+python scripts/transcribe.py data/audio/debat.webm --modele large-v3 \
+    --sortie data/debat.whisper.json
+
+python scripts/run_chain.py data/debat.json --famille youtube \
+    --temoin data/debat.whisper.json --depuis 22 --minutes 10
 python scripts/run_poc.py data/debat.json --degree 2 --out data/debat
 ```
 
@@ -140,14 +153,34 @@ Le degré 1 se rejoue au minutage réel : `--rejeu 12` accélère douze fois.
 | CrisperWhisper 2.0 | 5/11 | 64 % — deuxième voix |
 | Sous-titres YouTube | 3/11 | 36 % |
 
+### Accord entre transcriptions — mesuré
+
+Un chiffre qu'une seconde famille d'ASR n'a pas entendu ne reçoit aucun verdict.
+Sous-titres YouTube contre `faster-whisper-large-v3`, débat entier, 102 énoncés
+chiffrés :
+
+| | |
+|---|---|
+| corroborés | **74 %** |
+| bloqués | 26 % — dont au plus 4 cas sur 31 imputables à l'alignement |
+
+**Un quart des énoncés chiffrés n'est pas corroboré entre deux familles.** Une
+chaîne qui travaille sur une seule transcription rend donc, pour un chiffre sur
+quatre, un verdict sur une valeur que la seconde oreille n'a pas entendue.
+
+La couche est **implémentée, mesurée, et sans autorité** : le banc pré-inscrit
+qui devait la valider a échoué, donc elle ne débloque rien. Aucun rouge n'est
+publié, corroboré ou non — et c'est désormais le programme qui le garantit, non
+plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
+
 ### Ce qui bloque encore
 
-- **Accord entre transcriptions non implémenté** : aucun rouge ne doit être
-  publié. Le premier rouge produit par le système portait sur « de au feu
-  600 millions de dettes françaises » — de la bouillie d'ASR, donc une citation
-  fabriquée.
+- **Attribution des locuteurs** : premier blocage du projet. Aucune empreinte
+  enrôlée, donc la règle « seuls les candidats sont analysés » est inapplicable.
+  Le premier rouge du système portait sur une phrase de l'animateur — mesuré le
+  01/09, contre ce que la session précédente avait conclu.
+- **Rouges** : bloqués en bloc par le programme, jusqu'à un banc qui passe.
 - **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
-- **Empreintes vocales** : aucune. L'attribution est simulée.
 - **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
 - **Jeu étalon** : inexistant. Sans lui, les seuils restent des opinions.
 
@@ -157,5 +190,7 @@ Le degré 1 se rejoue au minutage réel : `--rejeu 12` accélère douze fois.
 |---|---|
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
-| `JOURNAL.md` | 50 décisions datées avec leur motif, et mes erreurs |
+| `JOURNAL.md` | 56 décisions datées avec leur motif, et mes erreurs |
 | `ETUDES/` | outils de fact-checking existants, et bancs de transcription |
+| `ETUDES/preinscription-accord.md` | le protocole, écrit **avant** la mesure |
+| `ETUDES/accord-transcriptions.md` | ce que la mesure a rendu, y compris son échec |

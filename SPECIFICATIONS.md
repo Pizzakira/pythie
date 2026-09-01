@@ -557,7 +557,8 @@ intentions.
 |---|---|
 | Déclencheurs, corpus et rangs, provenance, seuils, registre, consensus, rendu | écrit et testé |
 | Backends, vérification, empreintes, alignement, profils, fiche dynamique | écrit, non éprouvé |
-| Transcription | audité, non écrit |
+| Transcription | audité, écrite (`scripts/transcribe.py`) |
+| Accord entre transcriptions | écrit et mesuré, **sans autorité de publication** |
 | Diffusion SSE, backoffice | conçu, non écrit |
 | **Évaluation** | **inexistant** |
 | Base de connaissances | **1 domaine sur ~8** |
@@ -568,17 +569,31 @@ rend désormais des verdicts réels et sourcés. Deux défauts corrigés le
 inquotables, et un champ `sources` facultatif que la grammaire laissait omettre.
 
 Transcription : `faster-whisper-large-v3` retenu comme référence (D-045). Le
-fine-tune français est écarté en l'état (D-046). L'accord entre sources n'est
-pas implémenté, donc **aucun rouge ne doit être publié** (D-044).
+fine-tune français est écarté en l'état (D-046).
+
+L'accord entre sources est implémenté (étage 0.5) et mesuré : 74 % des énoncés
+chiffrés du débat sont corroborés par une seconde famille d'ASR, un quart ne
+l'est pas. Le banc pré-inscrit qui devait le valider a **échoué**, donc la
+couche ne débloque rien et **aucun rouge n'est publié** (D-044, désormais
+appliqué par le programme — D-055). Voir `ETUDES/accord-transcriptions.md`.
+
+Ce même banc a corrigé le diagnostic du 31/08 : le premier rouge du système ne
+venait pas d'une corruption d'ASR mais d'une phrase réellement prononcée **par
+l'animateur**. Le maillon manquant est l'attribution, pas la transcription.
 
 Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE §3.
 
 ## Ordre des chantiers
 
 1. **Le jeu étalon** — il conditionne le jugement porté sur tout le reste.
-2. **Le corpus** — sans lui Pythie ne peut répondre qu'`unverified`.
-3. Le module de transcription à trois sources.
-4. Le reste.
+2. **L'attribution des locuteurs** — remontée de la quatrième à la deuxième
+   place le 01/09 : sans elle, la règle « seuls les candidats sont analysés »
+   (D-040) ne s'applique à rien, et c'est ce défaut qui a produit le premier
+   rouge du projet.
+3. **Le corpus** — sans lui Pythie ne peut répondre qu'`unverified`.
+4. La troisième source de transcription (Kyutai ou Voxtral) : avec deux
+   familles on détecte un désaccord, avec trois on peut l'arbitrer.
+5. Le reste.
 
 ---
 
@@ -603,3 +618,9 @@ Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE �
 | 31/08 | Trois transcriptions d'architectures distinctes, accord sur les valeurs |
 | 31/08 | Escalade vers un modèle fort sur les seuls rouges |
 | 31/08 | Modules 7-8-9 regroupés : la mémoire est une fonction à trois horizons |
+| 01/09 | La famille d'un ASR est déclarée dans le fichier, jamais devinée |
+| 01/09 | L'accord entre transcriptions porte sur le chiffre, ancré par son contexte |
+| 01/09 | Le silence d'un témoin n'est pas une confirmation |
+| 01/09 | Aucun rouge publié : garanti par le programme, pas par la consigne |
+| 01/09 | Une grandeur en pourcentage se compare en points |
+| 01/09 | Première mesure pré-inscrite ; son cas témoin a échoué, et le protocole a été suivi |

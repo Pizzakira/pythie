@@ -1,0 +1,622 @@
+{
+  "fenetre_min": [
+    22.0,
+    32.0
+  ],
+  "principale": {
+    "fichier": "data/laref2026.json",
+    "famille": "youtube"
+  },
+  "temoins": [
+    {
+      "nom": "large-v3",
+      "famille": "whisper"
+    }
+  ],
+  "enonces": 151,
+  "candidats": 15,
+  "porteurs_de_chiffre": 13,
+  "criteres": {
+    "couverture_min": 0.3,
+    "enonces_min": 20
+  },
+  "balayage": [
+    {
+      "pad": 5.0,
+      "min_anchor": 0.0,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.1,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.2,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.35,
+      "couverture": 0.769,
+      "corrobores": 10,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 10,
+        "no_quantity": 2,
+        "divergent": 2,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 5.0,
+      "min_anchor": 0.5,
+      "couverture": 0.692,
+      "corrobores": 9,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 9,
+        "divergent": 3,
+        "no_quantity": 2,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.0,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.1,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.2,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 1,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.35,
+      "couverture": 0.769,
+      "corrobores": 10,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 10,
+        "no_quantity": 2,
+        "divergent": 2,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 10.0,
+      "min_anchor": 0.5,
+      "couverture": 0.692,
+      "corrobores": 9,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 9,
+        "divergent": 3,
+        "no_quantity": 2,
+        "absent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.0,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.1,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.2,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.35,
+      "couverture": 0.769,
+      "corrobores": 10,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 10,
+        "divergent": 3,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 20.0,
+      "min_anchor": 0.5,
+      "couverture": 0.692,
+      "corrobores": 9,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 9,
+        "divergent": 4,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.0,
+      "couverture": 0.923,
+      "corrobores": 12,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 12,
+        "no_quantity": 2,
+        "divergent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.1,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.2,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.35,
+      "couverture": 0.769,
+      "corrobores": 10,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 10,
+        "divergent": 3,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 30.0,
+      "min_anchor": 0.5,
+      "couverture": 0.692,
+      "corrobores": 9,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 9,
+        "divergent": 4,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.0,
+      "couverture": 0.923,
+      "corrobores": 12,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 12,
+        "no_quantity": 2,
+        "divergent": 1
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.1,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.2,
+      "couverture": 0.846,
+      "corrobores": 11,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 11,
+        "no_quantity": 2,
+        "divergent": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": true,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "confirmed",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.35,
+      "couverture": 0.769,
+      "corrobores": 10,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 10,
+        "divergent": 3,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    },
+    {
+      "pad": 45.0,
+      "min_anchor": 0.5,
+      "couverture": 0.692,
+      "corrobores": 9,
+      "porteurs_de_chiffre": 13,
+      "statuts": {
+        "confirmed": 9,
+        "divergent": 4,
+        "no_quantity": 2
+      },
+      "T+_bloque": false,
+      "T-_confirme": false,
+      "T+_statut": [
+        "confirmed"
+      ],
+      "T-_statut": [
+        "divergent",
+        "confirmed"
+      ],
+      "retenu": false
+    }
+  ],
+  "decision": null,
+  "cause_des_blocages": {
+    "enonces_bloques": 2,
+    "chiffres_bloques": {
+      "moins de 60 s": 1,
+      "1 a 5 min": 0,
+      "plus de 5 min": 1,
+      "absent partout": 0
+    }
+  },
+  "blocages": [
+    {
+      "enonce": "Depuis 2000, l'État central a reculé de 05 points.",
+      "statut": "divergent",
+      "manquant": [
+        "05"
+      ],
+      "entendu_par_le_temoin": [
+        "4,8%",
+        "0,5",
+        "3,4",
+        "18"
+      ],
+      "temoin": "4,8% de déficit quand même et pourtant ça ne s'équilibre pas Donc les recettes sont énormes et ça ne s'équilibre pas. Ce n'est pas du tout une opinion, c'est une soustraction. Alors, je ne me demande "
+    },
+    {
+      "enonce": "Mais si nous avons une proposition européenne et si nous motivons au moment où les taux d'intérêt sont les plus élevés, plus de 4 points, nous ferons baisser ces taux d'intérêt parce que le ratio entr",
+      "statut": "divergent",
+      "manquant": [
+        "4"
+      ],
+      "entendu_par_le_temoin": [
+        "3%"
+      ],
+      "temoin": "Donc évitons les caricatures, sinon on ne se comprend pas et on ne sait plus de quoi on parle. Je parle de la dette de la France auprès de la Banque Centrale Européenne. Voilà de quoi je parle. Et cet"
+    }
+  ]
+}
