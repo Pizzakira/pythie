@@ -188,7 +188,10 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 - **Rouges** : bloqués en bloc par le programme, jusqu'à un banc qui passe.
 - **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
 - **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
-- **Jeu étalon** : inexistant. Sans lui, les seuils restent des opinions.
+- **Jeu étalon** : amorcé — 16 énoncés étiquetés à la main
+  (`ETUDES/etalon/`), dont 6 seulement tranchables par un seuil. Trop peu pour
+  calibrer quoi que ce soit : les seuils restent des opinions, et le banc le
+  dit au lieu de publier une courbe.
 
 ### Documentation
 
@@ -196,8 +199,9 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 |---|---|
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
-| `JOURNAL.md` | 58 décisions datées avec leur motif, et mes erreurs |
+| `JOURNAL.md` | 60 décisions datées avec leur motif, et mes erreurs |
 | `ETUDES/` | outils de fact-checking existants, et bancs de transcription |
 | `ETUDES/preinscription-accord.md` | le protocole, écrit **avant** la mesure |
 | `ETUDES/preinscription-francais.md` | idem, pour le fine-tune français en CT2 |
 | `ETUDES/accord-transcriptions.md` | ce que la mesure a rendu, y compris son échec |
+| `ETUDES/etalon/` | le jeu étalon, ses étiquettes et le biais de son auteur |

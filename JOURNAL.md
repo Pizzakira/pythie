@@ -425,6 +425,64 @@ la sortie de ce banc-ci, faussait le banc d'accord : la couverture passe de
 de ce que je comptais comme désaccord entre modèles était ma propre lecture des
 nombres. Tous les chiffres publiés ont été repris.
 
+### Suite — le jeu étalon, enfin
+
+Appelé « le manque le plus grave » depuis trois sessions, et absent depuis
+autant. `ETUDES/etalon/laref2026.yaml` : 16 énoncés étiquetés à la main contre
+les sources stockées, avant toute exécution de la chaîne sur eux.
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-059** | **Une étiquette porte sa robustesse : `mecanique` ou `depend_du_seuil`** | « 27 millions de demandeurs d'emploi » contre 2 710 400 est faux quelle que soit la barre. « 45,3 % » contre 43,6 % dépend entièrement de la barre. Les premiers jugent le système, les seconds choisissent les seuils. Les confondre revient à régler un seuil sur des cas puis à se féliciter de bien les classer. |
+| **D-060** | **Un item que la chaîne ne peut pas réussir reste dans le jeu** | Marqué `atteignable_aujourdhui: non`, avec la raison. Un jeu étalon qui n'exprime que ce que le système sait déjà faire ne mesure rien. Premier cas : la phrase de l'animateur, que l'étage d'attribution en bouchon laisse passer. |
+
+**Composition.** 12 items du débat, 4 construits à la main pour le piège de
+définition de la fiche `emploi` — taux BIT contre effectif de catégorie A — que
+le débat LaREF ne déclenche jamais. Les items construits sont marqués et ne
+comptent dans aucune mesure de performance réelle.
+
+Sur les 16 : 6 seulement portent un couple de valeurs qu'une barre puisse
+trancher. Les dix autres attendent une abstention, une incompatibilité de
+définitions, un défaut de l'énoncé ou un hors-périmètre — et c'est une
+information en soi sur ce que contient vraiment un débat.
+
+**Premier balayage de seuils, sans modèle.** `scripts/evaluate.py --seuils`
+part des couples étiquetés et regarde quelle barre reproduit les étiquettes ;
+aucun appel de modèle, donc aucun aléa.
+
+| Barres en points | Étiquettes reproduites |
+|---|---|
+| 0,3 / 1,0 — **les barres publiées** | 2 sur 4 |
+| 0,1 / 2,0 | 4 sur 4 |
+
+**Et rien n'est retenu.** Quatre items ne calibrent rien : le banc l'écrit et
+s'arrête. Déplacer une barre publiée sur quatre cas serait exactement le geste
+consigné dans `METHODE.md` §2 comme la faute la plus grave du projet — celui
+qui a déjà été commis une fois, en relevant un seuil de 0,60 à 0,75 parce
+qu'un cas déplaisait.
+
+Ce que le tableau dit malgré tout : les deux barres publiées sont mal placées
+sur la maigre matière disponible. Ce n'est pas une raison de les bouger, c'est
+une raison d'élargir le corpus jusqu'à ce que la mesure devienne lisible.
+
+**Le biais, déclaré et non corrigé.** Les étiquettes sont écrites par l'auteur
+du système. Trois garde-fous, aucun suffisant : chaque item cite la source et
+la valeur qu'elle porte, donc l'étiquette se re-dérive sans me croire ; elles
+sont posées avant exécution et versionnées, donc un ajustement après coup se
+verrait dans `git log` ; les cas discutables sont marqués et ne comptent pas.
+Le vrai correctif serait un étiquetage en aveugle par quelqu'un d'autre.
+
+**Défaut d'instrument, encore un, et toujours la même famille.** Le premier
+balayage comptait les items `conflicting_sources` et `out_of_scope` comme des
+échecs de chaque barre — alors qu'aucune barre ne peut les produire. Toutes les
+barres baissaient de la même quantité, ce qui ne se voit pas dans un
+classement. Corrigé : n'entrent au balayage que les étiquettes qu'un seuil peut
+trancher.
+
+**Mode complet non exécuté** : `llama-server` n'écoute pas. Le harnais existe,
+compare, et range la couverture avant l'exactitude comme l'exige `METHODE.md`
+§5 ; il mesurera le jour où le serveur tournera.
+
 ### Reste ouvert
 
 - **Attribution des locuteurs** : c'est maintenant le premier blocage du
@@ -433,7 +491,9 @@ nombres. Tous les chiffres publiés ont été repris.
 - **Rouges** : toujours bloqués en bloc, désormais par le programme (D-055).
   Lever le verrou demande un banc pré-inscrit qui passe.
 - Corpus : deux domaines sur huit.
-- **Jeu étalon : toujours inexistant.**
+- **Jeu étalon : amorcé, trop petit pour calibrer.** Six couples de
+  valeurs tranchables ; il en faudrait des dizaines. Le corpus est le
+  facteur limitant, pas l'étiquetage.
 - Un seul témoin de transcription : une paire de familles. Avec un troisième
   (Kyutai, Voxtral), « qui a raison » deviendrait une question posable — et
   aucune variante Whisper ne peut tenir ce rôle, quelle que soit sa qualité.

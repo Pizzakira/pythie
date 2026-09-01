@@ -1,0 +1,317 @@
+# Jeu étalon — débat LaREF 2026
+#
+# Étiquettes posées à la main le 1er septembre 2026, contre les sources
+# stockées sous corpus/base/, AVANT toute exécution de la chaîne sur ces
+# énoncés. Protocole et biais déclarés : ETUDES/etalon/README.md
+#
+# Les énoncés `origine: debat` sont recopiés verbatim de la transcription
+# principale (sous-titres YouTube, data/laref2026.json), fautes d'ASR
+# comprises : c'est ce que la chaîne voit, et c'est donc ce qu'il faut juger.
+
+version: 1
+debat: "LaREF 2026"
+transcription: "data/laref2026.json (sous-titres YouTube)"
+etiquete_le: "2026-09-01"
+
+items:
+
+  # --- finances publiques, tranchables par le corpus ----------------------
+
+  - id: dep-57-3
+    origine: debat
+    minutage: "24:55"
+    enonce: "Donc on peut pas l'augmenter. 57,3 % de dépenses"
+    domaine: finances-publiques
+    source_attendue: insee-comptes-apu-2025
+    grandeur: "dépenses des administrations publiques, % du PIB"
+    valeur_enoncee: "57,3 %"
+    valeur_source: "57,2 %"
+    millesime_source: "2025"
+    ecart: "0,1 point"
+    verdict_attendu: exact
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Un dixième de point. Aucun seuil raisonnable ne rend autre chose
+      qu'« exact ». L'énoncé est coupé par le découpage en blocs — « de
+      dépenses » puis « publiques » au bloc suivant — et reste néanmoins
+      testable.
+
+  - id: pre-45-3
+    origine: debat
+    minutage: "24:43"
+    enonce: "Or, nous sommes titulaires de trois records, 45,3 % de prélèvement."
+    domaine: finances-publiques
+    source_attendue: insee-prelevements-obligatoires-2025
+    grandeur: "taux de prélèvements obligatoires, % du PIB"
+    valeur_enoncee: "45,3 %"
+    valeur_source: "43,6 %"
+    millesime_source: "2025"
+    ecart: "1,7 point"
+    verdict_attendu: approximate
+    robustesse: depend_du_seuil
+    atteignable_aujourdhui: oui
+    motif: >
+      Bon ordre de grandeur, bon sens, mais 1,7 point de PIB — environ 50
+      milliards d'euros. « Exact » serait faux ; « faux » serait excessif pour
+      une valeur qui garde le bon ordre de grandeur. C'est précisément l'item
+      qui doit servir à poser la barre, jamais à valider le système.
+    reserve: >
+      Le seuil publié en points (au-delà d'un point, le modèle tranche) place
+      cet énoncé hors de la bande « approximatif ». Mon étiquette et le seuil
+      publié divergent : c'est un résultat, pas une erreur d'étiquetage.
+
+  - id: def-4-8
+    origine: debat
+    minutage: "25:02"
+    enonce: "publiques, on est le premier d'Europe et je vous le disais 4,8 % de déficit quand même."
+    domaine: finances-publiques
+    source_attendue: insee-comptes-apu-2025
+    grandeur: "besoin de financement des administrations publiques, % du PIB"
+    valeur_enoncee: "4,8 %"
+    valeur_source: "5,1 %"
+    millesime_source: "2025"
+    ecart: "0,3 point"
+    verdict_attendu: approximate
+    robustesse: depend_du_seuil
+    atteignable_aujourdhui: oui
+    motif: >
+      Exactement sur la barre de 0,3 point : selon qu'on la lit inclusive ou
+      exclusive, l'énoncé bascule d'« exact » à « approximatif ». Item retenu
+      pour cela.
+    reserve: >
+      « Premier d'Europe » n'est pas vérifiable par le corpus (aucune source
+      comparative européenne). Seule la valeur chiffrée est étiquetée. Le
+      millésime invoqué par le locuteur n'est pas explicite : s'il vise une
+      prévision 2026, la comparaison change de référent.
+
+  - id: def-etat-150
+    origine: debat
+    minutage: "28:22"
+    enonce: "Le déficit de l'État est de 150 milliards."
+    domaine: finances-publiques
+    source_attendue: insee-comptes-apu-2025
+    grandeur: "besoin de financement — mais du seul État, non des APU"
+    valeur_enoncee: "150 milliards"
+    valeur_source: "152,5 milliards (ensemble des administrations publiques)"
+    millesime_source: "2025"
+    ecart: "périmètres incompatibles"
+    verdict_attendu: conflicting_sources
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Le locuteur dit « l'État », la source couvre l'ensemble des
+      administrations publiques — État, collectivités, sécurité sociale. Les
+      deux grandeurs ne se comparent pas, et le rapprochement des nombres
+      (150 contre 152,5) est une coïncidence trompeuse. La doctrine du projet
+      est explicite : deux périmètres, pas de verdict de vérité.
+
+  - id: dette-macron-1000
+    origine: debat
+    minutage: "52:33"
+    enonce: "C'est parce que vos propositions sont injustes, monsieur l'ancien Premier ministre, dont il est effectivement utile de rappeler que sous Macron 1000 milliards d'euros de dettes"
+    domaine: finances-publiques
+    source_attendue: null
+    grandeur: "variation de la dette publique entre deux dates"
+    valeur_enoncee: "1000 milliards"
+    valeur_source: null
+    millesime_source: null
+    ecart: null
+    verdict_attendu: unverified
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      La base ne stocke que la dette fin 2025 et fin 2024. Sans la valeur de
+      2017, l'écart invoqué n'est pas calculable. C'est un trou de NOTRE base,
+      pas une réfutation — et le système doit le dire ainsi.
+
+  - id: dette-600m-anime
+    origine: debat
+    minutage: "26:52"
+    enonce: "Je vous cite de au feu 600 millions de dettes françaises."
+    domaine: finances-publiques
+    source_attendue: insee-dette-maastricht-2025
+    grandeur: "dette publique au sens de Maastricht, en euros"
+    valeur_enoncee: "600 millions"
+    valeur_source: "3 460 milliards"
+    millesime_source: "fin 2025"
+    ecart: "facteur 5 767"
+    verdict_attendu: out_of_scope
+    robustesse: mecanique
+    atteignable_aujourdhui: non
+    motif: >
+      C'est l'animateur qui parle, citant une proposition d'un candidat. Seuls
+      les candidats sont analysés (D-040) : l'énoncé sort du périmètre avant
+      toute question de valeur.
+    reserve: >
+      Inatteignable en l'état : l'étage d'attribution est un bouchon qui nomme
+      tout le monde « locuteur non identifié » et laisse passer. La chaîne
+      produit ici un `false` — c'est le premier rouge du projet, et cet item
+      existe pour que cet échec soit compté plutôt que raconté.
+      Étiquette secondaire, si l'énoncé avait été d'un candidat : `false`,
+      mécanique.
+
+  # --- énoncés hors du corpus : l'abstention est la bonne réponse ---------
+
+  - id: all-deficit-3
+    origine: debat
+    minutage: "30:31"
+    enonce: "Si je suis élu, je trouverai des alliés en Europe, notamment dans les pays latins et sans doute aussi les Allemands, car cette année, ils vont passer des 3 % de déficit."
+    domaine: null
+    source_attendue: null
+    valeur_enoncee: "3 %"
+    valeur_source: null
+    verdict_attendu: unverified
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Finances publiques allemandes : hors corpus. De surcroît prospectif
+      (« vont passer »), donc non testable contre une source publiée.
+
+  - id: rd-1-4
+    origine: debat
+    minutage: "95:27"
+    enonce: "Les entreprises françaises, c'est en recherche développement selon seulement 1,4 % du PIB, là où en Allemagne c'est 2 et aux États-Unis c'est 2,8."
+    domaine: null
+    source_attendue: null
+    valeur_enoncee: "1,4 % du PIB"
+    valeur_source: null
+    verdict_attendu: unverified
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: "Dépense de R&D : aucun domaine du corpus ne la couvre."
+
+  - id: conso-55
+    origine: debat
+    minutage: "107:04"
+    enonce: "Et dans ce pays, les salaires et la consommation populaire, la consommation populaire c'est 55 % du PIB."
+    domaine: null
+    source_attendue: null
+    valeur_enoncee: "55 % du PIB"
+    valeur_source: null
+    verdict_attendu: unverified
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Hors corpus. La grandeur elle-même est floue — « consommation
+      populaire » n'est pas un agrégat de comptabilité nationale — mais
+      trancher cela demanderait un savoir que le système n'a pas le droit
+      d'invoquer. L'abstention est la bonne réponse pour la bonne raison.
+
+  # --- défauts de l'énoncé -----------------------------------------------
+
+  - id: dette-10ans
+    origine: debat
+    minutage: "29:22"
+    enonce: "de la dette est posée depuis 10 ans."
+    domaine: finances-publiques
+    valeur_enoncee: "10 ans"
+    verdict_attendu: too_vague
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Fragment sans sujet, produit par le découpage en blocs. Rien à comparer :
+      le défaut est celui de l'énoncé, et l'échelle du projet a un état pour ça.
+
+  - id: depenses-contraintes
+    origine: debat
+    minutage: "125:37"
+    enonce: "Parce qu'on oublie de vous dire, c'est que les dépenses contraintes, elles ont considérablement augmenté depuis les 10 dernières années"
+    domaine: null
+    valeur_enoncee: "« considérablement », 10 ans"
+    verdict_attendu: too_vague
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      « Considérablement » n'est pas une valeur, et « dépenses contraintes »
+      n'a pas de définition statistique unique. Non testable en l'état.
+
+  # --- engagements : hors de l'échelle de vérité --------------------------
+
+  - id: impots-production-50
+    origine: debat
+    minutage: "157:02"
+    enonce: "Je propose d'abord de supprimer 50 milliards d'impôts de production et de le financer par la suppression de 50 milliards"
+    domaine: finances-publiques
+    valeur_enoncee: "50 milliards"
+    verdict_attendu: out_of_scope
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Promesse. Ni vraie ni fausse : elle sera confrontée au programme publié
+      par la voie de la cohérence, jamais par l'échelle de vérité.
+
+  # --- items construits : le piège de définition de la fiche emploi -------
+  #
+  # Le débat LaREF ne déclenche jamais ce piège. Ces quatre énoncés sont
+  # écrits à la main pour le tester, et ne comptent dans aucune mesure de
+  # performance réelle.
+
+  - id: c-chomage-bit-73
+    origine: construit
+    enonce: "Le taux de chômage est à 7,3 % de la population active."
+    domaine: emploi
+    source_attendue: insee-chomage-bit-t2-2026
+    grandeur: "taux de chômage au sens du BIT, % de la population active"
+    valeur_enoncee: "7,3 %"
+    valeur_source: "7,3 %"
+    millesime_source: "T2 2026"
+    ecart: "0 point"
+    verdict_attendu: exact
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: "Témoin positif : la bonne grandeur, la bonne valeur, la bonne source."
+
+  - id: c-confusion-taux-effectif
+    origine: construit
+    enonce: "Il y a 7,3 % de demandeurs d'emploi en catégorie A."
+    domaine: emploi
+    source_attendue: francetravail-categorie-a-2026-06
+    grandeur: "effectif de catégorie A — mais énoncé comme un taux"
+    valeur_enoncee: "7,3 %"
+    valeur_source: "2 710 400 personnes"
+    millesime_source: "juin 2026"
+    ecart: "grandeurs incomparables"
+    verdict_attendu: conflicting_sources
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Le piège que la fiche `emploi` signale en tête : un taux BIT et un
+      effectif de catégorie A ne se comparent jamais. Le nombre 7,3 est celui
+      du taux BIT, appliqué à la mauvaise grandeur. Un système qui rend
+      « exact » ici a confondu deux mesures produites par deux organismes.
+
+  - id: c-cat-a-2-7m
+    origine: construit
+    enonce: "Il y a 2,7 millions de demandeurs d'emploi en catégorie A."
+    domaine: emploi
+    source_attendue: francetravail-categorie-a-2026-06
+    grandeur: "effectif de catégorie A"
+    valeur_enoncee: "2,7 millions"
+    valeur_source: "2 710 400"
+    millesime_source: "juin 2026"
+    ecart: "0,4 % en relatif"
+    verdict_attendu: exact
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: "Arrondi usuel d'un effectif. Écart relatif très inférieur à toute barre."
+
+  - id: c-cat-a-27m
+    origine: construit
+    enonce: "Il y a 27 millions de demandeurs d'emploi en catégorie A."
+    domaine: emploi
+    source_attendue: francetravail-categorie-a-2026-06
+    grandeur: "effectif de catégorie A"
+    valeur_enoncee: "27 millions"
+    valeur_source: "2 710 400"
+    millesime_source: "juin 2026"
+    ecart: "facteur 10"
+    verdict_attendu: "false"   # entre guillemets : sans eux, YAML lit un booléen
+    robustesse: mecanique
+    atteignable_aujourdhui: oui
+    motif: >
+      Un ordre de grandeur d'écart, source de rang 1 : le rouge est mérité.
+      C'est aussi la forme exacte d'une corruption d'ASR — un facteur dix par
+      déplacement de virgule — ce qui en fait le témoin du garde-fou : la
+      chaîne ne doit publier ce rouge que si une seconde transcription porte
+      le même chiffre.

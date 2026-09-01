@@ -26,7 +26,8 @@ j'aurais publié un réglage ajusté contre un cas que j'avais mal lu. Résultat
 dans `ETUDES/accord-transcriptions.md`.
 
 **Ce qui reste** : les autres mesures du projet — seuils de verdict, seuils
-d'empreinte vocale — n'ont toujours aucune pré-inscription. Une sur sept.
+d'empreinte vocale — n'ont toujours aucune pré-inscription. Deux sur huit, la
+seconde étant le banc du fine-tune français.
 
 ---
 
@@ -61,9 +62,23 @@ rien (81 % à 5 s comme à 45 s) ; l'ancrage lexical, posé au passage, déplace
 couverture de 21 points. Aucune valeur n'a été retenue pour autant — le critère
 éliminatoire du protocole n'est satisfait par aucune combinaison.
 
-**Ce qu'il faut** : le même traitement pour les seuils qui comptent — verdict,
-empreinte vocale, accord entre fenêtres — sur un jeu étalon qui n'existe pas
-encore.
+**Le jeu étalon existe depuis le 01/09, et il est trop petit.**
+`ETUDES/etalon/laref2026.yaml` : 16 énoncés étiquetés à la main contre les
+sources stockées, dont 6 seulement portent un couple de valeurs qu'une barre
+puisse trancher. `scripts/evaluate.py --seuils` balaye les barres sans faire
+tourner aucun modèle, et **refuse de retenir une valeur** : il faudrait des
+dizaines de couples par unité de comparaison, il y en a quatre en points et
+deux en relatif.
+
+Ce que le tableau montre déjà, sans qu'on puisse en conclure : les barres
+publiées (0,3 / 1,0 point) reproduisent 2 étiquettes sur 4, là où 0,1 / 2,0 en
+reproduit 4. **Ce n'est pas une raison de changer les barres** — c'est une
+raison d'élargir le corpus jusqu'à ce que la mesure devienne lisible. Déplacer
+un seuil sur quatre items serait le geste même que ce document interdit.
+
+**Ce qu'il faut** : le même traitement pour les seuils d'empreinte vocale et
+d'accord entre fenêtres, et surtout assez de matière étiquetée pour que le
+balayage cesse d'être une anecdote avec une courbe.
 
 ---
 

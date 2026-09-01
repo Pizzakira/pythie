@@ -560,7 +560,7 @@ intentions.
 | Transcription | audité, écrite (`scripts/transcribe.py`) |
 | Accord entre transcriptions | écrit et mesuré, **sans autorité de publication** |
 | Diffusion SSE, backoffice | conçu, non écrit |
-| **Évaluation** | **inexistant** |
+| **Évaluation** | **amorcée** — 16 items étiquetés, banc de seuils écrit, trop peu de matière |
 | Base de connaissances | **1 domaine sur ~8** |
 
 Qualité de sortie du modèle local : le routage fonctionne, l'étape verdict
@@ -627,3 +627,5 @@ Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE �
 | 01/09 | Une grandeur en pourcentage se compare en points |
 | 01/09 | Première mesure pré-inscrite ; son cas témoin a échoué, et le protocole a été suivi |
 | 01/09 | Fine-tune français écarté pour la graphie des échelles, non plus pour la boucle |
+| 01/09 | Jeu étalon : étiquettes séparées en « mécaniques » et « dépendantes du seuil » |
+| 01/09 | Un item que la chaîne ne peut pas réussir reste dans le jeu, marqué comme tel |
