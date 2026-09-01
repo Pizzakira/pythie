@@ -368,18 +368,64 @@ def main() -> None:
     if args.confirmer:
         rempli = yaml.safe_load(Path(args.confirmer).read_text(encoding="utf-8"))
         registry = Registry()
+
+        # Deux sources d'enrôlement, et la première prime : les MORCEAUX
+        # découpés à la main, dont on connaît les bornes exactes, puis à défaut
+        # la grappe entière quand elle a été confirmée d'un bloc.
+        #
+        # Un morceau vaut mieux qu'une grappe : il ne contient qu'une voix, par
+        # construction. Et il enrôle qui il nomme, pas seulement le locuteur
+        # principal — une journaliste repérée au milieu d'un extrait de
+        # candidat construit SA propre empreinte, alors qu'aucune grappe ne lui
+        # aurait été attribuée.
+        par_personne: dict[str, list[Window]] = {}
+        for grappe in rempli.get("grappes", []):
+            for morceau in grappe.get("morceaux") or []:
+                debut, fin, qui = float(morceau[0]), float(morceau[1]), str(morceau[2])
+                if qui.lower() in ("inconnu", "plusieurs", ""):
+                    continue
+                par_personne.setdefault(qui, []).append(Window(debut, fin))
+
         confirmees, refusees = 0, 0
+        embedder = Embedder()
+
+        for qui, fenetres in sorted(par_personne.items()):
+            person = next((p for p in people.values()
+                           if p["id"].lower() == qui.lower()
+                           or strip_accents(p["nom"]) == strip_accents(qui)), None)
+            decoupes, gardees = embedder.embed(args.wav, fenetres)
+            if len(decoupes) < 3:
+                print(f"  {qui}: {len(decoupes)} morceau(x) exploitable(s), "
+                      "3 requis — empreinte non ecrite", file=sys.stderr)
+                refusees += 1
+                continue
+            registry.enrol(
+                display_name=person["nom"] if person else qui,
+                role=person["role"] if person else Role.OTHER,
+                embeddings=list(decoupes),
+                seconds=float(sum(fenetres[k].duration for k in gardees)),
+                sources=[f"{args.wav} : {len(gardees)} morceaux delimites et "
+                         "confirmes a l'oreille"],
+                enrolled_on="2026-09-01",
+                human_verified=True,
+            )
+            confirmees += 1
+            print(f"  {qui}: {len(gardees)} morceaux, "
+                  f"{sum(fenetres[k].duration for k in gardees):.0f} s",
+                  file=sys.stderr)
+
+        # Grappes confirmées d'un bloc, pour qui aucun morceau n'a été découpé.
         for grappe in rempli.get("grappes", []):
             reponse = str(grappe.get("confirme") or "").strip()
             if not reponse or reponse.lower() in ("inconnu", "plusieurs", "non"):
                 refusees += 1
                 continue
-            # On accepte le nom tel qu'il a été écrit, en le rattachant au
-            # plateau quand c'est possible : le rôle décide qui est analysé, et
-            # il ne s'invente pas.
             person = next((p for p in people.values()
                            if strip_accents(p["nom"]) == strip_accents(reponse)
                            or p["id"].lower() == reponse.lower()), None)
+            speaker_id = person["id"] if person else reponse
+            if speaker_id in par_personne:
+                continue          # déjà enrôlé, et mieux, par ses morceaux
             members = np.where(labels == grappe["grappe"])[0]
             if len(members) < 3:
                 refusees += 1
@@ -397,8 +443,8 @@ def main() -> None:
             confirmees += 1
 
         registry.save()
-        print(f"\n{confirmees} empreintes VERIFIEES ecrites, {refusees} grappes "
-              "laissees de cote", file=sys.stderr)
+        print(f"\n{confirmees} empreintes VERIFIEES ecrites, {refusees} laissees "
+              "de cote", file=sys.stderr)
         print("Ces empreintes-la peuvent porter une attribution.", file=sys.stderr)
         return
 

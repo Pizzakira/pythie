@@ -1,0 +1,877 @@
+<title>Écoute de contrôle LaREF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --ground: #F2F4F7;
+  --surface: #FFFFFF;
+  --surface-sunk: #E8EBF0;
+  --line: #D3D9E2;
+  --line-strong: #B4BDCA;
+  --ink: #141922;
+  --ink-soft: #5A6472;
+  --ink-faint: #8790A0;
+  --accent: #2F5D8C;
+  --confirmed: #2E6B4F;
+  --confirmed-soft: #DFEDE5;
+  --attention: #9E4234;
+  --attention-soft: #F6E4E0;
+  --shadow: 0 1px 2px rgba(20, 25, 34, .06), 0 8px 24px -16px rgba(20, 25, 34, .3);
+  --radius: 10px;
+  --step: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0E1118;
+    --surface: #161B24;
+    --surface-sunk: #10141C;
+    --line: #262D3A;
+    --line-strong: #38414F;
+    --ink: #E6EAF1;
+    --ink-soft: #A2ACBB;
+    --ink-faint: #6F7A8A;
+    --accent: #7FA8D4;
+    --confirmed: #6FB694;
+    --confirmed-soft: #172A22;
+    --attention: #D98878;
+    --attention-soft: #2C1B18;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground: #0E1118;
+  --surface: #161B24;
+  --surface-sunk: #10141C;
+  --line: #262D3A;
+  --line-strong: #38414F;
+  --ink: #E6EAF1;
+  --ink-soft: #A2ACBB;
+  --ink-faint: #6F7A8A;
+  --accent: #7FA8D4;
+  --confirmed: #6FB694;
+  --confirmed-soft: #172A22;
+  --attention: #D98878;
+  --attention-soft: #2C1B18;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: Archivo, "IBM Plex Sans", system-ui, sans-serif;
+  text-wrap: balance;
+  margin: 0;
+}
+
+a { color: var(--accent); }
+.mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; }
+.wrap { max-width: 1020px; margin: 0 auto; padding: 0 20px 96px; }
+
+/* --- bandeau ------------------------------------------------------------ */
+
+.masthead { border-bottom: 1px solid var(--line); background: var(--surface); }
+.masthead-inner {
+  max-width: 1020px; margin: 0 auto; padding: 28px 20px 24px;
+  display: flex; flex-wrap: wrap; gap: var(--step); align-items: flex-start;
+  justify-content: space-between;
+}
+.masthead h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
+.masthead p { margin: 6px 0 0; color: var(--ink-soft); max-width: 62ch; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace; font-size: .7rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint);
+  margin: 0 0 6px;
+}
+.tally { display: flex; gap: 18px; align-items: flex-end; }
+.tally-figure { text-align: right; }
+.tally-figure b {
+  font-family: Archivo, sans-serif; font-size: 1.9rem; font-weight: 700;
+  font-variant-numeric: tabular-nums; display: block; line-height: 1.1;
+}
+.tally-figure span {
+  font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --- consigne ----------------------------------------------------------- */
+
+.brief {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 20px 22px; margin: var(--step) 0;
+  box-shadow: var(--shadow);
+}
+.brief h2 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+.brief ol { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); }
+.brief li { margin-bottom: 8px; }
+.brief li b { color: var(--ink); font-weight: 600; }
+.brief .warn {
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
+  color: var(--ink-soft); font-size: .92rem;
+}
+
+/* --- barre d'action ----------------------------------------------------- */
+
+.actionbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  padding: 12px 0; margin-bottom: 4px;
+  background: color-mix(in srgb, var(--ground) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.progress-rail {
+  flex: 1 1 200px; height: 6px; background: var(--surface-sunk);
+  border-radius: 999px; overflow: hidden; min-width: 140px;
+}
+.progress-fill { height: 100%; width: 0%; background: var(--confirmed); transition: width .3s ease; }
+.progress-label { font-size: .85rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.saved-note { font-size: .8rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+button {
+  font: inherit; cursor: pointer; border-radius: 8px;
+  border: 1px solid var(--line-strong); background: var(--surface);
+  color: var(--ink); padding: 8px 14px; transition: background .15s, border-color .15s;
+}
+button:hover { border-color: var(--accent); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn-primary {
+  background: var(--accent); border-color: var(--accent); color: var(--surface);
+  font-weight: 600;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+
+/* --- grappes ------------------------------------------------------------ */
+
+.section-rule {
+  display: flex; align-items: center; gap: 12px; margin: 34px 0 16px;
+  color: var(--ink-faint);
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  letter-spacing: .14em; text-transform: uppercase;
+}
+.section-rule::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.voice {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); margin-bottom: 18px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.voice[data-state="done"] { border-color: var(--confirmed); }
+.voice[data-state="split"] { border-color: var(--attention); }
+
+.voice-head {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  justify-content: space-between; padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.voice-id { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.voice-id h3 { font-size: 1.12rem; font-weight: 600; }
+.voice-id .suggest { color: var(--ink-soft); font-size: .9rem; }
+.chip-cluster {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--surface-sunk); color: var(--ink-faint);
+}
+.verdict {
+  font-size: .82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  background: var(--surface-sunk); color: var(--ink-faint);
+}
+.verdict[data-kind="done"] { background: var(--confirmed-soft); color: var(--confirmed); }
+.verdict[data-kind="split"] { background: var(--attention-soft); color: var(--attention); }
+.evidence {
+  display: flex; align-items: center; gap: 10px;
+  font-size: .8rem; color: var(--ink-faint); font-variant-numeric: tabular-nums;
+}
+.evidence-bar {
+  width: 62px; height: 5px; border-radius: 999px;
+  background: var(--surface-sunk); overflow: hidden;
+}
+.evidence-bar i { display: block; height: 100%; background: var(--accent); }
+
+/* --- extraits ----------------------------------------------------------- */
+
+.clip { padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.clip:last-child { border-bottom: 0; }
+
+.clip-top { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+.play {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--line-strong); background: var(--surface-sunk);
+  padding: 0; flex: none;
+}
+.play svg { width: 14px; height: 14px; fill: var(--ink); }
+.play[data-playing="1"] { background: var(--accent); border-color: var(--accent); }
+.play[data-playing="1"] svg { fill: var(--surface); }
+
+.clip-meta {
+  display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap;
+  font-size: .82rem; color: var(--ink-faint);
+}
+.clip-meta .span-abs {
+  font-family: "IBM Plex Mono", monospace; font-size: .9rem; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.clip-said { color: var(--ink-soft); font-size: .93rem; margin: 0 0 12px; max-width: 70ch; }
+
+/* --- la bande de découpe ------------------------------------------------ */
+
+.strip {
+  position: relative; height: 56px; background: var(--surface-sunk);
+  border: 1px solid var(--line); border-radius: 8px;
+  overflow: hidden; cursor: text; user-select: none;
+}
+.seg {
+  position: absolute; top: 0; bottom: 0;
+  border-right: 1px solid var(--line-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .74rem; text-align: center; padding: 0 4px; overflow: hidden;
+  color: var(--ink-faint); white-space: nowrap; text-overflow: ellipsis;
+}
+.seg[data-labelled="1"] {
+  background: var(--confirmed-soft); color: var(--confirmed); font-weight: 600;
+}
+.seg[data-selected="1"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.handle {
+  position: absolute; top: 0; bottom: 0; width: 13px; margin-left: -6px;
+  cursor: ew-resize; z-index: 3; background: transparent; border: 0; padding: 0;
+}
+.handle::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 5px; width: 3px;
+  background: var(--accent); border-radius: 2px;
+}
+.handle:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.playhead {
+  position: absolute; top: 0; bottom: 0; width: 2px; background: var(--attention);
+  z-index: 4; pointer-events: none;
+}
+
+.tools {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin: 10px 0 12px; font-size: .84rem; color: var(--ink-soft);
+}
+.tools button { padding: 5px 10px; font-size: .84rem; }
+.tools .bound-read {
+  font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+  color: var(--ink); background: var(--surface-sunk);
+  padding: 4px 8px; border-radius: 6px;
+}
+.tools label { display: inline-flex; gap: 5px; align-items: center; }
+.tools input[type="number"] {
+  font: inherit; font-family: "IBM Plex Mono", monospace; width: 88px;
+  padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink);
+}
+
+.who { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.who .who-label { font-size: .82rem; color: var(--ink-faint); margin-right: 4px; }
+.who button { padding: 5px 11px; font-size: .86rem; border-radius: 999px; }
+.who button[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent);
+  color: var(--surface); font-weight: 600;
+}
+.who button.neutral[aria-pressed="true"] {
+  background: var(--ink-faint); border-color: var(--ink-faint); color: var(--surface);
+}
+
+/* --- sortie ------------------------------------------------------------- */
+
+dialog {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: var(--ink); padding: 0;
+  max-width: min(780px, 92vw); box-shadow: var(--shadow);
+}
+dialog::backdrop { background: rgba(10, 13, 20, .55); }
+.sheet { padding: 22px; }
+.sheet h2 { font-size: 1.1rem; margin-bottom: 8px; }
+.sheet p { color: var(--ink-soft); margin: 0 0 14px; }
+textarea {
+  width: 100%; height: 340px; resize: vertical;
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem; line-height: 1.5;
+  background: var(--surface-sunk); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 8px; padding: 12px;
+}
+.sheet-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <p class="eyebrow">Pythie · enrôlement des voix</p>
+      <h1>Écoute de contrôle</h1>
+      <p id="lede"></p>
+      <p style="margin-top:10px"><a id="video-link" href="#" target="_blank" rel="noopener">Ouvrir le débat en entier dans un autre onglet ↗</a></p>
+    </div>
+    <div class="tally">
+      <div class="tally-figure"><b id="count-done">0</b><span>voix nommées</span></div>
+      <div class="tally-figure"><b id="count-left">0</b><span>extraits à faire</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="brief">
+    <h2>Ce que je vous demande de vérifier</h2>
+    <ol>
+      <li><b>Qui parle ?</b> Si c'est une seule personne du début à la fin,
+        cliquez son nom : c'est tout.</li>
+      <li><b>Si plusieurs personnes se relaient</b> — une journaliste qui
+        relance trois fois, par exemple — découpez : lecture, pause à l'instant
+        du changement, <b>Couper ici</b>, puis nommez le morceau. Autant de fois
+        qu'il y a de tours. Chaque coupure se règle ensuite au dixième de
+        seconde : tirez la poignée, ou sélectionnez-la et utilisez les flèches
+        du clavier, ou tapez la seconde exacte.</li>
+      <li><b>Trois extraits par voix</b>, pris à des moments éloignés. S'ils ne
+        donnent pas la même personne, la grappe mélange deux locuteurs et ne
+        doit pas devenir une empreinte.</li>
+    </ol>
+    <p class="warn">Chaque clic est enregistré dans ce navigateur, et repris au
+      retour. Les sept premières voix pèsent 13 à 20 minutes de débat chacune :
+      ce sont elles qui comptent. Une empreinte fausse attribuerait une citation
+      à quelqu'un qui ne l'a pas prononcée — d'où la découpe plutôt qu'un nom
+      approximatif.</p>
+  </section>
+
+  <div class="actionbar">
+    <div class="progress-rail"><div class="progress-fill" id="progress"></div></div>
+    <span class="progress-label" id="progress-label">0 / 0</span>
+    <span class="saved-note" id="saved-note">enregistré dans ce navigateur</span>
+    <button id="btn-export" class="btn-primary">Copier le résultat</button>
+    <button id="btn-reset">Tout effacer</button>
+  </div>
+
+  <main id="voices"></main>
+</div>
+
+<dialog id="export">
+  <div class="sheet">
+    <h2>À recoller dans la conversation</h2>
+    <p>Chaque morceau nommé sort avec son minutage réel dans le débat. C'est de
+      là que les empreintes sont construites — y compris celles des
+      journalistes repérés au passage.</p>
+    <textarea id="export-text" readonly></textarea>
+    <div class="sheet-actions">
+      <button id="btn-copy" class="btn-primary">Copier</button>
+      <button id="btn-close">Fermer</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const DATA = /*__DONNEES__*/null;
+const OLD_STORE = "pythie-ecoute-laref-v1";
+const STORE = "pythie-ecoute-laref-v2";
+
+const ICON_PLAY = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"></path></svg>';
+const ICON_STOP = '<svg viewBox="0 0 12 14" aria-hidden="true"><rect x="0" y="0" width="4.5" height="14"></rect><rect x="7.5" y="0" width="4.5" height="14"></rect></svg>';
+
+let state = readState();
+let playing = null;
+
+/** Ce qui a déjà été fait est repris, jamais jeté : l'ancien format — un seul
+ *  locuteur pour tout l'extrait, ou une paire de bornes — devient un découpage
+ *  équivalent au premier affichage. */
+function readState() {
+  try {
+    const fresh = JSON.parse(localStorage.getItem(STORE));
+    if (fresh) return fresh;
+  } catch (e) {}
+  const carried = {};
+  try {
+    const old = JSON.parse(localStorage.getItem(OLD_STORE)) || {};
+    Object.keys(old).forEach(key => {
+      const entry = old[key] || {};
+      if (!entry.qui && !entry.bornes) return;
+      carried[key] = { segments: null, legacy: entry };
+    });
+  } catch (e) {}
+  return carried;
+}
+
+function save() {
+  const note = document.getElementById("saved-note");
+  try {
+    localStorage.setItem(STORE, JSON.stringify(state));
+    const now = new Date();
+    note.textContent = "enregistré à " + String(now.getHours()).padStart(2, "0")
+      + " h " + String(now.getMinutes()).padStart(2, "0");
+  } catch (e) {
+    note.textContent = "ce navigateur refuse d'enregistrer — copiez le résultat avant de fermer";
+  }
+}
+
+const keyOf = (cluster, index) => cluster + ":" + index;
+
+/** Les morceaux d'un extrait : une partition contiguë de [0, durée]. */
+function segmentsOf(cluster, index, duration) {
+  const key = keyOf(cluster, index);
+  let entry = state[key];
+  if (!entry) { entry = state[key] = { segments: null }; }
+  if (!entry.segments) {
+    const legacy = entry.legacy;
+    entry.segments = [];
+    if (legacy && legacy.bornes) {
+      const a = Math.max(0, legacy.bornes[0]);
+      const b = Math.min(duration, legacy.bornes[1]);
+      if (a > 0.05) entry.segments.push({ a: 0, b: a, who: "" });
+      entry.segments.push({ a: a, b: b, who: legacy.qui || "" });
+      if (b < duration - 0.05) entry.segments.push({ a: b, b: duration, who: "" });
+    } else {
+      entry.segments.push({ a: 0, b: duration, who: legacy ? (legacy.qui || "") : "" });
+    }
+    delete entry.legacy;
+  }
+  return entry.segments;
+}
+
+/* --- minutages, lisibles ------------------------------------------------ */
+
+function clock(seconds) {
+  const total = Math.max(0, Math.round(seconds));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return (h ? h + " h " + String(m).padStart(2, "0") : String(m))
+    + (h ? " min " : " min ") + String(s).padStart(2, "0") + " s";
+}
+function shortClock(seconds) {
+  const total = Math.max(0, Math.round(seconds));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return (h ? h + ":" + String(m).padStart(2, "0") : String(m))
+    + ":" + String(s).padStart(2, "0");
+}
+function preciseClock(seconds) {
+  const whole = Math.floor(seconds);
+  const tenth = Math.round((seconds - whole) * 10);
+  return shortClock(whole) + "," + (tenth === 10 ? 9 : tenth);
+}
+function nameOf(id) {
+  if (id === "inconnu") return "aucun des intervenants";
+  const person = DATA.intervenants.find(p => p.id === id);
+  return person ? person.nom : id;
+}
+function shortName(id) {
+  if (!id) return "";
+  if (id === "inconnu") return "?";
+  const person = DATA.intervenants.find(p => p.id === id);
+  return person ? person.nom.split(" ").slice(-1)[0] : id;
+}
+
+/* --- verdict d'une grappe ----------------------------------------------- */
+
+function dominant(cluster, index, duration) {
+  const held = {};
+  segmentsOf(cluster, index, duration).forEach(seg => {
+    if (!seg.who) return;
+    held[seg.who] = (held[seg.who] || 0) + (seg.b - seg.a);
+  });
+  const names = Object.keys(held);
+  if (!names.length) return "";
+  return names.sort((a, b) => held[b] - held[a])[0];
+}
+
+function verdict(cluster) {
+  const answers = cluster.extraits
+    .map((clip, i) => dominant(cluster.grappe, i, clip.duree))
+    .filter(Boolean);
+  if (!answers.length) return { kind: "todo", label: "à écouter", nom: "" };
+  const unique = [...new Set(answers)];
+  if (unique.length > 1) return { kind: "split", label: "voix mélangées", nom: "plusieurs" };
+  if (answers.length < cluster.extraits.length) {
+    return { kind: "partial", nom: unique[0],
+             label: answers.length + " / " + cluster.extraits.length + " extraits" };
+  }
+  return { kind: "done", label: nameOf(unique[0]), nom: unique[0] };
+}
+
+/* --- rendu -------------------------------------------------------------- */
+
+function render() {
+  const host = document.getElementById("voices");
+  host.textContent = "";
+  const majors = DATA.grappes.filter(g => g.minutes >= 10);
+  const minors = DATA.grappes.filter(g => g.minutes < 10);
+  host.appendChild(rule("les voix qui portent le débat"));
+  majors.forEach(g => host.appendChild(card(g)));
+  if (minors.length) {
+    host.appendChild(rule("voix brèves — facultatif"));
+    minors.forEach(g => host.appendChild(card(g)));
+  }
+  refresh();
+}
+
+function rule(text) {
+  const div = document.createElement("div");
+  div.className = "section-rule";
+  div.textContent = text;
+  return div;
+}
+
+function card(cluster) {
+  const box = document.createElement("section");
+  box.className = "voice";
+  box.dataset.cluster = cluster.grappe;
+  const head = document.createElement("header");
+  head.className = "voice-head";
+  head.innerHTML =
+    '<div class="voice-id">' +
+      "<h3>" + escapeHtml(cluster.nomSuggere) + "</h3>" +
+      '<span class="suggest">proposé · ' + cluster.minutes + " min de parole</span>" +
+      '<span class="chip-cluster">grappe ' + cluster.grappe + "</span>" +
+    "</div>" +
+    '<div class="evidence">' +
+      '<span class="evidence-bar"><i style="width:' + Math.round(cluster.part * 100) + '%"></i></span>' +
+      "<span>" + Math.round(cluster.part * 100) + " % des " + cluster.mentions + " mentions</span>" +
+      '<span class="verdict" data-role="verdict">à écouter</span>' +
+    "</div>";
+  box.appendChild(head);
+  cluster.extraits.forEach((clip, index) => box.appendChild(clipRow(cluster, clip, index)));
+  return box;
+}
+
+function clipRow(cluster, clip, index) {
+  const row = document.createElement("div");
+  row.className = "clip";
+  const duration = clip.duree;
+  let selected = 0;
+
+  const top = document.createElement("div");
+  top.className = "clip-top";
+  const play = document.createElement("button");
+  play.className = "play";
+  play.innerHTML = ICON_PLAY;
+  play.setAttribute("aria-label", "Écouter l'extrait de " + clock(clip.debut));
+  const meta = document.createElement("div");
+  meta.className = "clip-meta";
+  meta.innerHTML =
+    '<span class="span-abs">' + clock(clip.debut) + " → " + shortClock(clip.debut + duration) + "</span>" +
+    "<span>" + Math.round(duration) + " secondes d'extrait</span>" +
+    (clip.video ? '<a href="' + clip.video + '" target="_blank" rel="noopener">ouvrir la vidéo à cet instant ↗</a>' : "");
+  top.append(play, meta);
+  row.appendChild(top);
+
+  if (clip.texte) {
+    const said = document.createElement("p");
+    said.className = "clip-said";
+    said.textContent = "« " + clip.texte + " »";
+    row.appendChild(said);
+  }
+
+  const strip = document.createElement("div");
+  strip.className = "strip";
+  row.appendChild(strip);
+
+  const tools = document.createElement("div");
+  tools.className = "tools";
+  tools.innerHTML =
+    '<button data-act="cut">Couper ici</button>' +
+    '<button data-act="play-seg">Écouter ce morceau</button>' +
+    '<button data-act="merge">Fusionner à gauche</button>' +
+    '<span class="bound-read" data-role="read"></span>' +
+    "<label>début <input type='number' step='0.1' min='0' data-role='from'></label>" +
+    "<label>fin <input type='number' step='0.1' min='0' data-role='to'></label>";
+  row.appendChild(tools);
+
+  const who = document.createElement("div");
+  who.className = "who";
+  who.innerHTML = "<span class='who-label'>le morceau choisi, c'est :</span>";
+  DATA.intervenants.forEach(person => who.appendChild(
+    whoButton(person.id, person.nom, person.role)));
+  who.appendChild(whoButton("inconnu", "aucun / je ne sais pas", "neutral"));
+  row.appendChild(who);
+
+  /* --- audio ------------------------------------------------------------ */
+  const audio = new Audio(clip.audio);
+  audio.preload = "none";
+  let stopAt = null;
+
+  play.addEventListener("click", () => {
+    if (playing && playing.audio !== audio) playing.stop();
+    if (!audio.paused) { audio.pause(); return; }
+    stopAt = null;
+    audio.play();
+  });
+  audio.addEventListener("play", () => {
+    play.dataset.playing = "1"; play.innerHTML = ICON_STOP;
+    playing = { audio: audio, stop: () => audio.pause() };
+  });
+  ["pause", "ended"].forEach(event => audio.addEventListener(event, () => {
+    play.dataset.playing = "0"; play.innerHTML = ICON_PLAY;
+  }));
+  audio.addEventListener("timeupdate", () => {
+    if (stopAt !== null && audio.currentTime >= stopAt) { audio.pause(); stopAt = null; }
+    movePlayhead();
+  });
+
+  /* --- la bande --------------------------------------------------------- */
+  const playhead = document.createElement("div");
+  playhead.className = "playhead";
+
+  function movePlayhead() {
+    playhead.style.left = (100 * (audio.currentTime || 0) / duration) + "%";
+  }
+
+  function paint() {
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    if (selected >= segments.length) selected = segments.length - 1;
+    strip.textContent = "";
+
+    segments.forEach((seg, position) => {
+      const block = document.createElement("div");
+      block.className = "seg";
+      block.style.left = (100 * seg.a / duration) + "%";
+      block.style.width = (100 * (seg.b - seg.a) / duration) + "%";
+      block.dataset.labelled = seg.who ? "1" : "0";
+      block.dataset.selected = position === selected ? "1" : "0";
+      block.textContent = seg.who ? shortName(seg.who) : (seg.b - seg.a > 2.5 ? "à nommer" : "");
+      block.title = preciseClock(clip.debut + seg.a) + " → " + preciseClock(clip.debut + seg.b);
+      block.addEventListener("mousedown", event => {
+        event.stopPropagation();
+        selected = position;
+        paint();
+      });
+      strip.appendChild(block);
+    });
+
+    segments.slice(1).forEach((seg, offset) => {
+      const position = offset + 1;
+      const handle = document.createElement("button");
+      handle.className = "handle";
+      handle.style.left = (100 * seg.a / duration) + "%";
+      handle.setAttribute("aria-label", "Coupure à " + preciseClock(clip.debut + seg.a)
+        + " — flèches pour déplacer");
+      handle.addEventListener("mousedown", event => {
+        event.preventDefault(); event.stopPropagation();
+        drag(position);
+      });
+      handle.addEventListener("keydown", event => {
+        const step = event.shiftKey ? 1 : 0.1;
+        if (event.key === "ArrowLeft") { event.preventDefault(); nudge(position, -step); }
+        if (event.key === "ArrowRight") { event.preventDefault(); nudge(position, step); }
+      });
+      strip.appendChild(handle);
+    });
+
+    strip.appendChild(playhead);
+    movePlayhead();
+
+    const seg = segments[selected];
+    tools.querySelector('[data-role="read"]').textContent =
+      preciseClock(clip.debut + seg.a) + " → " + preciseClock(clip.debut + seg.b);
+    const from = tools.querySelector('[data-role="from"]');
+    const to = tools.querySelector('[data-role="to"]');
+    from.max = duration; to.max = duration;
+    if (document.activeElement !== from) from.value = seg.a.toFixed(1);
+    if (document.activeElement !== to) to.value = seg.b.toFixed(1);
+    who.querySelectorAll("button[data-who]").forEach(button =>
+      button.setAttribute("aria-pressed", String(button.dataset.who === seg.who)));
+  }
+
+  function commit() { save(); paint(); refresh(); }
+
+  function boundary(position, value) {
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    const low = segments[position - 1].a + 0.2;
+    const high = segments[position].b - 0.2;
+    const clamped = Math.min(Math.max(value, low), high);
+    segments[position - 1].b = clamped;
+    segments[position].a = clamped;
+  }
+  function nudge(position, delta) {
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    boundary(position, segments[position].a + delta);
+    commit();
+    const handles = strip.querySelectorAll(".handle");
+    if (handles[position - 1]) handles[position - 1].focus();
+  }
+  function drag(position) {
+    const rect = strip.getBoundingClientRect();
+    const move = event => {
+      boundary(position, (event.clientX - rect.left) / rect.width * duration);
+      paint();
+    };
+    const up = () => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      commit();
+    };
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+  }
+
+  strip.addEventListener("mousedown", event => {
+    const rect = strip.getBoundingClientRect();
+    audio.currentTime = (event.clientX - rect.left) / rect.width * duration;
+    movePlayhead();
+  });
+
+  tools.addEventListener("click", event => {
+    const action = event.target.dataset.act;
+    if (!action) return;
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    if (action === "cut") {
+      const at = audio.currentTime;
+      const position = segments.findIndex(seg => at > seg.a + 0.2 && at < seg.b - 0.2);
+      if (position < 0) return;
+      const seg = segments[position];
+      segments.splice(position, 1,
+        { a: seg.a, b: at, who: seg.who },
+        { a: at, b: seg.b, who: seg.who });
+      selected = position + 1;
+      commit();
+    }
+    if (action === "merge") {
+      if (selected === 0 || segments.length < 2) return;
+      segments[selected - 1].b = segments[selected].b;
+      segments.splice(selected, 1);
+      selected -= 1;
+      commit();
+    }
+    if (action === "play-seg") {
+      const seg = segments[selected];
+      if (playing && playing.audio !== audio) playing.stop();
+      audio.currentTime = seg.a;
+      stopAt = seg.b;
+      audio.play();
+    }
+  });
+
+  tools.querySelectorAll("input").forEach(input => {
+    input.addEventListener("change", () => {
+      const segments = segmentsOf(cluster.grappe, index, duration);
+      const value = parseFloat(input.value);
+      if (isNaN(value)) return;
+      if (input.dataset.role === "from" && selected > 0) boundary(selected, value);
+      if (input.dataset.role === "to" && selected < segments.length - 1) boundary(selected + 1, value);
+      commit();
+    });
+  });
+
+  who.addEventListener("click", event => {
+    const id = event.target.dataset.who;
+    if (!id) return;
+    const segments = segmentsOf(cluster.grappe, index, duration);
+    const seg = segments[selected];
+    seg.who = seg.who === id ? "" : id;
+    commit();
+  });
+
+  paint();
+  return row;
+}
+
+function whoButton(id, label, role) {
+  const button = document.createElement("button");
+  button.textContent = label;
+  button.dataset.who = id;
+  button.dataset.role = role;
+  if (role === "neutral") button.className = "neutral";
+  button.setAttribute("aria-pressed", "false");
+  return button;
+}
+
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"]/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+/* --- état visible ------------------------------------------------------- */
+
+function refresh() {
+  let answered = 0, total = 0, done = 0;
+  DATA.grappes.forEach(cluster => {
+    const box = document.querySelector('.voice[data-cluster="' + cluster.grappe + '"]');
+    if (!box) return;
+    const result = verdict(cluster);
+    box.dataset.state = result.kind;
+    const badge = box.querySelector('[data-role="verdict"]');
+    badge.textContent = result.label;
+    badge.dataset.kind = result.kind;
+    cluster.extraits.forEach((clip, index) => {
+      total += 1;
+      if (dominant(cluster.grappe, index, clip.duree)) answered += 1;
+    });
+    if (result.kind === "done") done += 1;
+  });
+  document.getElementById("count-done").textContent = done;
+  document.getElementById("count-left").textContent = total - answered;
+  document.getElementById("progress").style.width = (100 * answered / total) + "%";
+  document.getElementById("progress-label").textContent = answered + " / " + total + " extraits";
+}
+
+/* --- sortie ------------------------------------------------------------- */
+
+function exportYaml() {
+  const lines = ["# Ecoute de controle — LaREF 2026",
+                 "# morceaux : [debut, fin, qui] en secondes depuis le debut du debat",
+                 "grappes:"];
+  DATA.grappes.forEach(cluster => {
+    const result = verdict(cluster);
+    lines.push("- grappe: " + cluster.grappe);
+    lines.push("  nom_suggere: " + cluster.nomSuggere);
+    lines.push("  confirme: " + (result.kind === "done" ? result.nom
+      : result.kind === "split" ? "plusieurs" : ""));
+    const marked = [];
+    cluster.extraits.forEach((clip, index) => {
+      segmentsOf(cluster.grappe, index, clip.duree).forEach(seg => {
+        if (!seg.who) return;
+        marked.push("  - [" + (clip.debut + seg.a).toFixed(1) + ", "
+          + (clip.debut + seg.b).toFixed(1) + ", " + seg.who + "]   # "
+          + shortClock(clip.debut + seg.a));
+      });
+    });
+    if (marked.length) {
+      lines.push("  morceaux:");
+      marked.forEach(line => lines.push(line));
+    }
+  });
+  return lines.join("\n");
+}
+
+document.getElementById("btn-export").addEventListener("click", () => {
+  document.getElementById("export-text").value = exportYaml();
+  document.getElementById("export").showModal();
+});
+document.getElementById("btn-close").addEventListener("click", () =>
+  document.getElementById("export").close());
+document.getElementById("btn-copy").addEventListener("click", async () => {
+  const field = document.getElementById("export-text");
+  field.select();
+  try { await navigator.clipboard.writeText(field.value); }
+  catch (e) { document.execCommand("copy"); }
+  const button = document.getElementById("btn-copy");
+  button.textContent = "Copié";
+  setTimeout(() => { button.textContent = "Copier"; }, 1600);
+});
+document.getElementById("btn-reset").addEventListener("click", () => {
+  if (!confirm("Effacer tout ce qui a été nommé ?")) return;
+  state = {};
+  save();
+  render();
+});
+
+document.getElementById("lede").textContent =
+  DATA.grappes.length + " voix regroupées dans « " + DATA.debat +
+  " ». Le nom proposé vient des patronymes prononcés juste avant chaque prise " +
+  "de parole : il oriente, il ne prouve pas.";
+const link = document.getElementById("video-link");
+if (DATA.video) { link.href = DATA.video; } else { link.remove(); }
+
+render();
+</script>
