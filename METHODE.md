@@ -57,8 +57,8 @@ qu'un cas déplaisait.** C'est exactement le geste que la méthode interdit.
 d'accord ont été balayés sur 25 combinaisons et la courbe est publiée
 (`ETUDES/accord-transcriptions.md`). Elle apprend quelque chose qu'aucune
 intuition n'avait vu : la tolérance temporelle, dont je me méfiais, ne déplace
-rien (76 % à 5 s comme à 45 s) ; l'ancrage lexical, posé au passage, déplace la
-couverture de 19 points. Aucune valeur n'a été retenue pour autant — le critère
+rien (81 % à 5 s comme à 45 s) ; l'ancrage lexical, posé au passage, déplace la
+couverture de 21 points. Aucune valeur n'a été retenue pour autant — le critère
 éliminatoire du protocole n'est satisfait par aucune combinaison.
 
 **Ce qu'il faut** : le même traitement pour les seuils qui comptent — verdict,
@@ -155,7 +155,7 @@ Ce paragraphe affirmait « tenu par conception » alors que la couche d'accord
 entre transcriptions **n'existait pas**. Elle existe désormais
 (`pythie/media/transcripts.py`, étage 0.5) : un chiffre qu'une seconde famille
 d'ASR n'a pas entendu ne reçoit aucun verdict. Mesuré sur le débat entier,
-cela retire un quart des énoncés chiffrés.
+cela retire un cinquième des énoncés chiffrés.
 
 Reste faux pour la voix : aucune empreinte n'est enrôlée, donc rien n'est
 attribué, donc la règle « on ne juge pas un locuteur non identifié » n'est pas
@@ -268,8 +268,10 @@ Troisième occurrence, le 01/09 au soir : la couche d'accord réclamait qu'un
 témoin répète « 2024 » et « 2028 » — la ponctuation finale (« en 2024, »,
 « jusqu'à 2028. ») empêchait de les reconnaître comme des millésimes, et ils
 devenaient des valeurs à corroborer. Trouvé en **lisant la liste des blocages**,
-jamais en lisant le taux : 74 % ou 76 %, rien dans le nombre ne dit qu'un quart
-des refus porte sur des dates.
+jamais en lisant le taux : 74 % ou 78 %, rien dans le nombre ne dit qu'un quart
+des refus porte sur des dates. Un troisième défaut de la même famille — « 150
+milliards. » lu comme 150 — a été trouvé le lendemain, dans la sortie d'un
+autre banc. La ponctuation finale aura coûté trois mesures.
 
 Deuxième occurrence le même jour : l'alignement des chiffres de
 `banc_chiffres.py` comparait des blocs de sous-titres de 25 s à des segments

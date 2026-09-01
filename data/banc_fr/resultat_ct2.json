@@ -1,0 +1,32 @@
+{
+  "modele": "bofenghuang/whisper-large-v3-french",
+  "pile": "faster-whisper / CTranslate2 float16, VAD, sans conditionnement",
+  "extrait": "data/banc_fr/extrait.wav",
+  "temoin_de_la_metrique": {
+    "repetitions": 45,
+    "phrase": "c'est le 2ème,"
+  },
+  "large_v3": {
+    "repetitions": 1,
+    "phrase": "["
+  },
+  "mesure": {
+    "segments": 25,
+    "vitesse_directe": 19.5,
+    "boucle": 1,
+    "phrase_bouclee": "donc,",
+    "entiers_aberrants": [
+      "600000000",
+      "1000000000",
+      "1000000000",
+      "1000000000"
+    ]
+  },
+  "criteres": {
+    "boucle": true,
+    "chiffres": false,
+    "vitesse": true
+  },
+  "verdict": "non retenu — D-046 confirme, et sa cause est desormais connue",
+  "texte": "Donc, c'est zéro dividende jusqu'à la fin du remboursement complet, plus 2 ans, et c'est annulation de tous mes comptes courants jusqu'à ma retraite. Ce n'est pas la même chose pour l'État. Alors, qu'on ne me dise pas, s'il vous plaît, moi j'ai du mal à l'entendre, qu'annuler la dette, ça suffit. Le déficit public, c'est 4,8 points de PIB. Les intérêts de la dette qui disparaîtraient si on annulait la dette, c'est 2,4. Donc même en supprimant la dette, les intérêts supprimés, on continuerait de toute façon à avoir du déficit. Or, nous sommes titulaires de 3 records 45,3 pourcents de prélèvements, on est le 2ème en Europe, et au niveau international c'est quand même assez magnifique, donc on ne peut pas l'augmenter, 57,3 pourcents de dépenses publiques, on est le 1er d'Europe. Et je vous le disais, 4,8 pourcent de déficit quand même, et pourtant ça ne s'équilibre pas. Donc les recettes sont énormes et ça ne s'équilibre pas. Ce n'est pas du tout une opinion, c'est une soustraction. Alors je ne demande absolument pas moins d'État, on est tous là, on a félicité les pompiers hier, on veut des hôpitaux, on veut des écoles, on veut des infrastructures, on demande juste un équilibre budgétaire. On veut juste des services mutualisés, avec une qualité de service, mais avec un coût raisonnable. Et donc, où se niche ce déficit ? Et ma question arrive. Depuis 2000, l'État central a reculé de 0,5 point, c'est plutôt pas mal. Par contre, tout ce qui touche le social maladie, famille, chômage, retraite, a explosé de 3,4 points. 5 réformes depuis 93, toutes pour la retraite, toutes dans le conflit, aucune dans le consensus. La dernière, celle de 2023, était suspendue en décembre, ça fait 18 mois après le vote. 2 questions s'il vous plaît. Est-ce qu'avec courage, si vous êtes à la tête de l'État, vous pouvez me donner une date à partir de laquelle on n'empruntera plus pour le fonctionnement de l'État ? 1ère question, une année, et la 2ème, toujours avec courage, la réforme de 2023 qui est suspendue jusqu'à 2028, êtes-vous prêt à en rétablir le calendrier qui a été voté par le Parlement ? Merci beaucoup, Éric Malenfer, donc ça n'aura échappé à personne ces derniers jours, il y a un sujet qui est central dans le débat politique, mais pour nos entrepreneurs, la question de la dette. Dans l'atmosphère, le mot dette, ces derniers jours, je rappelle votre proposition, je vous cite, de foutre au feu 600000000 de dettes françaises, dans votre programme, ça donne refuser le chantage, annuler la dette publique, vous savez très bien que nombre des personnes dans cette salle jugent que c'est absolument pas réaliste, que c'est irresponsable, que répondez-vous, Eric ? Alors, ce sont 2... Pardon, ce sont 2 sortes de questions, j'apprécie celle que... Et la manière avec laquelle vous l'avez posée. Je vais vous dire la chose suivante. Le 1er point, c'est que il faut cesser de décrier notre État et la construction socio-politique de notre pays. La dépense française est dans la moyenne européenne pour l'État. Le salaire des fonctionnaires a reculé de 6 points dans le PIB. La dépense de l'État, de 7 points en 20 ans, donc il faut cesser de dire que l'État jetterait l'argent par les fenêtres. Deuxièmement, la quasi-totalité de la dépense de l'État est redistribuée sous une forme ou sous une autre, investissements, fonctionnement, ceci, cela, ce n'est donc pas de l'argent qui disparaît dans le sable. La question qui nous est posée, c'est celle de son usage. Vous me demandez comment rétablir les comptes, je pourrais vous faire une réponse très provocante et instantanée. Si nous supprimons toutes les aides aux entreprises, le déficit de l'État disparaît. Pourquoi ? Monsieur Fabien Gay a parlé de 210 1000000000 d'aides. Le président de cette commission, qui est LES Républicains, donc pas un gauchiste échevelé, lui parle de 120 1000000000. Le déficit de l'État est de 150 1000000000. Si je décide instantanément de céder, de cesser les aides aux entreprises, il n'y a plus de déficit de l'État. Donc ce n'est pas là qu'est la question. Nous devons retrouver des marges de manoeuvre, nous en sommes conscients, vous et moi. Où allons-nous les retrouver ? Premièrement, nous devons retrouver du crédit fluide. Aujourd'hui, le comportement bancaire n'est pas acceptable, il n'aide pas l'économie, il la surveille, ce n'est pas la même chose. 2ème élément, la manière avec laquelle intervient l'État en tant qu'investisseur, et vous-même, donc ce que je peux faire dans cette situation."
+}

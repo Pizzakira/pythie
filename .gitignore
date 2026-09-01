@@ -8,3 +8,4 @@ data/*.html
 data/audio/
 data/banc_noms/*.wav
 data/banc_noms/_runner.py
+data/modeles/

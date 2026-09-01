@@ -24,13 +24,13 @@
     {
       "pad": 5.0,
       "min_anchor": 0.0,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 3
       },
       "T+_bloque": false,
@@ -47,13 +47,13 @@
     {
       "pad": 5.0,
       "min_anchor": 0.1,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 3
       },
       "T+_bloque": false,
@@ -70,13 +70,13 @@
     {
       "pad": 5.0,
       "min_anchor": 0.2,
-      "couverture": 0.745,
-      "corrobores": 76,
+      "couverture": 0.784,
+      "corrobores": 80,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 76,
+        "confirmed": 80,
         "no_quantity": 72,
-        "divergent": 23,
+        "divergent": 19,
         "absent": 3
       },
       "T+_bloque": false,
@@ -93,13 +93,13 @@
     {
       "pad": 5.0,
       "min_anchor": 0.35,
-      "couverture": 0.667,
-      "corrobores": 68,
+      "couverture": 0.696,
+      "corrobores": 71,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 68,
-        "divergent": 31,
+        "confirmed": 71,
+        "divergent": 28,
         "absent": 3
       },
       "T+_bloque": false,
@@ -116,13 +116,13 @@
     {
       "pad": 5.0,
       "min_anchor": 0.5,
-      "couverture": 0.569,
-      "corrobores": 58,
+      "couverture": 0.598,
+      "corrobores": 61,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 58,
-        "divergent": 41,
+        "confirmed": 61,
+        "divergent": 38,
         "absent": 3
       },
       "T+_bloque": false,
@@ -139,13 +139,13 @@
     {
       "pad": 10.0,
       "min_anchor": 0.0,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 3
       },
       "T+_bloque": false,
@@ -162,13 +162,13 @@
     {
       "pad": 10.0,
       "min_anchor": 0.1,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 3
       },
       "T+_bloque": false,
@@ -185,13 +185,13 @@
     {
       "pad": 10.0,
       "min_anchor": 0.2,
-      "couverture": 0.745,
-      "corrobores": 76,
+      "couverture": 0.784,
+      "corrobores": 80,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 76,
+        "confirmed": 80,
         "no_quantity": 72,
-        "divergent": 23,
+        "divergent": 19,
         "absent": 3
       },
       "T+_bloque": false,
@@ -208,13 +208,13 @@
     {
       "pad": 10.0,
       "min_anchor": 0.35,
-      "couverture": 0.667,
-      "corrobores": 68,
+      "couverture": 0.696,
+      "corrobores": 71,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 68,
-        "divergent": 31,
+        "confirmed": 71,
+        "divergent": 28,
         "absent": 3
       },
       "T+_bloque": false,
@@ -231,13 +231,13 @@
     {
       "pad": 10.0,
       "min_anchor": 0.5,
-      "couverture": 0.569,
-      "corrobores": 58,
+      "couverture": 0.598,
+      "corrobores": 61,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 58,
-        "divergent": 41,
+        "confirmed": 61,
+        "divergent": 38,
         "absent": 3
       },
       "T+_bloque": false,
@@ -254,13 +254,13 @@
     {
       "pad": 20.0,
       "min_anchor": 0.0,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 22,
+        "divergent": 17,
         "absent": 2
       },
       "T+_bloque": false,
@@ -277,13 +277,13 @@
     {
       "pad": 20.0,
       "min_anchor": 0.1,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 22,
+        "divergent": 17,
         "absent": 2
       },
       "T+_bloque": false,
@@ -300,13 +300,13 @@
     {
       "pad": 20.0,
       "min_anchor": 0.2,
-      "couverture": 0.745,
-      "corrobores": 76,
+      "couverture": 0.784,
+      "corrobores": 80,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 76,
+        "confirmed": 80,
         "no_quantity": 72,
-        "divergent": 24,
+        "divergent": 20,
         "absent": 2
       },
       "T+_bloque": false,
@@ -323,13 +323,13 @@
     {
       "pad": 20.0,
       "min_anchor": 0.35,
-      "couverture": 0.667,
-      "corrobores": 68,
+      "couverture": 0.696,
+      "corrobores": 71,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 68,
-        "divergent": 32,
+        "confirmed": 71,
+        "divergent": 29,
         "absent": 2
       },
       "T+_bloque": false,
@@ -346,13 +346,13 @@
     {
       "pad": 20.0,
       "min_anchor": 0.5,
-      "couverture": 0.569,
-      "corrobores": 58,
+      "couverture": 0.598,
+      "corrobores": 61,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 58,
-        "divergent": 42,
+        "confirmed": 61,
+        "divergent": 39,
         "absent": 2
       },
       "T+_bloque": false,
@@ -369,13 +369,13 @@
     {
       "pad": 30.0,
       "min_anchor": 0.0,
-      "couverture": 0.775,
-      "corrobores": 79,
+      "couverture": 0.824,
+      "corrobores": 84,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 79,
+        "confirmed": 84,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 2
       },
       "T+_bloque": false,
@@ -392,13 +392,13 @@
     {
       "pad": 30.0,
       "min_anchor": 0.1,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 22,
+        "divergent": 17,
         "absent": 2
       },
       "T+_bloque": false,
@@ -415,13 +415,13 @@
     {
       "pad": 30.0,
       "min_anchor": 0.2,
-      "couverture": 0.745,
-      "corrobores": 76,
+      "couverture": 0.784,
+      "corrobores": 80,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 76,
+        "confirmed": 80,
         "no_quantity": 72,
-        "divergent": 24,
+        "divergent": 20,
         "absent": 2
       },
       "T+_bloque": false,
@@ -438,13 +438,13 @@
     {
       "pad": 30.0,
       "min_anchor": 0.35,
-      "couverture": 0.667,
-      "corrobores": 68,
+      "couverture": 0.696,
+      "corrobores": 71,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 68,
-        "divergent": 32,
+        "confirmed": 71,
+        "divergent": 29,
         "absent": 2
       },
       "T+_bloque": false,
@@ -461,13 +461,13 @@
     {
       "pad": 30.0,
       "min_anchor": 0.5,
-      "couverture": 0.569,
-      "corrobores": 58,
+      "couverture": 0.598,
+      "corrobores": 61,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 58,
-        "divergent": 42,
+        "confirmed": 61,
+        "divergent": 39,
         "absent": 2
       },
       "T+_bloque": false,
@@ -484,13 +484,13 @@
     {
       "pad": 45.0,
       "min_anchor": 0.0,
-      "couverture": 0.775,
-      "corrobores": 79,
+      "couverture": 0.824,
+      "corrobores": 84,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 79,
+        "confirmed": 84,
         "no_quantity": 72,
-        "divergent": 21,
+        "divergent": 16,
         "absent": 2
       },
       "T+_bloque": false,
@@ -507,13 +507,13 @@
     {
       "pad": 45.0,
       "min_anchor": 0.1,
-      "couverture": 0.765,
-      "corrobores": 78,
+      "couverture": 0.814,
+      "corrobores": 83,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 78,
+        "confirmed": 83,
         "no_quantity": 72,
-        "divergent": 22,
+        "divergent": 17,
         "absent": 2
       },
       "T+_bloque": false,
@@ -530,13 +530,13 @@
     {
       "pad": 45.0,
       "min_anchor": 0.2,
-      "couverture": 0.745,
-      "corrobores": 76,
+      "couverture": 0.784,
+      "corrobores": 80,
       "porteurs_de_chiffre": 102,
       "statuts": {
-        "confirmed": 76,
+        "confirmed": 80,
         "no_quantity": 72,
-        "divergent": 24,
+        "divergent": 20,
         "absent": 2
       },
       "T+_bloque": false,
@@ -553,13 +553,13 @@
     {
       "pad": 45.0,
       "min_anchor": 0.35,
-      "couverture": 0.667,
-      "corrobores": 68,
+      "couverture": 0.696,
+      "corrobores": 71,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 68,
-        "divergent": 32,
+        "confirmed": 71,
+        "divergent": 29,
         "absent": 2
       },
       "T+_bloque": false,
@@ -576,13 +576,13 @@
     {
       "pad": 45.0,
       "min_anchor": 0.5,
-      "couverture": 0.569,
-      "corrobores": 58,
+      "couverture": 0.598,
+      "corrobores": 61,
       "porteurs_de_chiffre": 102,
       "statuts": {
         "no_quantity": 72,
-        "confirmed": 58,
-        "divergent": 42,
+        "confirmed": 61,
+        "divergent": 39,
         "absent": 2
       },
       "T+_bloque": false,
@@ -599,12 +599,12 @@
   ],
   "decision": null,
   "cause_des_blocages": {
-    "enonces_bloques": 26,
+    "enonces_bloques": 22,
     "chiffres_bloques": {
-      "moins de 60 s": 4,
+      "moins de 60 s": 5,
       "1 a 5 min": 1,
-      "plus de 5 min": 16,
-      "absent partout": 10
+      "plus de 5 min": 15,
+      "absent partout": 5
     }
   },
   "blocages": [
@@ -665,20 +665,6 @@
         "1 000 milliards"
       ],
       "temoin": "Donc, maintenant, posons-nous la question de la dette, d'où vient-elle structurellement ? Eh bien, la dette, elle vient de la désindustrialisation des années 80-90. Elle est structurelle dans notre pa"
-    },
-    {
-      "enonce": "Le le gouvernement Barnier 30 milliards dont 20 milliards d'augmentation des impôts sur les entreprises.",
-      "statut": "divergent",
-      "manquant": [
-        "30 milliards"
-      ],
-      "entendu_par_le_temoin": [
-        "1000 milliards",
-        "43 milliards",
-        "30",
-        "20 milliards"
-      ],
-      "temoin": "qui vote contre toutes les provisions, toutes les économies, mais qui se plaint que l'ascenseur soit en panne le lendemain. Ça suffit maintenant. Parce que vos propositions sont injustes, monsieur l'a"
     },
     {
       "enonce": "J'entends madame Le Pen leçons sur l'immigration devant le MEDEF avec lequel je ne suis pas d'accord surtout certes, mais dont j'ai lu le rapport qui expliquait que l'économie française ne pourrait pa",
@@ -745,7 +731,7 @@
       ],
       "entendu_par_le_temoin": [
         "4,5 milliards",
-        "1,5",
+        "1,5 milliard",
         "1,5 milliard"
       ],
       "temoin": "Je ne vais pas m'allonger sur ce sujet-là, puisque je pense que l'important, c'est de répondre aux questions qui sont posées par les chefs d'entreprise. D'abord, ce qu'il aurait fallu faire, c'est ne "
@@ -761,7 +747,7 @@
       ],
       "entendu_par_le_temoin": [
         "4,5 milliards",
-        "1,5",
+        "1,5 milliard",
         "1,5 milliard"
       ],
       "temoin": "Je ne vais pas m'allonger sur ce sujet-là, puisque je pense que l'important, c'est de répondre aux questions qui sont posées par les chefs d'entreprise. D'abord, ce qu'il aurait fallu faire, c'est ne "
@@ -782,22 +768,7 @@
       "enonce": "Et ces exonérations, elles sont aujourd'hui, mais encore une fois, moi j'assume de les maintenir, donc c'est pas le sujet, mais elles sont à 77 milliards.",
       "statut": "divergent",
       "manquant": [
-        "77"
-      ],
-      "entendu_par_le_temoin": [
-        "2,9.",
-        "2,9.",
-        "2,9,",
-        "77 milliards",
-        "21 milliards"
-      ],
-      "temoin": "et dont on parle peu, mais qui coûtent également très cher. Mais aujourd'hui, dans la situation budgétaire dans laquelle nous sommes, on ne peut pas faire baisser le coût du travail au-delà de ce qui "
-    },
-    {
-      "enonce": "En 2014, de mémoire, elles étaient à 21 milliards.",
-      "statut": "divergent",
-      "manquant": [
-        "21"
+        "77 milliards"
       ],
       "entendu_par_le_temoin": [
         "2,9.",
@@ -840,7 +811,7 @@
       "enonce": "sera 100 %.",
       "statut": "divergent",
       "manquant": [
-        "100 %."
+        "100 %"
       ],
       "entendu_par_le_temoin": [
         "50%",
@@ -849,18 +820,6 @@
         "150 000"
       ],
       "temoin": "Et moi, ce que je veux, c'est que pour les jeunes, pour les jeunes couples qui vont avoir un enfant, comme ils le souhaitent, à chaque enfant, on puisse déduire des taux d'intérêt de leurs emprunts, q"
-    },
-    {
-      "enonce": "années à 30 milliards 25 milliards de pertes fiscales.",
-      "statut": "divergent",
-      "manquant": [
-        "30 milliards"
-      ],
-      "entendu_par_le_temoin": [
-        "30",
-        "25 milliards"
-      ],
-      "temoin": "compte tenu de leur nombre que par des ordonnances qui massivement nous feront revenir en termes de compétitivité avec la norme minimale qui est exigée par l'Union Européenne. Ça coûte de l'argent les"
     },
     {
       "enonce": "On en a plus une dizaine euh qui représente aujourd'hui un peu plus de 15 % de mon chif d'affair qui représente euh oui 15 % du chiffre d'affair et c'est le 3è poste de charge aujourd'hui dans notre c",
@@ -907,34 +866,17 @@
       "enonce": "J'en trouve pas 21 milliards, j'en trouve 40 milliards.",
       "statut": "divergent",
       "manquant": [
-        "21",
-        "40"
+        "21 milliards"
       ],
       "entendu_par_le_temoin": [
-        "110",
         "110 milliards",
-        "210",
+        "110 milliards",
+        "210 milliards",
         "40 milliards",
         "110 milliards",
         "40 milliards"
       ],
       "temoin": "Merci Raphaël Glucksmann. Je tiens à préciser que Bruno Rotailleau, vous avez un peu de retard. Donc si vous souhaitez réagir, vous pouvez le faire. – Non, simplement, ce que je souhaite, c'est que, p"
-    },
-    {
-      "enonce": "Je soustrais les 40 milliards, les vrais 40 milliards d'aide. Ça nous donne 70 milliards.",
-      "statut": "divergent",
-      "manquant": [
-        "40"
-      ],
-      "entendu_par_le_temoin": [
-        "110 milliards",
-        "210",
-        "40 milliards",
-        "110 milliards",
-        "40 milliards",
-        "70"
-      ],
-      "temoin": "110 milliards que les entreprises françaises doivent porter sur leur dos Ce que moi je propose, c'est que j'ai fait ligne par ligne quels étaient les vrais aides aux entreprises J'en trouve pas 210 mi"
     },
     {
       "enonce": "Si on prend toutes les exonérations, enfin les les voilà les avantages fiscaux du pack du Treil, les 2/3 de ces sommes, elles vont à 1 % des bénéficiaires.",

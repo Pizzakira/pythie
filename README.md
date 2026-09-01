@@ -149,9 +149,15 @@ Le degré 1 se rejoue au minutage réel : `--rejeu 12` accélère douze fois.
 | Source | Patronymes exacts | Utilisable |
 |---|---|---|
 | `faster-whisper-large-v3` | 8/11 | **91 %** — retenu |
-| `whisper-large-v3-french` | 8/11 | 91 % — **écarté**, boucle d'hallucination |
+| `whisper-large-v3-french` | 8/11 | 91 % — **écarté**, écrit « 210 1000000000 » |
 | CrisperWhisper 2.0 | 5/11 | 64 % — deuxième voix |
 | Sous-titres YouTube | 3/11 | 36 % |
+
+Le fine-tune français, converti en CTranslate2, ne boucle plus et tourne à
+19,5× le direct — la boucle venait de la pile `transformers`, pas des poids.
+Il reste écarté pour une seule raison, mais elle est rédhibitoire ici : il
+écrit les échelles en chiffres (« 150 1000000000 » pour 150 milliards), et un
+lecteur de valeurs y voit deux nombres au lieu d'un.
 
 ### Accord entre transcriptions — mesuré
 
@@ -161,12 +167,12 @@ chiffrés :
 
 | | |
 |---|---|
-| corroborés | **74 %** |
-| bloqués | 26 % — dont au plus 4 cas sur 31 imputables à l'alignement |
+| corroborés | **78 %** |
+| bloqués | 22 % — dont au plus 5 cas sur 26 imputables à l'alignement |
 
-**Un quart des énoncés chiffrés n'est pas corroboré entre deux familles.** Une
-chaîne qui travaille sur une seule transcription rend donc, pour un chiffre sur
-quatre, un verdict sur une valeur que la seconde oreille n'a pas entendue.
+**Un cinquième des énoncés chiffrés n'est pas corroboré entre deux familles.**
+Une chaîne qui travaille sur une seule transcription rend donc, pour un chiffre
+sur cinq, un verdict sur une valeur que la seconde oreille n'a pas entendue.
 
 La couche est **implémentée, mesurée, et sans autorité** : le banc pré-inscrit
 qui devait la valider a échoué, donc elle ne débloque rien. Aucun rouge n'est
@@ -190,7 +196,8 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 |---|---|
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
-| `JOURNAL.md` | 56 décisions datées avec leur motif, et mes erreurs |
+| `JOURNAL.md` | 58 décisions datées avec leur motif, et mes erreurs |
 | `ETUDES/` | outils de fact-checking existants, et bancs de transcription |
 | `ETUDES/preinscription-accord.md` | le protocole, écrit **avant** la mesure |
+| `ETUDES/preinscription-francais.md` | idem, pour le fine-tune français en CT2 |
 | `ETUDES/accord-transcriptions.md` | ce que la mesure a rendu, y compris son échec |

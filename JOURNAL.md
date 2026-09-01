@@ -382,6 +382,49 @@ avoir vu qu'il passe ne démontre rien — et j'en avais deux sous la main
    heredocs pour tout code contenant des séquences d'échappement — a été
    enfreinte le 01/09 au soir.
 
+### Suite du 1er septembre — le modèle francophone, repris en CTranslate2
+
+Deuxième mesure pré-inscrite (`ETUDES/preinscription-francais.md`), écrite pour
+répondre à la réserve que la session 003 avait elle-même posée : le fine-tune
+avait été jugé via `transformers`, pas dans le régime de large-v3.
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-057** | **D-046 reformulé : le fine-tune français est écarté pour la graphie des échelles, pas pour la boucle** | Converti en CTranslate2 : plus aucune boucle, 19,5× le direct — plus rapide que large-v3, qui fait 14,5×. La boucle et la lenteur venaient de la pile `transformers` et de son découpage en blocs de 30 s. Ce qui reste, et qui vient des poids : « 150 1000000000 » pour 150 milliards. |
+| **D-058** | **La ponctuation finale ne fait pas partie d'un mot d'échelle** | « 150 milliards. » était lu comme le nombre 150. Troisième défaut de cette famille en deux jours. |
+
+**La métrique d'abord, son témoin d'abord.** La nouvelle mesure de boucle
+compte la plus longue répétition consécutive d'un même groupe de mots, sans
+considération de segment. Elle trouve **45× « c'est le 2ème, »** dans la sortie
+du matin, et 1 chez large-v3. Elle voit ce que `repetition()` ne voyait pas ;
+le zéro qu'elle rend ensuite se lit.
+
+**Ce que j'avais imputé au mauvais coupable.** Le jugement du matin était juste
+sur les faits et faux sur la cause : boucle et lenteur appartenaient à la pile
+d'exécution. Deuxième fois dans la même journée qu'une mesure déplace la cause
+d'un défaut sans en changer le constat — après le premier rouge, qui venait de
+l'attribution et non de la transcription.
+
+**Et pourtant il reste dehors**, par la règle posée d'avance : le titulaire
+reste titulaire à égalité, et le français a une pathologie de plus. Le lecteur
+de chiffres du projet fait deux quantités de « 150 1000000000 » — 150, puis un
+milliard. Un système qui compare des valeurs ne peut pas travailler sur une
+transcription qui coupe les valeurs en deux.
+
+**Point structurel, qui vaut au-delà de ce modèle.** Aucune variante Whisper —
+fine-tune français, distillations `dec2/4/8/16` — ne pourra jamais corroborer
+large-v3 : même famille, mêmes modes de défaillance, écartée mécaniquement par
+la couche d'accord (D-051). La question « le modèle francophone peut-il être la
+seconde oreille ? » n'a donc pas de réponse empirique : elle est fermée par
+construction. Il ne peut que **remplacer** large-v3. La seconde oreille devra
+venir de Kyutai, de Voxtral, ou des sous-titres.
+
+**Effet de bord mesuré sur la couche d'accord.** Le défaut D-058, trouvé dans
+la sortie de ce banc-ci, faussait le banc d'accord : la couverture passe de
+74 % à **78 %** une fois corrigé, et les blocages de 26 à 22 énoncés. La moitié
+de ce que je comptais comme désaccord entre modèles était ma propre lecture des
+nombres. Tous les chiffres publiés ont été repris.
+
 ### Reste ouvert
 
 - **Attribution des locuteurs** : c'est maintenant le premier blocage du
@@ -392,4 +435,7 @@ avoir vu qu'il passe ne démontre rien — et j'en avais deux sous la main
 - Corpus : deux domaines sur huit.
 - **Jeu étalon : toujours inexistant.**
 - Un seul témoin de transcription : une paire de familles. Avec un troisième
-  (Kyutai, Voxtral), « qui a raison » deviendrait une question posable.
+  (Kyutai, Voxtral), « qui a raison » deviendrait une question posable — et
+  aucune variante Whisper ne peut tenir ce rôle, quelle que soit sa qualité.
+- Variantes distillées du fine-tune français : non testées, et probablement
+  porteuses du même défaut de graphie.

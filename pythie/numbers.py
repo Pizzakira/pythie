@@ -157,7 +157,14 @@ def quantities(text: str) -> List[Quantity]:
     what makes it a quantity: "600" alone is a number, "600 millions" is an
     amount, and confusing the two is how a verdict goes wrong.
     """
-    tokens = normalise(text).split()
+    # `normalise` keeps dots and commas because they live inside figures. On a
+    # WORD they are always punctuation -- and a scale word that keeps its full
+    # stop is not found: "150 milliards." read as the bare number 150, off by a
+    # factor of a billion. Digit tokens strip their own trailing punctuation
+    # further down, where the difference between a decimal comma and a final
+    # one still matters.
+    tokens = [t if t[:1].isdigit() else t.rstrip(".,")
+              for t in normalise(text).split()]
     found: List[Quantity] = []
     index = 0
 

@@ -69,17 +69,17 @@ Corroboration des 102 énoncés porteurs de chiffre :
 
 | `min_anchor` | 0,00 | 0,10 | 0,20 | 0,35 | 0,50 |
 |---|---|---|---|---|---|
-| corroborés | 78 | 78 | 76 | 68 | 58 |
-| **couverture** | **76 %** | **76 %** | **74 %** | **67 %** | **57 %** |
+| corroborés | 83 | 83 | 80 | 71 | 61 |
+| **couverture** | **81 %** | **81 %** | **78 %** | **70 %** | **60 %** |
 
 Et la fenêtre temporelle, de 5 s à 45 s de tolérance de part et d'autre :
-**76 % à 5 s, 76 % à 45 s.** Un énoncé de différence sur 102.
+**81 % à 5 s, 81 % à 45 s.** Aucune différence sur 102 énoncés.
 
 **Le paramètre dont je me méfiais ne fait rien, celui que j'avais posé au
 passage fait tout.** J'avais écrit dans `transcripts.py` que la fenêtre devait
 « absorber la dérive » entre deux découpages — c'était l'inquiétude principale,
 héritée de l'erreur d'alignement du 01/09. Elle ne mesure rien ici. C'est
-l'ancrage lexical qui déplace la couverture de 19 points.
+l'ancrage lexical qui déplace la couverture de 21 points.
 
 ---
 
@@ -90,16 +90,16 @@ remèdes opposés : un désaccord réel entre modèles (bloquer est juste) ou un
 fenêtre mal posée (bloquer est un faux positif). On cherche donc chaque chiffre
 bloqué dans **toute** la transcription témoin.
 
-26 énoncés bloqués, 31 chiffres non retrouvés dans leur fenêtre :
+22 énoncés bloqués, 26 chiffres non retrouvés dans leur fenêtre :
 
 | Où le chiffre se trouve dans le témoin | Nombre | Lecture |
 |---|---|---|
-| absent de toute la transcription | 10 | désaccord réel |
-| à plus de 5 minutes | 16 | autre occurrence, sans rapport |
+| absent de toute la transcription | 5 | désaccord réel |
+| à plus de 5 minutes | 15 | autre occurrence, sans rapport |
 | entre 1 et 5 minutes | 1 | douteux |
-| à moins de 60 s | 4 | **dérive d'alignement possible** |
+| à moins de 60 s | 5 | **dérive d'alignement possible** |
 
-Au plus 4 blocages sur 31 s'expliquent par ma fenêtre. Le reste est du
+Au plus 5 blocages sur 26 s'expliquent par ma fenêtre. Le reste est du
 désaccord entre deux oreilles.
 
 Exemples lus en clair :
@@ -116,12 +116,13 @@ la couche ne dit pas qui a raison, elle dit qu'on ne sait pas (D-048).
 
 ---
 
-## Ce que le chiffre de 74 % signifie vraiment
+## Ce que le chiffre de 78 % signifie vraiment
 
-**Un quart des énoncés chiffrés n'est pas corroboré entre deux familles d'ASR.**
+**Un cinquième des énoncés chiffrés n'est pas corroboré entre deux familles
+d'ASR.**
 
 Dit autrement : une chaîne qui travaille sur une seule transcription rend, pour
-un chiffre sur quatre, un verdict sur une valeur que la seconde oreille n'a pas
+un chiffre sur cinq, un verdict sur une valeur que la seconde oreille n'a pas
 entendue. Ce n'est pas une hypothèse de conception, c'est une mesure, et elle
 vaut pour tous les verdicts publiés jusqu'ici.
 
@@ -144,16 +145,23 @@ Elle est donc **implémentée, exécutée, mesurée — et sans autorité**. Con
 
 ## Défauts d'instrument corrigés en cours de route
 
-Deux, tous deux trouvés en **lisant les blocages** plutôt qu'en lisant le taux.
+Trois, tous trouvés en **lisant les sorties** plutôt qu'en lisant les taux.
 
 1. « en 2024, » et « jusqu'à 2028. » étaient lus comme des quantités et non
    comme des millésimes : la ponctuation finale empêchait la reconnaissance
    d'année. La couche exigeait alors qu'un témoin répète un millésime.
 2. Le dénominateur du banc comptait les énoncés porteurs d'une année seule,
    que la couche ne demande à personne de corroborer. 125 annoncés, 102 réels.
+3. **La même ponctuation, du côté des mots d'échelle** : « 150 milliards. »
+   était lu comme le nombre 150, à un milliard près. Trouvé le lendemain en
+   lisant la sortie d'un autre banc, pas celui-ci. La couverture passe de 74 %
+   à 78 % une fois corrigé — la moitié de ce que je prenais pour du désaccord
+   entre modèles était ma propre lecture des nombres.
 
-Les deux ont été corrigés et la mesure relancée. Aucun seuil, aucun cas témoin,
-aucune règle de décision n'a été touché — seul l'instrument l'a été.
+Les trois ont été corrigés et la mesure relancée à chaque fois. Aucun seuil,
+aucun cas témoin, aucune règle de décision n'a été touché — seul l'instrument
+l'a été. La leçon se répète : la ponctuation finale aura faussé trois lectures
+de nombres, et aucun des trois défauts n'était visible dans un taux.
 
 ## Ce que ce banc ne dit pas
 

@@ -569,11 +569,13 @@ rend désormais des verdicts réels et sourcés. Deux défauts corrigés le
 inquotables, et un champ `sources` facultatif que la grammaire laissait omettre.
 
 Transcription : `faster-whisper-large-v3` retenu comme référence (D-045). Le
-fine-tune français est écarté en l'état (D-046).
+fine-tune français est écarté — après conversion CTranslate2, il ne boucle plus
+et devient le plus rapide, mais il écrit les échelles en chiffres, ce qui coupe
+chaque valeur en deux (D-046, reformulé le 01/09).
 
-L'accord entre sources est implémenté (étage 0.5) et mesuré : 74 % des énoncés
-chiffrés du débat sont corroborés par une seconde famille d'ASR, un quart ne
-l'est pas. Le banc pré-inscrit qui devait le valider a **échoué**, donc la
+L'accord entre sources est implémenté (étage 0.5) et mesuré : 78 % des énoncés
+chiffrés du débat sont corroborés par une seconde famille d'ASR, un cinquième
+ne l'est pas. Le banc pré-inscrit qui devait le valider a **échoué**, donc la
 couche ne débloque rien et **aucun rouge n'est publié** (D-044, désormais
 appliqué par le programme — D-055). Voir `ETUDES/accord-transcriptions.md`.
 
@@ -624,3 +626,4 @@ Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE �
 | 01/09 | Aucun rouge publié : garanti par le programme, pas par la consigne |
 | 01/09 | Une grandeur en pourcentage se compare en points |
 | 01/09 | Première mesure pré-inscrite ; son cas témoin a échoué, et le protocole a été suivi |
+| 01/09 | Fine-tune français écarté pour la graphie des échelles, non plus pour la boucle |

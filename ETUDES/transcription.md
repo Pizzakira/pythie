@@ -372,3 +372,88 @@ mieux segmenté, sans boucle, et sans défaut de formatage des nombres.
 
 Le fine-tune français n'entre pas dans la chaîne en l'état. Il reste candidat à
 une reprise en CTranslate2, où la comparaison serait honnête.
+
+---
+
+# La comparaison équitable : le fine-tune français en CTranslate2
+## 1er septembre 2026, au soir — même extrait de 5 min
+
+La réserve écrite plus haut est levée : le modèle a été converti en CTranslate2
+(float16) et exécuté par `faster-whisper`, dans le régime exact de large-v3 —
+VAD, sans conditionnement sur le texte précédent. Protocole figé d'avance :
+`ETUDES/preinscription-francais.md`. Banc : `ETUDES/banc_francais_ct2.py`.
+
+## D'abord, la métrique a été validée sur son témoin
+
+La leçon du matin : une métrique qui rend zéro n'est pas une preuve d'absence.
+La nouvelle mesure compte la plus longue répétition consécutive d'un même
+groupe de mots, sans considération de segment — et elle devait d'abord
+retrouver la boucle connue.
+
+| Texte | Plus longue répétition |
+|---|---|
+| sortie `transformers` du matin | **45× « c'est le 2ème, »** |
+| large-v3 sur le même extrait | 1× (aucune boucle) |
+
+Elle voit ce que `repetition()` ne voyait pas. Le zéro qui suivra se lit.
+
+## Le résultat
+
+| | `transformers` (matin) | **CTranslate2 (soir)** | large-v3 |
+|---|---|---|---|
+| Segments | 2 | **25** | ~20 |
+| Vitesse | 3,4× | **19,5× le direct** | 14,5× |
+| Boucle | 45 répétitions | **aucune** | aucune |
+| Graphie des nombres | « 210 1000000000 » | **« 210 1000000000 »** | correcte |
+
+**La boucle venait de la pile, pas des poids.** Converti, le modèle français ne
+boucle plus du tout, segmente proprement, et devient le plus rapide des trois —
+plus rapide que large-v3. Le jugement du matin était juste sur les faits et
+faux sur la cause : j'avais imputé au fine-tune ce qui appartenait à
+`transformers` et à son découpage en blocs de 30 secondes.
+
+## Et pourtant il est écarté, pour une seule raison
+
+La graphie des nombres ne bouge pas d'un iota, parce qu'elle vient bien des
+poids :
+
+> « Monsieur Fabien Gay a parlé de **210 1000000000** d'aides. »
+> « Le déficit de l'État est de **150 1000000000**. »
+
+L'échelle est écrite en clair, à côté du nombre, au lieu de le multiplier. Pour
+Pythie, c'est rédhibitoire et mécaniquement démontrable — le lecteur de
+chiffres du projet en fait deux quantités :
+
+```
+« 150 1000000000 »   ->  150  et  1 000 000 000
+« 150 milliards »    ->  150 000 000 000
+```
+
+Un système dont le métier est de comparer des valeurs ne peut pas travailler
+sur une transcription qui coupe les valeurs en deux. Le critère avait été posé
+avant la mesure, et il tombe du mauvais côté.
+
+Note annexe : le même passage écrit « de foutre au feu **600000000** de dettes
+françaises ». Troisième oreille sur le « 600 millions » du premier rouge — sans
+valeur probante, puisque c'est la même famille que large-v3, mais cohérent avec
+ce que la couche d'accord a mesuré.
+
+## Décision, selon la règle pré-inscrite
+
+**Le titulaire reste titulaire.** `faster-whisper-large-v3` demeure la
+référence : à égalité de pathologies on ne change pas de modèle sans vérité de
+terrain (D-048), et ici le français en a une de plus.
+
+D-046 est donc confirmé, mais sa formulation change : ce n'est plus « il
+hallucine et il est lent » — c'était la pile — c'est **« il écrit les échelles
+en chiffres »**, ce qui est un défaut du modèle et le seul qui compte pour nous.
+
+Ce qui reste ouvert : les variantes distillées (`distil-dec2/4/8/16`), que ce
+banc n'a pas touchées, et dont `ETUDES/transcription.md` fait pourtant sa
+recommandation de référence. Elles méritent leur propre pré-inscription — avec
+le même critère de graphie des nombres, qu'elles hériteront probablement.
+
+**Et quoi qu'il arrive, aucune de ces variantes ne pourra corroborer
+large-v3 :** même famille, mêmes modes de défaillance, écartée mécaniquement
+par la couche d'accord (D-051). La seconde oreille devra venir d'ailleurs —
+Kyutai, Voxtral, ou les sous-titres.
