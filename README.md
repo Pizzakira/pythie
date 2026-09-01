@@ -181,10 +181,11 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 
 ### Ce qui bloque encore
 
-- **Attribution des locuteurs** : premier blocage du projet. Aucune empreinte
-  enrôlée, donc la règle « seuls les candidats sont analysés » est inapplicable.
-  Le premier rouge du système portait sur une phrase de l'animateur — mesuré le
-  01/09, contre ce que la session précédente avait conclu.
+- **Attribution des locuteurs** : premier blocage. Les voix du débat sont
+  regroupées et les sept plus grosses grappes reçoivent sept noms de candidats
+  différents, mais **aucune empreinte n'est vérifiée par une oreille humaine**,
+  et sans cela aucune attribution ne peut porter un verdict. Il manque quelques
+  minutes d'écoute : `data/empreintes/confirmation.yaml`.
 - **Rouges** : bloqués en bloc par le programme, jusqu'à un banc qui passe.
 - **Corpus** : deux domaines sur huit. 24 affirmations sur 40 hors périmètre.
 - **Reproductibilité du verdict** : non tenue, mesurée. Voir `METHODE.md` §3.
@@ -199,9 +200,10 @@ plus une consigne. Détail : `ETUDES/accord-transcriptions.md`.
 |---|---|
 | `SPECIFICATIONS.md` | le cahier, en lecture pyramidale à quatre niveaux |
 | `METHODE.md` | les engagements scientifiques, **et où ils ne sont pas tenus** |
-| `JOURNAL.md` | 60 décisions datées avec leur motif, et mes erreurs |
+| `JOURNAL.md` | 62 décisions datées avec leur motif, et mes erreurs |
 | `ETUDES/` | outils de fact-checking existants, et bancs de transcription |
 | `ETUDES/preinscription-accord.md` | le protocole, écrit **avant** la mesure |
 | `ETUDES/preinscription-francais.md` | idem, pour le fine-tune français en CT2 |
 | `ETUDES/accord-transcriptions.md` | ce que la mesure a rendu, y compris son échec |
 | `ETUDES/etalon/` | le jeu étalon, ses étiquettes et le biais de son auteur |
+| `ETUDES/empreintes.md` | regrouper les voix sans les entendre, et où ça s'arrête |

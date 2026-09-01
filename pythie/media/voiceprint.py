@@ -96,6 +96,19 @@ class VoicePrint:
     sources: List[str] = field(default_factory=list)
     enrolled_on: str = ""
 
+    human_verified: bool = False
+    """Quelqu'un a-t-il ECOUTE un extrait et confirme le nom ?
+
+    Une empreinte peut etre construite sans oreille humaine -- en regroupant
+    les voix puis en laissant les patronymes prononces nommer les grappes
+    (scripts/enrol.py). Ce montage donne des noms plausibles, jamais des noms
+    verifies : un animateur qui parlerait systematiquement apres avoir prononce
+    un nom produirait la meme regularite sous la mauvaise etiquette.
+
+    Tant que ce drapeau est faux, l'attribution qui en decoule ne peut faire
+    naitre aucun verdict colore. Le cout d'une confirmation est d'une minute
+    d'ecoute par voix ; le cout d'une erreur est une citation fabriquee."""
+
     @property
     def analysed(self) -> bool:
         return self.role in ANALYSED_ROLES
@@ -110,6 +123,7 @@ class VoicePrint:
             "total_seconds": round(self.total_seconds, 1),
             "sources": self.sources,
             "enrolled_on": self.enrolled_on,
+            "human_verified": self.human_verified,
         }
 
     @classmethod
@@ -123,6 +137,9 @@ class VoicePrint:
             total_seconds=data.get("total_seconds", 0.0),
             sources=data.get("sources", []),
             enrolled_on=data.get("enrolled_on", ""),
+            # Par defaut NON verifiee : une empreinte ecrite par une version
+            # anterieure du format n'a certainement pas ete ecoutee.
+            human_verified=bool(data.get("human_verified", False)),
         )
 
 
@@ -182,6 +199,7 @@ class Registry:
         seconds: float = 0.0,
         sources: Optional[List[str]] = None,
         enrolled_on: str = "",
+        human_verified: bool = False,
     ) -> VoicePrint:
         """Build a print from several enrolment embeddings.
 
@@ -206,6 +224,7 @@ class Registry:
             total_seconds=seconds,
             sources=sources or [],
             enrolled_on=enrolled_on,
+            human_verified=human_verified,
         )
         self.prints[voice_print.speaker_id] = voice_print
         return voice_print

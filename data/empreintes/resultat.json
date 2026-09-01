@@ -1,0 +1,253 @@
+{
+  "audio": "data/audio/laref2026.wav",
+  "transcription": "data/laref2026.whisper.json",
+  "segments_embarques": 1282,
+  "mentions": 164,
+  "criteres": {
+    "part_du_nom": 0.6,
+    "mentions": 3,
+    "cohesion": 0.6,
+    "separation": 0.5
+  },
+  "balayage": [
+    {
+      "distance": 0.3,
+      "grappes": 231,
+      "retenues": 1,
+      "candidats": 1,
+      "ecartees_trop_proches": 0,
+      "detail": [
+        {
+          "cluster": 8,
+          "cohesion": 0.8698038458824158,
+          "segments": 127,
+          "id": "LE_PEN",
+          "mentions": 8,
+          "share": 0.6666666666666666,
+          "detail": {
+            "LE_PEN": 8,
+            "MELENCHON": 2,
+            "NEUVILLE": 1,
+            "RETAILLEAU": 1
+          }
+        }
+      ]
+    },
+    {
+      "distance": 0.4,
+      "grappes": 63,
+      "retenues": 2,
+      "candidats": 2,
+      "ecartees_trop_proches": 0,
+      "detail": [
+        {
+          "cluster": 18,
+          "cohesion": 0.860470175743103,
+          "segments": 141,
+          "id": "LE_PEN",
+          "mentions": 8,
+          "share": 0.6666666666666666,
+          "detail": {
+            "LE_PEN": 8,
+            "MELENCHON": 2,
+            "NEUVILLE": 1,
+            "RETAILLEAU": 1
+          }
+        },
+        {
+          "cluster": 2,
+          "cohesion": 0.829229474067688,
+          "segments": 148,
+          "id": "RETAILLEAU",
+          "mentions": 7,
+          "share": 0.6363636363636364,
+          "detail": {
+            "RETAILLEAU": 7,
+            "GLUCKSMANN": 1,
+            "LE_PEN": 1,
+            "PHILIPPE": 1,
+            "MARTIN": 1
+          }
+        }
+      ]
+    },
+    {
+      "distance": 0.5,
+      "grappes": 26,
+      "retenues": 2,
+      "candidats": 2,
+      "ecartees_trop_proches": 0,
+      "detail": [
+        {
+          "cluster": 17,
+          "cohesion": 0.8548285365104675,
+          "segments": 145,
+          "id": "LE_PEN",
+          "mentions": 8,
+          "share": 0.6666666666666666,
+          "detail": {
+            "LE_PEN": 8,
+            "MELENCHON": 2,
+            "NEUVILLE": 1,
+            "RETAILLEAU": 1
+          }
+        },
+        {
+          "cluster": 4,
+          "cohesion": 0.8191752433776855,
+          "segments": 158,
+          "id": "RETAILLEAU",
+          "mentions": 7,
+          "share": 0.6363636363636364,
+          "detail": {
+            "RETAILLEAU": 7,
+            "GLUCKSMANN": 1,
+            "LE_PEN": 1,
+            "PHILIPPE": 1,
+            "MARTIN": 1
+          }
+        }
+      ]
+    },
+    {
+      "distance": 0.6,
+      "grappes": 18,
+      "retenues": 3,
+      "candidats": 3,
+      "ecartees_trop_proches": 0,
+      "detail": [
+        {
+          "cluster": 3,
+          "cohesion": 0.8053767085075378,
+          "segments": 174,
+          "id": "GLUCKSMANN",
+          "mentions": 7,
+          "share": 0.6363636363636364,
+          "detail": {
+            "RETAILLEAU": 1,
+            "GLUCKSMANN": 7,
+            "LE_PEN": 3
+          }
+        },
+        {
+          "cluster": 0,
+          "cohesion": 0.8522263169288635,
+          "segments": 146,
+          "id": "LE_PEN",
+          "mentions": 8,
+          "share": 0.6666666666666666,
+          "detail": {
+            "LE_PEN": 8,
+            "MELENCHON": 2,
+            "NEUVILLE": 1,
+            "RETAILLEAU": 1
+          }
+        },
+        {
+          "cluster": 2,
+          "cohesion": 0.8176426887512207,
+          "segments": 159,
+          "id": "RETAILLEAU",
+          "mentions": 7,
+          "share": 0.6363636363636364,
+          "detail": {
+            "RETAILLEAU": 7,
+            "GLUCKSMANN": 1,
+            "LE_PEN": 1,
+            "PHILIPPE": 1,
+            "MARTIN": 1
+          }
+        }
+      ]
+    },
+    {
+      "distance": 0.7,
+      "grappes": 14,
+      "retenues": 2,
+      "candidats": 2,
+      "ecartees_trop_proches": 0,
+      "detail": [
+        {
+          "cluster": 9,
+          "cohesion": 0.8522263169288635,
+          "segments": 146,
+          "id": "LE_PEN",
+          "mentions": 8,
+          "share": 0.6666666666666666,
+          "detail": {
+            "LE_PEN": 8,
+            "MELENCHON": 2,
+            "NEUVILLE": 1,
+            "RETAILLEAU": 1
+          }
+        },
+        {
+          "cluster": 2,
+          "cohesion": 0.8176426887512207,
+          "segments": 159,
+          "id": "RETAILLEAU",
+          "mentions": 7,
+          "share": 0.6363636363636364,
+          "detail": {
+            "RETAILLEAU": 7,
+            "GLUCKSMANN": 1,
+            "LE_PEN": 1,
+            "PHILIPPE": 1,
+            "MARTIN": 1
+          }
+        }
+      ]
+    }
+  ],
+  "retenu": {
+    "distance": 0.6,
+    "grappes": 18,
+    "retenues": 3,
+    "candidats": 3,
+    "ecartees_trop_proches": 0,
+    "detail": [
+      {
+        "cluster": 3,
+        "cohesion": 0.8053767085075378,
+        "segments": 174,
+        "id": "GLUCKSMANN",
+        "mentions": 7,
+        "share": 0.6363636363636364,
+        "detail": {
+          "RETAILLEAU": 1,
+          "GLUCKSMANN": 7,
+          "LE_PEN": 3
+        }
+      },
+      {
+        "cluster": 0,
+        "cohesion": 0.8522263169288635,
+        "segments": 146,
+        "id": "LE_PEN",
+        "mentions": 8,
+        "share": 0.6666666666666666,
+        "detail": {
+          "LE_PEN": 8,
+          "MELENCHON": 2,
+          "NEUVILLE": 1,
+          "RETAILLEAU": 1
+        }
+      },
+      {
+        "cluster": 2,
+        "cohesion": 0.8176426887512207,
+        "segments": 159,
+        "id": "RETAILLEAU",
+        "mentions": 7,
+        "share": 0.6363636363636364,
+        "detail": {
+          "RETAILLEAU": 7,
+          "GLUCKSMANN": 1,
+          "LE_PEN": 1,
+          "PHILIPPE": 1,
+          "MARTIN": 1
+        }
+      }
+    ]
+  }
+}

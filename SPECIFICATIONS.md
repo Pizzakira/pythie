@@ -556,7 +556,8 @@ intentions.
 | Module | État |
 |---|---|
 | Déclencheurs, corpus et rangs, provenance, seuils, registre, consensus, rendu | écrit et testé |
-| Backends, vérification, empreintes, alignement, profils, fiche dynamique | écrit, non éprouvé |
+| Backends, vérification, alignement, profils, fiche dynamique | écrit, non éprouvé |
+| Empreintes vocales | regroupées et nommées, **aucune vérifiée à l'oreille** |
 | Transcription | audité, écrite (`scripts/transcribe.py`) |
 | Accord entre transcriptions | écrit et mesuré, **sans autorité de publication** |
 | Diffusion SSE, backoffice | conçu, non écrit |
@@ -629,3 +630,4 @@ Reproductibilité au niveau du verdict : **non tenue**, mesurée. Voir METHODE �
 | 01/09 | Fine-tune français écarté pour la graphie des échelles, non plus pour la boucle |
 | 01/09 | Jeu étalon : étiquettes séparées en « mécaniques » et « dépendantes du seuil » |
 | 01/09 | Un item que la chaîne ne peut pas réussir reste dans le jeu, marqué comme tel |
+| 01/09 | Une empreinte non confirmée à l'oreille n'autorise aucun verdict |

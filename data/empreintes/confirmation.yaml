@@ -1,0 +1,266 @@
+# Une minute d'ecoute par voix, et l'attribution devient utilisable.
+#
+# Pour chaque grappe : ecouter les trois moments indiques dans
+# data/audio/laref2026.wav, puis remplir `confirme` avec le nom entendu, ou
+# `inconnu` si ce n'est aucun des intervenants, ou `plusieurs` si la
+# grappe melange visiblement deux personnes.
+#
+# `nom_suggere` vient des patronymes prononces juste avant la prise de
+# parole. Ils orientent, ils ne prouvent pas -- c'est exactement ce que
+# votre oreille tranche.
+#
+# Puis : scripts/enrol.py ... --confirmer data/empreintes/confirmation.yaml
+
+grappes:
+- grappe: 15
+  nom_suggere: Jean-Luc Mélenchon
+  id_suggere: MELENCHON
+  part_des_mentions: 0.57
+  mentions: 8
+  segments: 179
+  secondes: 1191.4
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe015_1.mp3
+    minutage: '140:44'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8444s
+  - extrait: data\empreintes\a_confirmer\grappe015_2.mp3
+    minutage: '139:39'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8379s
+  - extrait: data\empreintes\a_confirmer\grappe015_3.mp3
+    minutage: '74:50'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=4490s
+  confirme: ''
+- grappe: 3
+  nom_suggere: Raphaël Glucksmann
+  id_suggere: GLUCKSMANN
+  part_des_mentions: 0.64
+  mentions: 7
+  segments: 174
+  secondes: 1092.5
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe003_1.mp3
+    minutage: '85:32'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5132s
+  - extrait: data\empreintes\a_confirmer\grappe003_2.mp3
+    minutage: '167:19'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=10039s
+  - extrait: data\empreintes\a_confirmer\grappe003_3.mp3
+    minutage: '169:12'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=10152s
+  confirme: ''
+- grappe: 2
+  nom_suggere: Bruno Retailleau
+  id_suggere: RETAILLEAU
+  part_des_mentions: 0.64
+  mentions: 7
+  segments: 159
+  secondes: 1080.8
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe002_1.mp3
+    minutage: '61:38'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3698s
+  - extrait: data\empreintes\a_confirmer\grappe002_2.mp3
+    minutage: '7:15'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=435s
+  - extrait: data\empreintes\a_confirmer\grappe002_3.mp3
+    minutage: '118:21'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7101s
+  confirme: ''
+- grappe: 0
+  nom_suggere: Marine Le Pen
+  id_suggere: LE_PEN
+  part_des_mentions: 0.67
+  mentions: 8
+  segments: 146
+  secondes: 1034.0
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe000_1.mp3
+    minutage: '52:21'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3141s
+  - extrait: data\empreintes\a_confirmer\grappe000_2.mp3
+    minutage: '126:38'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7598s
+  - extrait: data\empreintes\a_confirmer\grappe000_3.mp3
+    minutage: '38:54'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=2334s
+  confirme: ''
+- grappe: 4
+  nom_suggere: Marine Tondelier
+  id_suggere: TONDELIER
+  part_des_mentions: 0.45
+  mentions: 5
+  segments: 144
+  secondes: 930.7
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe004_1.mp3
+    minutage: '120:31'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7231s
+  - extrait: data\empreintes\a_confirmer\grappe004_2.mp3
+    minutage: '57:52'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=3472s
+  - extrait: data\empreintes\a_confirmer\grappe004_3.mp3
+    minutage: '22:19'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1339s
+  confirme: ''
+- grappe: 8
+  nom_suggere: Gabriel Attal
+  id_suggere: ATTAL
+  part_des_mentions: 0.53
+  mentions: 9
+  segments: 138
+  secondes: 795.2
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe008_1.mp3
+    minutage: '134:41'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8081s
+  - extrait: data\empreintes\a_confirmer\grappe008_2.mp3
+    minutage: '86:07'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5167s
+  - extrait: data\empreintes\a_confirmer\grappe008_3.mp3
+    minutage: '136:11'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=8171s
+  confirme: ''
+- grappe: 1
+  nom_suggere: Édouard Philippe
+  id_suggere: PHILIPPE
+  part_des_mentions: 0.5
+  mentions: 6
+  segments: 128
+  secondes: 1087.1
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe001_1.mp3
+    minutage: '11:26'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=686s
+  - extrait: data\empreintes\a_confirmer\grappe001_2.mp3
+    minutage: '77:48'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=4668s
+  - extrait: data\empreintes\a_confirmer\grappe001_3.mp3
+    minutage: '110:35'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=6635s
+  confirme: ''
+- grappe: 7
+  nom_suggere: Patrick Martin
+  id_suggere: MARTIN
+  part_des_mentions: 0.5
+  mentions: 1
+  segments: 92
+  secondes: 527.6
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe007_1.mp3
+    minutage: '5:52'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=352s
+  - extrait: data\empreintes\a_confirmer\grappe007_2.mp3
+    minutage: '35:49'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=2149s
+  - extrait: data\empreintes\a_confirmer\grappe007_3.mp3
+    minutage: '127:04'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7624s
+  confirme: ''
+- grappe: 5
+  nom_suggere: Patrick Martin
+  id_suggere: MARTIN
+  part_des_mentions: 1.0
+  mentions: 2
+  segments: 27
+  secondes: 253.1
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe005_1.mp3
+    minutage: '186:57'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11217s
+  - extrait: data\empreintes\a_confirmer\grappe005_2.mp3
+    minutage: '187:21'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11241s
+  - extrait: data\empreintes\a_confirmer\grappe005_3.mp3
+    minutage: '3:18'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=198s
+  confirme: ''
+- grappe: 17
+  nom_suggere: Patrick Martin
+  id_suggere: MARTIN
+  part_des_mentions: 1.0
+  mentions: 1
+  segments: 23
+  secondes: 148.4
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe017_1.mp3
+    minutage: '189:57'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11397s
+  - extrait: data\empreintes\a_confirmer\grappe017_2.mp3
+    minutage: '189:37'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=11377s
+  - extrait: data\empreintes\a_confirmer\grappe017_3.mp3
+    minutage: '4:35'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=275s
+  confirme: ''
+- grappe: 6
+  nom_suggere: Eric Malenfer
+  id_suggere: MALENFER
+  part_des_mentions: 1.0
+  mentions: 1
+  segments: 16
+  secondes: 92.1
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe006_1.mp3
+    minutage: '25:30'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1530s
+  - extrait: data\empreintes\a_confirmer\grappe006_2.mp3
+    minutage: '23:55'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1435s
+  - extrait: data\empreintes\a_confirmer\grappe006_3.mp3
+    minutage: '26:19'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=1579s
+  confirme: ''
+- grappe: 11
+  nom_suggere: Colombe Lecoufle
+  id_suggere: LECOUFLE
+  part_des_mentions: 0.5
+  mentions: 1
+  segments: 13
+  secondes: 83.9
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe011_1.mp3
+    minutage: '128:46'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7726s
+  - extrait: data\empreintes\a_confirmer\grappe011_2.mp3
+    minutage: '128:00'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7680s
+  - extrait: data\empreintes\a_confirmer\grappe011_3.mp3
+    minutage: '128:58'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=7738s
+  confirme: ''
+- grappe: 13
+  nom_suggere: Joris Brajon
+  id_suggere: BRAJON
+  part_des_mentions: 1.0
+  mentions: 1
+  segments: 13
+  secondes: 62.8
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe013_1.mp3
+    minutage: '154:34'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9274s
+  - extrait: data\empreintes\a_confirmer\grappe013_2.mp3
+    minutage: '154:43'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9283s
+  - extrait: data\empreintes\a_confirmer\grappe013_3.mp3
+    minutage: '154:51'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=9291s
+  confirme: ''
+- grappe: 12
+  nom_suggere: Marine Le Pen
+  id_suggere: LE_PEN
+  part_des_mentions: 1.0
+  mentions: 1
+  segments: 10
+  secondes: 67.4
+  ecouter:
+  - extrait: data\empreintes\a_confirmer\grappe012_1.mp3
+    minutage: 0:05
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=5s
+  - extrait: data\empreintes\a_confirmer\grappe012_2.mp3
+    minutage: '1:19'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=79s
+  - extrait: data\empreintes\a_confirmer\grappe012_3.mp3
+    minutage: '1:33'
+    video: https://www.youtube.com/watch?v=VM8cGxOtUvA&t=93s
+  confirme: ''

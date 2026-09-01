@@ -483,11 +483,64 @@ trancher.
 compare, et range la couverture avant l'exactitude comme l'exige `METHODE.md`
 §5 ; il mesurera le jour où le serveur tournera.
 
+### Suite — les empreintes vocales, sans oreille
+
+Le blocage identifié le matin. Troisième mesure pré-inscrite
+(`ETUDES/preinscription-empreintes.md`), résultats dans `ETUDES/empreintes.md`.
+
+| # | Décision | Motif |
+|---|---|---|
+| **D-061** | **Une empreinte porte `human_verified`, et sans lui elle n'autorise rien** | Regrouper les voix puis les nommer par les patronymes prononcés donne des noms plausibles, jamais vérifiés : quelqu'un qui parlerait toujours après avoir dit un nom produirait la même régularité sous la mauvaise étiquette. Le coût d'une confirmation est d'une minute d'écoute ; celui d'une erreur est une citation attribuée à qui ne l'a pas prononcée. |
+| **D-062** | **Le patronyme est tout ce qui suit le prénom, jamais le dernier mot** | « Marine Le Pen » se réduisait à « pen », trois lettres, écarté par le garde-fou de longueur : la candidate était invisible au mécanisme entier. |
+
+**Ce qui marche.** Le regroupement sépare les voix : à distance 0,40, huit
+grappes concentrent 86 % de la parole — 14, 12, 12, 11, 11, 10, 9, 7 % — soit
+la forme exacte d'un plateau à sept candidats et une animatrice. Et les sept
+plus grosses grappes reçoivent **sept noms différents**, un par candidat.
+
+**Ce qui échoue, selon la règle écrite d'avance.** Le critère exige qu'un
+patronyme réunisse 60 % des mentions d'une grappe : trois candidats y
+parviennent (Glucksmann 64 %, Retailleau 64 %, Le Pen 67 %), quatre étaient
+exigés. **Bootstrap en échec.**
+
+La bijection des sept grappes est un argument plus fort que le critère des
+60 %, et je ne m'en sers pas : elle n'a pas été pré-inscrite. S'en servir
+aujourd'hui reviendrait à choisir la mesure après avoir vu laquelle arrange.
+Elle sera pré-inscrite pour la prochaine fois, ou elle ne servira pas.
+
+**Deux défauts d'instrument, consignés.**
+
+1. **Une mention votait pour dix grappes** : dans les 90 s suivant un nom, la
+   première version faisait voter toutes les grappes présentes. Chaque nom se
+   dispersait sur dix grappes et chaque grappe recevait dix noms — aucun
+   patronyme ne pouvait atteindre 60 %, **quel que soit le débat**. Le critère
+   était insatisfaisable par construction, et le banc aurait échoué sur du
+   matériel parfait. Correctif : une mention = une voix, pour la première prise
+   de parole d'au moins dix secondes qui n'est pas celle qui prononce le nom.
+   Retailleau passe de 57 % à 75 %, Glucksmann de 58 % à 88 %.
+2. **Le patronyme tronqué** (D-062), qui rendait une candidate invisible.
+
+Quatrième fois en deux jours qu'un défaut se trouve en lisant ce qu'un nombre
+recouvre, jamais dans le nombre.
+
+**Ce qui reste, et que je ne peux pas faire.** `data/empreintes/confirmation.yaml`
+liste 14 grappes avec, pour chacune, trois extraits mp3 découpés et trois liens
+horodatés vers la vidéo. Quelques minutes d'écoute sur les sept grosses
+grappes, puis `--confirmer`, et les empreintes deviennent vérifiées — donc
+utilisables. L'étage d'attribution attend cela, et rien d'autre.
+
+**Angle mort qui reste ouvert** : aucun détecteur de paroles superposées, donc
+la règle de `consensus.py` — la superposition s'abstient d'office — reste
+inapplicable. Une empreinte calculée sur deux voix mêlées ne ressemble à
+aucune des deux. Il faut un modèle de segmentation (pyannote, sous licence à
+accepter) pour refermer ce trou.
+
 ### Reste ouvert
 
-- **Attribution des locuteurs** : c'est maintenant le premier blocage du
-  projet, pas le deuxième. Aucune empreinte enrôlée, donc D-040 est
-  inapplicable, donc des énoncés qui ne devraient jamais être analysés le sont.
+- **Attribution des locuteurs** : premier blocage du projet, et il tient
+  désormais à quelques minutes d'écoute humaine — les voix sont regroupées, les
+  noms proposés, les extraits découpés. Tant que personne n'a confirmé, aucune
+  empreinte n'est vérifiée, donc D-040 reste inapplicable.
 - **Rouges** : toujours bloqués en bloc, désormais par le programme (D-055).
   Lever le verrou demande un banc pré-inscrit qui passe.
 - Corpus : deux domaines sur huit.
